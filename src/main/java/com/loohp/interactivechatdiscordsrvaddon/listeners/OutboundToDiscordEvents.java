@@ -83,7 +83,6 @@ import github.scarsz.discordsrv.api.events.AchievementMessagePreProcessEvent;
 import github.scarsz.discordsrv.api.events.DeathMessagePostProcessEvent;
 import github.scarsz.discordsrv.api.events.DeathMessagePreProcessEvent;
 import github.scarsz.discordsrv.api.events.GameChatMessagePreProcessEvent;
-import github.scarsz.discordsrv.api.events.VentureChatMessagePreProcessEvent;
 import github.scarsz.discordsrv.dependencies.jda.api.entities.ChannelType;
 import github.scarsz.discordsrv.dependencies.jda.api.entities.Message;
 import github.scarsz.discordsrv.dependencies.jda.api.entities.MessageEmbed;
@@ -100,7 +99,6 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
 import it.unimi.dsi.fastutil.ints.IntLinkedOpenHashSet;
 import it.unimi.dsi.fastutil.ints.IntSet;
-import mineverse.Aust1n46.chat.api.MineverseChatPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -148,48 +146,6 @@ public class OutboundToDiscordEvents implements Listener {
     private static final IDProvider DATA_ID_PROVIDER = new IDProvider();
     private static final Map<UUID, Component> DEATH_MESSAGE = new ConcurrentHashMap<>();
 
-    @Subscribe(priority = ListenerPriority.LOWEST)
-    public void onGameToDiscordLowest(GameChatMessagePreProcessEvent event) {
-        if (InteractiveChatDiscordSrvAddon.plugin.gameToDiscordPriority.equals(ListenerPriority.LOWEST)) {
-            handleGameToDiscord(event);
-        }
-    }
-
-    @Subscribe(priority = ListenerPriority.LOW)
-    public void onGameToDiscordLow(GameChatMessagePreProcessEvent event) {
-        if (InteractiveChatDiscordSrvAddon.plugin.gameToDiscordPriority.equals(ListenerPriority.LOW)) {
-            handleGameToDiscord(event);
-        }
-    }
-
-    @Subscribe(priority = ListenerPriority.NORMAL)
-    public void onGameToDiscordNormal(GameChatMessagePreProcessEvent event) {
-        if (InteractiveChatDiscordSrvAddon.plugin.gameToDiscordPriority.equals(ListenerPriority.NORMAL)) {
-            handleGameToDiscord(event);
-        }
-    }
-
-    @Subscribe(priority = ListenerPriority.HIGH)
-    public void onGameToDiscordHigh(GameChatMessagePreProcessEvent event) {
-        if (InteractiveChatDiscordSrvAddon.plugin.gameToDiscordPriority.equals(ListenerPriority.HIGH)) {
-            handleGameToDiscord(event);
-        }
-    }
-
-    @Subscribe(priority = ListenerPriority.HIGHEST)
-    public void onGameToDiscordHighest(GameChatMessagePreProcessEvent event) {
-        if (InteractiveChatDiscordSrvAddon.plugin.gameToDiscordPriority.equals(ListenerPriority.HIGHEST)) {
-            handleGameToDiscord(event);
-        }
-    }
-
-    @Subscribe(priority = ListenerPriority.MONITOR)
-    public void onGameToDiscordMonitor(GameChatMessagePreProcessEvent event) {
-        if (InteractiveChatDiscordSrvAddon.plugin.gameToDiscordPriority.equals(ListenerPriority.MONITOR)) {
-            handleGameToDiscord(event);
-        }
-    }
-
     public void handleGameToDiscord(GameChatMessagePreProcessEvent event) {
         Debug.debug("Triggering onGameToDiscord");
         if (event.isCancelled()) {
@@ -212,77 +168,6 @@ public class OutboundToDiscordEvents implements Listener {
         event.setMessageComponent(ComponentStringUtils.toDiscordSRVComponent(message));
     }
 
-    @Subscribe(priority = ListenerPriority.LOWEST)
-    public void onVentureChatHookToDiscordLowest(VentureChatMessagePreProcessEvent event) {
-        if (InteractiveChatDiscordSrvAddon.plugin.ventureChatToDiscordPriority.equals(ListenerPriority.LOWEST)) {
-            handleVentureChatHookToDiscord(event);
-        }
-    }
-
-    @Subscribe(priority = ListenerPriority.LOW)
-    public void onVentureChatHookToDiscordLow(VentureChatMessagePreProcessEvent event) {
-        if (InteractiveChatDiscordSrvAddon.plugin.ventureChatToDiscordPriority.equals(ListenerPriority.LOW)) {
-            handleVentureChatHookToDiscord(event);
-        }
-    }
-
-    @Subscribe(priority = ListenerPriority.NORMAL)
-    public void onVentureChatHookToDiscordNormal(VentureChatMessagePreProcessEvent event) {
-        if (InteractiveChatDiscordSrvAddon.plugin.ventureChatToDiscordPriority.equals(ListenerPriority.NORMAL)) {
-            handleVentureChatHookToDiscord(event);
-        }
-    }
-
-    @Subscribe(priority = ListenerPriority.HIGH)
-    public void onVentureChatHookToDiscordHigh(VentureChatMessagePreProcessEvent event) {
-        if (InteractiveChatDiscordSrvAddon.plugin.ventureChatToDiscordPriority.equals(ListenerPriority.HIGH)) {
-            handleVentureChatHookToDiscord(event);
-        }
-    }
-
-    @Subscribe(priority = ListenerPriority.HIGHEST)
-    public void onVentureChatHookToDiscordHighest(VentureChatMessagePreProcessEvent event) {
-        if (InteractiveChatDiscordSrvAddon.plugin.ventureChatToDiscordPriority.equals(ListenerPriority.HIGHEST)) {
-            handleVentureChatHookToDiscord(event);
-        }
-    }
-
-    @Subscribe(priority = ListenerPriority.MONITOR)
-    public void onVentureChatHookToDiscordMonitor(VentureChatMessagePreProcessEvent event) {
-        if (InteractiveChatDiscordSrvAddon.plugin.ventureChatToDiscordPriority.equals(ListenerPriority.MONITOR)) {
-            handleVentureChatHookToDiscord(event);
-        }
-    }
-
-    public void handleVentureChatHookToDiscord(VentureChatMessagePreProcessEvent event) {
-        Debug.debug("Triggering onVentureChatHookToDiscord");
-        if (event.isCancelled()) {
-            Debug.debug("onVentureChatHookToDiscord already cancelled");
-            return;
-        }
-        InteractiveChatDiscordSrvAddon.plugin.messagesCounter.incrementAndGet();
-
-        ICPlayer icSender = null;
-        MineverseChatPlayer mcPlayer = event.getVentureChatEvent().getMineverseChatPlayer();
-        if (mcPlayer != null) {
-            icSender = ICPlayerFactory.getICPlayer(mcPlayer.getUUID());
-        } else {
-            icSender = ICPlayerFactory.getICPlayerExact(event.getVentureChatEvent().getUsername());
-        }
-        if (icSender == null) {
-            return;
-        }
-        Component message = ComponentStringUtils.toRegularComponent(event.getMessageComponent());
-
-        message = processGameMessage(icSender, message);
-
-        if (message == null) {
-            event.setCancelled(true);
-            return;
-        }
-
-        event.setMessageComponent(ComponentStringUtils.toDiscordSRVComponent(message));
-    }
 
     public Component processGameMessage(ICPlayer icSender, Component component) {
         boolean reserializer = DiscordSRV.config().getBoolean("Experiment_MCDiscordReserializer_ToDiscord");

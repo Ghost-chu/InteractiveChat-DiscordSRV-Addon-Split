@@ -138,9 +138,6 @@ public class InteractiveChatDiscordSrvAddon extends JavaPlugin implements Listen
     public AtomicLong attachmentImageCounter = new AtomicLong(0);
     public AtomicLong imagesViewedCounter = new AtomicLong(0);
     public Queue<Integer> playerModelRenderingTimes = new ConcurrentLinkedQueue<>();
-    public ListenerPriority gameToDiscordPriority = ListenerPriority.HIGHEST;
-    public ListenerPriority ventureChatToDiscordPriority = ListenerPriority.HIGHEST;
-    public ListenerPriority discordToGamePriority = ListenerPriority.HIGH;
     public boolean itemImage = true;
     public boolean invImage = true;
     public boolean enderImage = true;
@@ -516,10 +513,6 @@ public class InteractiveChatDiscordSrvAddon extends JavaPlugin implements Listen
         reducedAssetsDownloadInfo = config.getConfiguration().getBoolean("Settings.ReducedAssetsDownloadInfo");
 
         embedDeleteAfter = config.getConfiguration().getInt("Settings.EmbedDeleteAfter");
-
-        gameToDiscordPriority = ListenerPriority.valueOf(config.getConfiguration().getString("Settings.ListenerPriorities.GameToDiscord").toUpperCase());
-        ventureChatToDiscordPriority = ListenerPriority.valueOf(config.getConfiguration().getString("Settings.ListenerPriorities.VentureChatToDiscord").toUpperCase());
-        discordToGamePriority = ListenerPriority.valueOf(config.getConfiguration().getString("Settings.ListenerPriorities.DiscordToGame").toUpperCase());
 
         itemDisplaySingle = config.getConfiguration().getString("InventoryImage.Item.EmbedDisplay.Single");
         itemDisplayMultiple = config.getConfiguration().getString("InventoryImage.Item.EmbedDisplay.Multiple");
