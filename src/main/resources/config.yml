@@ -1,3 +1,4 @@
+#file: noinspection HttpUrlsUsage,HttpUrlsUsage,HttpUrlsUsage,HttpUrlsUsage,HttpUrlsUsage
 InventoryImage:
   #Whether to generate images for the item placeholder
   Item:

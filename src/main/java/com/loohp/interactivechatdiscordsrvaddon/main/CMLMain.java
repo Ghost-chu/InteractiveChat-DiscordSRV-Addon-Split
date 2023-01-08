@@ -71,7 +71,7 @@ public class CMLMain {
                 System.out.println("Links:");
                 System.out.println("SpigotMC: \"https://www.spigotmc.org/resources/83917/\"");
                 System.out.println("GitHub: \"https://github.com/LOOHP/InteractiveChat-DiscordSRV-Addon\"");
-                System.out.println("Discord: \"http://dev.discord.loohpjames.com\"");
+                System.out.println("Discord: \"https://dev.discord.loohpjames.com\"");
                 System.out.println("Build Server: \"https://ci.loohpjames.com\"");
                 System.out.println();
                 System.out.println("Select one of the tools by typing in their corresponding number");
