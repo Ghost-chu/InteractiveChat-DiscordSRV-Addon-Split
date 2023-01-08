@@ -24,24 +24,15 @@ import com.loohp.interactivechat.libs.org.apache.commons.io.input.BOMInputStream
 import com.loohp.interactivechat.libs.org.json.simple.JSONObject;
 import com.loohp.interactivechat.libs.org.json.simple.parser.JSONParser;
 import com.loohp.interactivechatdiscordsrvaddon.registry.ResourceRegistry;
-import com.loohp.interactivechatdiscordsrvaddon.resources.AbstractManager;
-import com.loohp.interactivechatdiscordsrvaddon.resources.ResourceLoadingException;
-import com.loohp.interactivechatdiscordsrvaddon.resources.ResourceManager;
-import com.loohp.interactivechatdiscordsrvaddon.resources.ResourcePackFile;
-import com.loohp.interactivechatdiscordsrvaddon.resources.TextureAtlases;
+import com.loohp.interactivechatdiscordsrvaddon.resources.*;
 import com.loohp.interactivechatdiscordsrvaddon.utils.TintUtils;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;

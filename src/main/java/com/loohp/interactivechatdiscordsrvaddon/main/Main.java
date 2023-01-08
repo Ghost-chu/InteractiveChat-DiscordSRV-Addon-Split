@@ -22,11 +22,8 @@ package com.loohp.interactivechatdiscordsrvaddon.main;
 
 import com.loohp.interactivechatdiscordsrvaddon.libs.LibraryLoader;
 
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import java.awt.GraphicsEnvironment;
-import java.awt.Toolkit;
+import javax.swing.*;
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -69,10 +66,10 @@ public class Main {
             }
             if (found) {
                 try {
-                    URLClassLoader child = new URLClassLoader(new URL[] {Main.class.getProtectionDomain().getCodeSource().getLocation().toURI().toURL(), file.toURI().toURL()}, null);
+                    URLClassLoader child = new URLClassLoader(new URL[]{Main.class.getProtectionDomain().getCodeSource().getLocation().toURI().toURL(), file.toURI().toURL()}, null);
                     Class<?> classToLoad = Class.forName("com.loohp.interactivechat.main.Main", true, child);
                     Method method = classToLoad.getMethod("mainInteractiveChatDiscordSrvAddon", String[].class);
-                    method.invoke(null, new Object[] {args});
+                    method.invoke(null, new Object[]{args});
                 } catch (MalformedURLException | ClassNotFoundException | NoSuchMethodException |
                          IllegalAccessException | InvocationTargetException | URISyntaxException e) {
                     e.printStackTrace();

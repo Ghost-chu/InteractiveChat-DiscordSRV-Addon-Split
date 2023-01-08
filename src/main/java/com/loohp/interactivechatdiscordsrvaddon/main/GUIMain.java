@@ -61,14 +61,14 @@ public class GUIMain {
 
             YamlFile pluginYaml = new YamlFile();
             pluginYaml.options().useComments(true);
-            pluginYaml.load( enumeration.nextElement().openStream());
+            pluginYaml.load(enumeration.nextElement().openStream());
 
             String pluginName = pluginYaml.getString("name");
             String version = pluginYaml.getString("version");
 
             YamlFile icPluginYaml = new YamlFile();
             icPluginYaml.options().useComments(true);
-            icPluginYaml.load( enumeration.nextElement().openStream());
+            icPluginYaml.load(enumeration.nextElement().openStream());
 
             String icPluginName = icPluginYaml.getString("name");
             String icVersion = icPluginYaml.getString("version");
@@ -86,8 +86,8 @@ public class GUIMain {
             title = pluginName + " v" + version + " Tools";
 
             String message = "<html><center><b>You are running " + pluginName + " v" + version + "</b><br>" +
-                "(Paired with " + icPluginName + " v" + icVersion + ")<br>" + append +
-                "<html/>";
+                    "(Paired with " + icPluginName + " v" + icVersion + ")<br>" + append +
+                    "<html/>";
 
             JLabel messageLabel = createLabel(message, 15);
             messageLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -100,7 +100,7 @@ public class GUIMain {
 
             main:
             while (true) {
-                int input = JOptionPane.showOptionDialog(null, messageLabel, title, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, new Object[] {"Check for Updates", "Validate Plugin Configs", "Generate Default Configs", "Download Assets", "Block Model Renderer (1.13+)", "Minecraft Font Renderer (1.13+)", "Visit Links"}, null);
+                int input = JOptionPane.showOptionDialog(null, messageLabel, title, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, new Object[]{"Check for Updates", "Validate Plugin Configs", "Generate Default Configs", "Download Assets", "Block Model Renderer (1.13+)", "Minecraft Font Renderer (1.13+)", "Visit Links"}, null);
                 switch (input) {
                     case 0:
                         checkForUpdates(title, icon, version);
@@ -136,29 +136,6 @@ public class GUIMain {
         }
     }
 
-    protected static void visitLinks(String title, Icon icon) throws URISyntaxException, IOException {
-        int input = JOptionPane.showOptionDialog(null, createLabel("Visit links through buttons below!", 15), title, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, new Object[] {"SpigotMC", "GitHub", "Discord Server", "Build Server"}, null);
-        if (Desktop.isDesktopSupported()) {
-            Desktop dt = Desktop.getDesktop();
-            switch (input) {
-                case -1:
-                    break;
-                case 0:
-                    dt.browse(new URI("https://www.spigotmc.org/resources/83917/"));
-                    break;
-                case 1:
-                    dt.browse(new URI("https://github.com/LOOHP/InteractiveChat-DiscordSRV-Addon"));
-                    break;
-                case 2:
-                    dt.browse(new URI("https://dev.discord.loohpjames.com"));
-                    break;
-                case 3:
-                    dt.browse(new URI("https://ci.loohpjames.com"));
-                    break;
-            }
-        }
-    }
-
     protected static void checkForUpdates(String title, Icon icon, String localPluginVersion) throws URISyntaxException, IOException {
         JSONObject response = (JSONObject) HTTPRequestUtils.getJSONResponse("https://api.loohpjames.com/spigot/data").get("InteractiveChat-DiscordSRV-Addon");
         String spigotPluginVersion = (String) ((JSONObject) response.get("latestversion")).get("release");
@@ -171,9 +148,9 @@ public class GUIMain {
         Version devBuild = new Version(devBuildVersion);
         int input;
         if (currentRelease.compareTo(spigotmc) < 0) { //update
-            input = JOptionPane.showOptionDialog(null, createLabel("There is a new version available! (" + currentDevBuild + ")\nLocal version: " + localPluginVersion, 15), title, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, new Object[] {"OK", "Download Link"}, null);
+            input = JOptionPane.showOptionDialog(null, createLabel("There is a new version available! (" + currentDevBuild + ")\nLocal version: " + localPluginVersion, 15), title, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, new Object[]{"OK", "Download Link"}, null);
         } else if (currentDevBuild.compareTo(devBuild) < 0) { //dev build update
-            input = JOptionPane.showOptionDialog(null, createLabel("There is a new DEV build available! (" + currentDevBuild + ")\nLocal version: " + localPluginVersion, 15), title, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, new Object[] {"OK", "Download Link"}, null);
+            input = JOptionPane.showOptionDialog(null, createLabel("There is a new DEV build available! (" + currentDevBuild + ")\nLocal version: " + localPluginVersion, 15), title, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, new Object[]{"OK", "Download Link"}, null);
         } else { //latest
             JOptionPane.showMessageDialog(null, createLabel("You are already running the latest version! (" + localPluginVersion + ")", 15), title, JOptionPane.INFORMATION_MESSAGE, icon);
             input = 0;
@@ -199,7 +176,7 @@ public class GUIMain {
             if (fileName.endsWith(".yml")) {
                 YamlFile yaml = new YamlFile();
                 yaml.options().useComments(true);
-                yaml.load( Files.newInputStream(file.toPath()));
+                yaml.load(Files.newInputStream(file.toPath()));
                 results.put(file, validateConfigurationSection("", yaml));
             }
         }
@@ -219,6 +196,29 @@ public class GUIMain {
         }
         message.append("\nNote that a valid config doesn't mean REGEX are valid.");
         JOptionPane.showMessageDialog(null, createLabel(message.toString(), 13), title, JOptionPane.INFORMATION_MESSAGE, icon);
+    }
+
+    protected static void visitLinks(String title, Icon icon) throws URISyntaxException, IOException {
+        int input = JOptionPane.showOptionDialog(null, createLabel("Visit links through buttons below!", 15), title, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, new Object[]{"SpigotMC", "GitHub", "Discord Server", "Build Server"}, null);
+        if (Desktop.isDesktopSupported()) {
+            Desktop dt = Desktop.getDesktop();
+            switch (input) {
+                case -1:
+                    break;
+                case 0:
+                    dt.browse(new URI("https://www.spigotmc.org/resources/83917/"));
+                    break;
+                case 1:
+                    dt.browse(new URI("https://github.com/LOOHP/InteractiveChat-DiscordSRV-Addon"));
+                    break;
+                case 2:
+                    dt.browse(new URI("https://dev.discord.loohpjames.com"));
+                    break;
+                case 3:
+                    dt.browse(new URI("https://ci.loohpjames.com"));
+                    break;
+            }
+        }
     }
 
     protected static List<String> validateConfigurationSection(String currentPath, ConfigurationSection section) {

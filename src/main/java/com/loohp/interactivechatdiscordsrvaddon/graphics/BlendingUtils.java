@@ -28,9 +28,9 @@ public class BlendingUtils {
 
     public static BlendingModes convert(OpenGLBlending openGLBlending) {
         return BlendingModes.of(BlendingMode.fromOpenGL(openGLBlending.getSrcColor().getOpenGLValue()),
-                                BlendingMode.fromOpenGL(openGLBlending.getDesColor().getOpenGLValue()),
-                                BlendingMode.fromOpenGL(openGLBlending.getSrcAlpha().getOpenGLValue()),
-                                BlendingMode.fromOpenGL(openGLBlending.getDesAlpha().getOpenGLValue()));
+                BlendingMode.fromOpenGL(openGLBlending.getDesColor().getOpenGLValue()),
+                BlendingMode.fromOpenGL(openGLBlending.getSrcAlpha().getOpenGLValue()),
+                BlendingMode.fromOpenGL(openGLBlending.getDesAlpha().getOpenGLValue()));
     }
 
 }

@@ -49,14 +49,14 @@ public class CMLMain {
 
             YamlFile pluginYaml = new YamlFile();
             pluginYaml.options().useComments(true);
-            pluginYaml.load( enumeration.nextElement().openStream());
+            pluginYaml.load(enumeration.nextElement().openStream());
 
             String pluginName = pluginYaml.getString("name");
             String version = pluginYaml.getString("version");
 
             YamlFile icPluginYaml = new YamlFile();
             pluginYaml.options().useComments(true);
-            pluginYaml.load( enumeration.nextElement().openStream());
+            pluginYaml.load(enumeration.nextElement().openStream());
 
             String icPluginName = icPluginYaml.getString("name");
             String icVersion = icPluginYaml.getString("version");
@@ -136,7 +136,7 @@ public class CMLMain {
             if (fileName.endsWith(".yml")) {
                 YamlFile yaml = new YamlFile();
                 yaml.options().useComments(true);
-                yaml.load( Files.newInputStream(file.toPath()));
+                yaml.load(Files.newInputStream(file.toPath()));
                 results.put(file, validateConfigurationSection("", yaml));
             }
         }

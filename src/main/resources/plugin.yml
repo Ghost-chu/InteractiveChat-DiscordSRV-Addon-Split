@@ -4,13 +4,13 @@ version: ${project.version}
 main: com.loohp.interactivechatdiscordsrvaddon.InteractiveChatDiscordSrvAddon
 api-version: 1.13
 description: DiscordSRV addon to InteractiveChat
-depend: [InteractiveChat, DiscordSRV]
+depend: [ InteractiveChat, DiscordSRV ]
 prefix: InteractiveChatDiscordSRVAddon
 
 commands:
   interactivechatdiscordsrv:
     usage: /<command>
-    aliases: [icd]
+    aliases: [ icd ]
     description: Plugin main command
 
 permissions:

@@ -43,13 +43,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
@@ -83,7 +77,7 @@ public class ChimeManager extends ModManager implements IChimeManager {
         JSONParser parser = new JSONParser();
         Map<String, ChimeBlockModel> models = new HashMap<>();
         Map<String, TextureResource> textures = new HashMap<>();
-        Collection<ResourcePackFile> files = root.listFilesRecursively(new String[] {"json", "png"});
+        Collection<ResourcePackFile> files = root.listFilesRecursively(new String[]{"json", "png"});
         for (ResourcePackFile file : files) {
             try {
                 String name = file.getName();
@@ -209,7 +203,7 @@ public class ChimeManager extends ModManager implements IChimeManager {
             }
             model = model.resolve(parent, is1_8);
         }
-        return model.resolve( is1_8);
+        return model.resolve(is1_8);
     }
 
     @SuppressWarnings("DeprecatedIsStillUsed")
@@ -247,7 +241,7 @@ public class ChimeManager extends ModManager implements IChimeManager {
             }
             model = model.resolve(parent, is1_8);
         }
-        return model.resolve( is1_8);
+        return model.resolve(is1_8);
     }
 
     @Override

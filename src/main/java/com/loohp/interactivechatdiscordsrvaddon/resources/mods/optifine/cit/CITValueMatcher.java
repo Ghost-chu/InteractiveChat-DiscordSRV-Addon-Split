@@ -20,13 +20,7 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.resources.mods.optifine.cit;
 
-import com.loohp.interactivechat.libs.net.querz.nbt.tag.ByteTag;
-import com.loohp.interactivechat.libs.net.querz.nbt.tag.DoubleTag;
-import com.loohp.interactivechat.libs.net.querz.nbt.tag.FloatTag;
-import com.loohp.interactivechat.libs.net.querz.nbt.tag.IntTag;
-import com.loohp.interactivechat.libs.net.querz.nbt.tag.LongTag;
-import com.loohp.interactivechat.libs.net.querz.nbt.tag.ShortTag;
-import com.loohp.interactivechat.libs.net.querz.nbt.tag.Tag;
+import com.loohp.interactivechat.libs.net.querz.nbt.tag.*;
 import com.loohp.interactivechat.utils.NBTParsingUtils;
 
 import java.util.regex.Pattern;

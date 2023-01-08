@@ -20,7 +20,7 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.main;
 
-import java.awt.Image;
+import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;

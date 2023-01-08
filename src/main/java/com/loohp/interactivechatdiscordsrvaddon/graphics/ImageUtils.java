@@ -38,9 +38,7 @@ import com.loohp.interactivechatdiscordsrvaddon.utils.I18nUtils;
 import it.unimi.dsi.fastutil.chars.CharObjectPair;
 
 import javax.imageio.ImageIO;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -52,18 +50,13 @@ import java.net.URLConnection;
 import java.util.BitSet;
 import java.util.List;
 
-import static com.loohp.blockmodelrenderer.utils.ColorUtils.composite;
-import static com.loohp.blockmodelrenderer.utils.ColorUtils.getAlpha;
-import static com.loohp.blockmodelrenderer.utils.ColorUtils.getBlue;
-import static com.loohp.blockmodelrenderer.utils.ColorUtils.getGreen;
-import static com.loohp.blockmodelrenderer.utils.ColorUtils.getIntFromColor;
-import static com.loohp.blockmodelrenderer.utils.ColorUtils.getRed;
+import static com.loohp.blockmodelrenderer.utils.ColorUtils.*;
 
 public class ImageUtils {
 
     public static final Color TEXT_BACKGROUND_COLOR = new Color(0, 0, 0, 180);
     public static final double CHAT_COLOR_BACKGROUND_FACTOR = 0.19;
-    private static final double[] GAUSSIAN_CONSTANTS = new double[] {0.00598, 0.060626, 0.241843, 0.383103, 0.241843, 0.060626, 0.00598};
+    private static final double[] GAUSSIAN_CONSTANTS = new double[]{0.00598, 0.060626, 0.241843, 0.383103, 0.241843, 0.060626, 0.00598};
 
     public static ByteArrayOutputStream toOutputStream(BufferedImage image) throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

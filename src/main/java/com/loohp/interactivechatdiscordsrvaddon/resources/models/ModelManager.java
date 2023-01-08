@@ -39,11 +39,7 @@ import com.loohp.interactivechatdiscordsrvaddon.utils.TriFunction;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class ModelManager extends AbstractManager implements IModelManager {
@@ -86,7 +82,7 @@ public class ModelManager extends AbstractManager implements IModelManager {
             throw new IllegalArgumentException(root.getAbsolutePath() + " is not a directory.");
         }
         Map<String, BlockModel> models = new HashMap<>();
-        Collection<ResourcePackFile> files = root.listFilesRecursively(new String[] {"json"});
+        Collection<ResourcePackFile> files = root.listFilesRecursively(new String[]{"json"});
         for (ResourcePackFile file : files) {
             try {
                 String key = namespace + ":" + file.getRelativePathFrom(root);
@@ -172,7 +168,7 @@ public class ModelManager extends AbstractManager implements IModelManager {
             }
             model = model.resolve(parent, is1_8);
         }
-        return model.resolve( is1_8);
+        return model.resolve(is1_8);
     }
 
 }

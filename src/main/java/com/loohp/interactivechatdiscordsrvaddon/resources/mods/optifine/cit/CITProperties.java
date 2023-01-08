@@ -22,16 +22,7 @@ package com.loohp.interactivechatdiscordsrvaddon.resources.mods.optifine.cit;
 
 import com.loohp.interactivechat.InteractiveChat;
 import com.loohp.interactivechat.libs.net.kyori.adventure.text.Component;
-import com.loohp.interactivechat.libs.net.querz.nbt.tag.ByteTag;
-import com.loohp.interactivechat.libs.net.querz.nbt.tag.CompoundTag;
-import com.loohp.interactivechat.libs.net.querz.nbt.tag.DoubleTag;
-import com.loohp.interactivechat.libs.net.querz.nbt.tag.FloatTag;
-import com.loohp.interactivechat.libs.net.querz.nbt.tag.IntTag;
-import com.loohp.interactivechat.libs.net.querz.nbt.tag.ListTag;
-import com.loohp.interactivechat.libs.net.querz.nbt.tag.LongTag;
-import com.loohp.interactivechat.libs.net.querz.nbt.tag.ShortTag;
-import com.loohp.interactivechat.libs.net.querz.nbt.tag.StringTag;
-import com.loohp.interactivechat.libs.net.querz.nbt.tag.Tag;
+import com.loohp.interactivechat.libs.net.querz.nbt.tag.*;
 import com.loohp.interactivechat.objectholders.ICMaterial;
 import com.loohp.interactivechat.utils.InteractiveChatComponentSerializer;
 import com.loohp.interactivechat.utils.ItemNBTUtils;
@@ -48,17 +39,8 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Properties;
-import java.util.Set;
 import java.util.function.UnaryOperator;
 
 public abstract class CITProperties {

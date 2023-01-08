@@ -112,7 +112,7 @@ public class EnchantmentProperties extends CITProperties {
                 e.printStackTrace();
             }
         }
-        
+
         public static OpenGLBlending of(OpenGLBlendMode srcComposite, OpenGLBlendMode desComposite) {
             return of(srcComposite, desComposite, OpenGLBlendMode.GL_ZERO, OpenGLBlendMode.GL_ONE);
         }
@@ -136,7 +136,7 @@ public class EnchantmentProperties extends CITProperties {
             }
             return null;
         }
-        
+
         private final OpenGLBlendMode srcColor;
         private final OpenGLBlendMode desColor;
         private final OpenGLBlendMode srcAlpha;

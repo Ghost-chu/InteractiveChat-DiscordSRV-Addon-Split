@@ -22,28 +22,14 @@ package com.loohp.interactivechatdiscordsrvaddon.resources.mods.chime;
 
 import com.loohp.interactivechat.libs.org.json.simple.JSONArray;
 import com.loohp.interactivechat.libs.org.json.simple.JSONObject;
-import com.loohp.interactivechatdiscordsrvaddon.resources.models.BlockModel;
-import com.loohp.interactivechatdiscordsrvaddon.resources.models.Coordinates3D;
-import com.loohp.interactivechatdiscordsrvaddon.resources.models.IModelManager;
-import com.loohp.interactivechatdiscordsrvaddon.resources.models.ModelAxis;
-import com.loohp.interactivechatdiscordsrvaddon.resources.models.ModelDisplay;
+import com.loohp.interactivechatdiscordsrvaddon.resources.models.*;
 import com.loohp.interactivechatdiscordsrvaddon.resources.models.ModelDisplay.ModelDisplayPosition;
-import com.loohp.interactivechatdiscordsrvaddon.resources.models.ModelElement;
 import com.loohp.interactivechatdiscordsrvaddon.resources.models.ModelElement.ModelElementRotation;
-import com.loohp.interactivechatdiscordsrvaddon.resources.models.ModelFace;
 import com.loohp.interactivechatdiscordsrvaddon.resources.models.ModelFace.ModelFaceSide;
-import com.loohp.interactivechatdiscordsrvaddon.resources.models.ModelGUILight;
-import com.loohp.interactivechatdiscordsrvaddon.resources.models.ModelOverride;
 import com.loohp.interactivechatdiscordsrvaddon.resources.models.ModelOverride.ModelOverrideType;
-import com.loohp.interactivechatdiscordsrvaddon.resources.models.TextureUV;
 import com.loohp.interactivechatdiscordsrvaddon.resources.mods.chime.ChimeModelOverride.ChimeModelOverrideType;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
+import java.util.*;
 
 public class ChimeBlockModel extends BlockModel {
 

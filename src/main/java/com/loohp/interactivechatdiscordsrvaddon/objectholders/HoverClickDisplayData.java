@@ -25,7 +25,7 @@ import com.loohp.interactivechat.objectholders.CustomPlaceholder.ClickEventActio
 import com.loohp.interactivechat.objectholders.ICPlayer;
 import com.loohp.interactivechat.objectholders.OfflineICPlayer;
 
-import java.awt.Color;
+import java.awt.*;
 
 public class HoverClickDisplayData extends DiscordDisplayData {
 
