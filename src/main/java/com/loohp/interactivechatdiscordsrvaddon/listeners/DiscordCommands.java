@@ -39,37 +39,12 @@ import com.loohp.interactivechat.libs.net.kyori.adventure.text.serializer.legacy
 import com.loohp.interactivechat.libs.net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import com.loohp.interactivechat.modules.InventoryDisplay;
 import com.loohp.interactivechat.modules.ItemDisplay;
-import com.loohp.interactivechat.objectholders.ICPlaceholder;
-import com.loohp.interactivechat.objectholders.ICPlayer;
-import com.loohp.interactivechat.objectholders.ICPlayerFactory;
-import com.loohp.interactivechat.objectholders.OfflineICPlayer;
-import com.loohp.interactivechat.objectholders.ValuePairs;
-import com.loohp.interactivechat.objectholders.ValueTrios;
-import com.loohp.interactivechat.utils.ChatColorUtils;
-import com.loohp.interactivechat.utils.ColorUtils;
-import com.loohp.interactivechat.utils.CompassUtils;
-import com.loohp.interactivechat.utils.ComponentModernizing;
-import com.loohp.interactivechat.utils.ComponentReplacing;
-import com.loohp.interactivechat.utils.ComponentStyling;
-import com.loohp.interactivechat.utils.CustomStringUtils;
-import com.loohp.interactivechat.utils.HashUtils;
-import com.loohp.interactivechat.utils.InteractiveChatComponentSerializer;
-import com.loohp.interactivechat.utils.InventoryUtils;
-import com.loohp.interactivechat.utils.ItemStackUtils;
-import com.loohp.interactivechat.utils.LanguageUtils;
-import com.loohp.interactivechat.utils.MCVersion;
-import com.loohp.interactivechat.utils.PlaceholderParser;
-import com.loohp.interactivechat.utils.PlayerUtils;
-import com.loohp.interactivechat.utils.SkinUtils;
+import com.loohp.interactivechat.objectholders.*;
+import com.loohp.interactivechat.utils.*;
 import com.loohp.interactivechatdiscordsrvaddon.InteractiveChatDiscordSrvAddon;
-import com.loohp.interactivechatdiscordsrvaddon.api.events.InteractiveChatDiscordSRVConfigReloadEvent;
 import com.loohp.interactivechatdiscordsrvaddon.graphics.ImageGeneration;
 import com.loohp.interactivechatdiscordsrvaddon.graphics.ImageUtils;
-import com.loohp.interactivechatdiscordsrvaddon.objectholders.DiscordMessageContent;
-import com.loohp.interactivechatdiscordsrvaddon.objectholders.ImageDisplayData;
-import com.loohp.interactivechatdiscordsrvaddon.objectholders.ImageDisplayType;
-import com.loohp.interactivechatdiscordsrvaddon.objectholders.InteractionHandler;
-import com.loohp.interactivechatdiscordsrvaddon.objectholders.ToolTipComponent;
+import com.loohp.interactivechatdiscordsrvaddon.objectholders.*;
 import com.loohp.interactivechatdiscordsrvaddon.registry.ResourceRegistry;
 import com.loohp.interactivechatdiscordsrvaddon.resources.ResourcePackInfo;
 import com.loohp.interactivechatdiscordsrvaddon.utils.ComponentStringUtils;
@@ -109,23 +84,13 @@ import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -506,11 +471,6 @@ public class DiscordCommands implements Listener, SlashCommandProvider {
                 }
             }
         }, 100, 100);
-    }
-
-    @EventHandler
-    public void onConfigReload(InteractiveChatDiscordSRVConfigReloadEvent event) {
-        Bukkit.getScheduler().runTaskAsynchronously(InteractiveChatDiscordSrvAddon.plugin, this::reload);
     }
 
     @Override
