@@ -118,7 +118,7 @@ public class TextureAtlases {
         return new TextureAtlases(sources);
     }
 
-    private Map<TextureAtlasType, List<TextureAtlasSource>> textureAtlases;
+    private final Map<TextureAtlasType, List<TextureAtlasSource>> textureAtlases;
 
     public TextureAtlases(Map<TextureAtlasType, List<TextureAtlasSource>> textureAtlases) {
         this.textureAtlases = Collections.unmodifiableMap(textureAtlases);
@@ -149,7 +149,7 @@ public class TextureAtlases {
         PAINTINGS("paintings"),
         PARTICLES("particles");
 
-        private String name;
+        private final String name;
 
         TextureAtlasType(String name) {
             this.name = name;
@@ -191,8 +191,8 @@ public class TextureAtlases {
             return TYPES;
         }
 
-        private String name;
-        private Class<T> typeClass;
+        private final String name;
+        private final Class<T> typeClass;
 
         private TextureAtlasSourceType(String name, Class<T> typeClass) {
             this.name = name;
@@ -223,8 +223,8 @@ public class TextureAtlases {
 
     public static class TextureAtlasDirectorySource extends TextureAtlasSource {
 
-        private String source;
-        private String prefix;
+        private final String source;
+        private final String prefix;
 
         public TextureAtlasDirectorySource(String source, String prefix) {
             this.source = source;
@@ -252,8 +252,8 @@ public class TextureAtlases {
 
     public static class TextureAtlasSingleSource extends TextureAtlasSource {
 
-        private String resource;
-        private String sprite;
+        private final String resource;
+        private final String sprite;
 
         public TextureAtlasSingleSource(String resource, String sprite) {
             this.resource = resource;
@@ -285,8 +285,8 @@ public class TextureAtlases {
 
     public static class TextureAtlasFilterSource extends TextureAtlasSource {
 
-        private Pattern namespace;
-        private Pattern path;
+        private final Pattern namespace;
+        private final Pattern path;
 
         public TextureAtlasFilterSource(Pattern namespace, Pattern path) {
             this.namespace = namespace;
@@ -314,10 +314,10 @@ public class TextureAtlases {
 
     public static class TextureAtlasUnstitchSource extends TextureAtlasSource {
 
-        private String resource;
-        private double divisorX;
-        private double divisorY;
-        private List<Region> regions;
+        private final String resource;
+        private final double divisorX;
+        private final double divisorY;
+        private final List<Region> regions;
 
         public TextureAtlasUnstitchSource(String resource, double divisorX, double divisorY, List<Region> regions) {
             this.resource = resource;
@@ -358,12 +358,12 @@ public class TextureAtlases {
 
         public class Region {
 
-            private String spriteName;
-            private double x;
-            private double y;
-            private double width;
-            private double height;
-            private UnaryOperator<BufferedImage> imageTransformFunction;
+            private final String spriteName;
+            private final double x;
+            private final double y;
+            private final double width;
+            private final double height;
+            private final UnaryOperator<BufferedImage> imageTransformFunction;
 
             public Region(String spriteName, double x, double y, double width, double height) {
                 this.spriteName = spriteName;

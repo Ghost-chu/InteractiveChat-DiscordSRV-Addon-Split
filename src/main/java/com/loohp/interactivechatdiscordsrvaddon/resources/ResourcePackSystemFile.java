@@ -35,9 +35,9 @@ import java.util.stream.Collectors;
 
 public class ResourcePackSystemFile implements ResourcePackFile {
 
-    private ResourcePackSystemFile root;
-    private File file;
-    private Set<InputStream> streams;
+    private final ResourcePackSystemFile root;
+    private final File file;
+    private final Set<InputStream> streams;
 
     public ResourcePackSystemFile(File file) {
         this.root = this;

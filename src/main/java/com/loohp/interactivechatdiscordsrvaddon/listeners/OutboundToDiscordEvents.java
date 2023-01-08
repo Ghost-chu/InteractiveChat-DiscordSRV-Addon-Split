@@ -544,7 +544,7 @@ public class OutboundToDiscordEvents implements Listener {
             return;
         }
         ItemMeta meta = item.getItemMeta();
-        if (meta == null || !meta.hasDisplayName() || meta.getDisplayName().length() <= 0) {
+        if (meta == null || !meta.hasDisplayName() || meta.getDisplayName().length() == 0) {
             return;
         }
         Color color = null;

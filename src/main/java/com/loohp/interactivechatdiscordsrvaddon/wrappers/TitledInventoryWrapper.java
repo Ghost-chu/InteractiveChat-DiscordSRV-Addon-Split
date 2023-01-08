@@ -25,8 +25,8 @@ import org.bukkit.inventory.Inventory;
 
 public class TitledInventoryWrapper {
 
-    private Component title;
-    private Inventory inventory;
+    private final Component title;
+    private final Inventory inventory;
 
     public TitledInventoryWrapper(Component title, Inventory inventory) {
         this.title = title;

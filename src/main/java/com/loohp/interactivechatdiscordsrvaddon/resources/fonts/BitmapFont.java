@@ -50,11 +50,11 @@ public class BitmapFont extends MinecraftFont {
 
     private Int2ObjectMap<FontTextureResource> charImages;
     private Int2IntMap charWidth;
-    private String resourceLocation;
-    private int height;
-    private int ascent;
+    private final String resourceLocation;
+    private final int height;
+    private final int ascent;
     private int scale;
-    private List<String> chars;
+    private final List<String> chars;
 
     public BitmapFont(ResourceManager manager, FontProvider provider, String resourceLocation, int height, int ascent, List<String> chars) {
         super(manager, provider);

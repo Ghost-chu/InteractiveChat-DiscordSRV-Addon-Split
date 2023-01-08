@@ -150,11 +150,11 @@ public abstract class MinecraftFont {
 
     public static class FontRenderResult {
 
-        private BufferedImage image;
-        private int width;
-        private int height;
-        private int spaceWidth;
-        private int italicExtraWidth;
+        private final BufferedImage image;
+        private final int width;
+        private final int height;
+        private final int spaceWidth;
+        private final int italicExtraWidth;
 
         public FontRenderResult(BufferedImage image, int width, int height, int spaceWidth, int italicExtraWidth) {
             this.image = image;

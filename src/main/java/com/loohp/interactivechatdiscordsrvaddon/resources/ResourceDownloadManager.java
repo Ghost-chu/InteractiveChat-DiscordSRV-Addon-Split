@@ -73,8 +73,8 @@ public class ResourceDownloadManager {
         return MINECRAFT_VERSIONS;
     }
 
-    private String minecraftVersion;
-    private File packFolder;
+    private final String minecraftVersion;
+    private final File packFolder;
     private JSONObject data;
     private JSONObject assetIndex;
 
@@ -268,7 +268,7 @@ public class ResourceDownloadManager {
         DOWNLOAD(true),
         DONE;
 
-        private boolean hasPercentage;
+        private final boolean hasPercentage;
 
         TaskType(boolean hasPercentage) {
             this.hasPercentage = hasPercentage;

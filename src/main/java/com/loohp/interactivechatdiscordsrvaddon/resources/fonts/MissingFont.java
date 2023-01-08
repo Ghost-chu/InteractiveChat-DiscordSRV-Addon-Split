@@ -25,7 +25,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
 
 public class MissingFont extends LegacyUnicodeFont {
 
-    private int missingFontWidth;
+    private final int missingFontWidth;
 
     public MissingFont(ResourceManager manager, FontProvider provider) {
         super(manager, provider, Int2ObjectMaps.emptyMap(), null);

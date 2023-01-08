@@ -28,12 +28,12 @@ import java.util.Objects;
 
 public class ModelElement {
 
-    private String name;
-    private Coordinates3D from;
-    private Coordinates3D to;
-    private ModelElementRotation rotation;
-    private boolean shade;
-    private Map<ModelFaceSide, ModelFace> face;
+    private final String name;
+    private final Coordinates3D from;
+    private final Coordinates3D to;
+    private final ModelElementRotation rotation;
+    private final boolean shade;
+    private final Map<ModelFaceSide, ModelFace> face;
 
     public ModelElement(String name, Coordinates3D from, Coordinates3D to, ModelElementRotation rotation, boolean shade, Map<ModelFaceSide, ModelFace> face) {
         this.name = name;
@@ -91,10 +91,10 @@ public class ModelElement {
 
     public static class ModelElementRotation {
 
-        private Coordinates3D origin;
-        private ModelAxis axis;
-        private double angle;
-        private boolean rescale;
+        private final Coordinates3D origin;
+        private final ModelAxis axis;
+        private final double angle;
+        private final boolean rescale;
 
         public ModelElementRotation(Coordinates3D origin, ModelAxis axis, double angle, boolean rescale) {
             this.origin = origin;

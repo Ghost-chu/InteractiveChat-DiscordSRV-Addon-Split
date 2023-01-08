@@ -667,14 +667,14 @@ public class ItemRenderUtils {
 
     public static class ItemStackProcessResult {
 
-        private boolean requiresEnchantmentGlint;
-        private Map<ModelOverrideType, Float> predicates;
-        private Map<String, TextureResource> providedTextures;
-        private TintIndexData tintIndexData;
-        private String modelKey;
-        private Function<BlockModel, ValuePairs<BlockModel, Map<String, TextureResource>>> postResolveFunction;
-        private UnaryOperator<BufferedImage> enchantmentGlintFunction;
-        private Function<BufferedImage, RawEnchantmentGlintData> rawEnchantmentGlintFunction;
+        private final boolean requiresEnchantmentGlint;
+        private final Map<ModelOverrideType, Float> predicates;
+        private final Map<String, TextureResource> providedTextures;
+        private final TintIndexData tintIndexData;
+        private final String modelKey;
+        private final Function<BlockModel, ValuePairs<BlockModel, Map<String, TextureResource>>> postResolveFunction;
+        private final UnaryOperator<BufferedImage> enchantmentGlintFunction;
+        private final Function<BufferedImage, RawEnchantmentGlintData> rawEnchantmentGlintFunction;
 
         public ItemStackProcessResult(boolean requiresEnchantmentGlint, Map<ModelOverrideType, Float> predicates, Map<String, TextureResource> providedTextures, TintIndexData tintIndexData, String modelKey, Function<BlockModel, ValuePairs<BlockModel, Map<String, TextureResource>>> postResolveFunction, UnaryOperator<BufferedImage> enchantmentGlintFunction, Function<BufferedImage, RawEnchantmentGlintData> rawEnchantmentGlintFunction) {
             this.requiresEnchantmentGlint = requiresEnchantmentGlint;

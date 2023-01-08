@@ -134,7 +134,7 @@ public class ChimeBlockModel extends BlockModel {
                         String faceTexture = (String) faceJson.get("texture");
                         Object cullfaceObj = faceJson.get("cullface");
                         ModelFaceSide cullface;
-                        if (cullfaceObj != null && cullfaceObj instanceof String) {
+                        if (cullfaceObj instanceof String) {
                             cullface = ModelFaceSide.fromKey((String) cullfaceObj);
                         } else {
                             cullface = side;

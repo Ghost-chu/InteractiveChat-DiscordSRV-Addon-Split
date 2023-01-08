@@ -202,8 +202,8 @@ public class TintUtils {
 
         public static final TintIndexData EMPTY_INSTANCE = new TintIndexData(Collections.emptyList());
 
-        private List<IntSupplier> data;
-        private IntSet availableTintIndex;
+        private final List<IntSupplier> data;
+        private final IntSet availableTintIndex;
 
         public TintIndexData(List<IntSupplier> data) {
             this.data = data;
@@ -242,8 +242,8 @@ public class TintUtils {
 
     public static class SpawnEggTintData {
 
-        private int base;
-        private int overlay;
+        private final int base;
+        private final int overlay;
 
         public SpawnEggTintData(int base, int overlay) {
             this.base = base;

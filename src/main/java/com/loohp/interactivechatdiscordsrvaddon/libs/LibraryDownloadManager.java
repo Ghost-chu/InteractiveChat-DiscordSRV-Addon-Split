@@ -32,7 +32,7 @@ public class LibraryDownloadManager {
 
     public static final String LIBS_DATA_URL = "https://api.loohpjames.com/spigot/plugins/interactivechatdiscordsrvaddon/libs";
 
-    private File libsFolder;
+    private final File libsFolder;
     private JSONObject data;
 
     public LibraryDownloadManager(File libsFolder) {

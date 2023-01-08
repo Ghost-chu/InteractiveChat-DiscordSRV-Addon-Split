@@ -50,10 +50,10 @@ public class LegacyUnicodeFont extends MinecraftFont {
         return String.format("%04x", i).substring(0, 2);
     }
 
-    protected Optional<FontTextureResource> missingCharacter;
+    protected final Optional<FontTextureResource> missingCharacter;
     private Int2ObjectMap<Optional<FontTextureResource>> charImages;
-    private Int2ObjectMap<GlyphSize> sizes;
-    private String template;
+    private final Int2ObjectMap<GlyphSize> sizes;
+    private final String template;
 
     public LegacyUnicodeFont(ResourceManager manager, FontProvider provider, Int2ObjectMap<GlyphSize> sizes, String template) {
         super(manager, provider);
@@ -128,7 +128,7 @@ public class LegacyUnicodeFont extends MinecraftFont {
         decorations = sortDecorations(decorations);
         Color awtColor = new Color(color.value());
         Optional<FontTextureResource> optCharImage = charImages.get(character.codePointAt(0));
-        if (optCharImage == null) {
+        if (!optCharImage.isPresent()) {
             optCharImage = missingCharacter;
         }
         if (optCharImage.isPresent()) {
@@ -220,7 +220,7 @@ public class LegacyUnicodeFont extends MinecraftFont {
     public Optional<BufferedImage> getCharacterImage(String character, float fontSize, TextColor color) {
         Color awtColor = new Color(color.value());
         Optional<FontTextureResource> optCharImage = charImages.get(character.codePointAt(0));
-        if (optCharImage == null) {
+        if (!optCharImage.isPresent()) {
             optCharImage = missingCharacter;
         }
         if (optCharImage.isPresent()) {
@@ -246,8 +246,8 @@ public class LegacyUnicodeFont extends MinecraftFont {
 
     public static class GlyphSize {
 
-        private byte start;
-        private byte end;
+        private final byte start;
+        private final byte end;
 
         public GlyphSize(byte start, byte end) {
             this.start = start;

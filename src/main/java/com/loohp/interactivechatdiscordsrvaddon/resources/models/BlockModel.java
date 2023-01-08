@@ -127,7 +127,7 @@ public class BlockModel {
                         String faceTexture = (String) faceJson.get("texture");
                         Object cullfaceObj = faceJson.get("cullface");
                         ModelFaceSide cullface;
-                        if (cullfaceObj != null && cullfaceObj instanceof String) {
+                        if (cullfaceObj instanceof String) {
                             cullface = ModelFaceSide.fromKey((String) cullfaceObj);
                         } else {
                             cullface = side;
@@ -164,16 +164,16 @@ public class BlockModel {
         return new BlockModel(manager, resourceLocation, parent, ambientocclusion, guiLight, display, texture, elements, overrides);
     }
 
-    private IModelManager manager;
-    private String resourceLocation;
+    private final IModelManager manager;
+    private final String resourceLocation;
 
-    private String parent;
-    private boolean ambientocclusion;
-    private ModelGUILight guiLight;
-    private Map<ModelDisplayPosition, ModelDisplay> display;
-    private Map<String, String> textures;
-    private List<ModelElement> elements;
-    private List<ModelOverride> overrides;
+    private final String parent;
+    private final boolean ambientocclusion;
+    private final ModelGUILight guiLight;
+    private final Map<ModelDisplayPosition, ModelDisplay> display;
+    private final Map<String, String> textures;
+    private final List<ModelElement> elements;
+    private final List<ModelOverride> overrides;
 
     public BlockModel(IModelManager manager, String resourceLocation, String parent, boolean ambientocclusion, ModelGUILight guiLight, Map<ModelDisplayPosition, ModelDisplay> display, Map<String, String> textures, List<ModelElement> elements, List<ModelOverride> overrides) {
         this.resourceLocation = resourceLocation;

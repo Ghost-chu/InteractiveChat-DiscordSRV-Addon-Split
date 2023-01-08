@@ -45,7 +45,7 @@ public class ItemMapWrapper {
         ICON_ORDER = first.thenComparing(second).thenComparing(third);
     }
 
-    private ItemStack itemStack;
+    private final ItemStack itemStack;
     private byte[] colors;
     private List<MapCursor> icons;
 

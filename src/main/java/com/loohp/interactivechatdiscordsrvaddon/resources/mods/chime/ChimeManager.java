@@ -59,9 +59,9 @@ public class ChimeManager extends ModManager implements IChimeManager {
     public static final List<String> ASSETS_FOLDERS = Collections.singletonList("overrides");
     public static final TriFunction<IModelManager, String, JSONObject, ChimeBlockModel> CHIME_MODEL_PARSING_FUNCTION = (manager, key, json) -> ChimeBlockModel.fromJson(manager, key, json);
 
-    private List<String> overrideLocations;
-    private Map<String, TextureResource> textures;
-    private Map<String, ChimeBlockModel> models;
+    private final List<String> overrideLocations;
+    private final Map<String, TextureResource> textures;
+    private final Map<String, ChimeBlockModel> models;
 
     public ChimeManager(ResourceManager manager) {
         super(manager, MOD_NAME, ASSETS_FOLDERS);
@@ -274,7 +274,7 @@ public class ChimeManager extends ModManager implements IChimeManager {
         for (String overrideLocation : overrideLocations) {
             String resourceKey = "minecraft:" + overrideLocation + "armor/" + layer;
             BlockModel model = getRawBlockModel(resourceKey, true);
-            if (model == null || !(model instanceof ChimeBlockModel)) {
+            if (!(model instanceof ChimeBlockModel)) {
                 return null;
             }
             for (ChimeModelOverride override : ((ChimeBlockModel) model).getChimeOverrides()) {

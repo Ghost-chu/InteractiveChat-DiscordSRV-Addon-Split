@@ -220,7 +220,7 @@ public class Commands implements CommandExecutor, TabCompleter {
                 return tab;
             case 2:
                 if (sender.hasPermission("interactivechatdiscordsrv.reloadtexture")) {
-                    if ("reloadtexture".equals(args[0].toLowerCase())) {
+                    if ("reloadtexture".equalsIgnoreCase(args[0])) {
                         if ("--redownload".startsWith(args[1].toLowerCase())) {
                             tab.add("--redownload");
                         }

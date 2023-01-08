@@ -95,13 +95,13 @@ public class InteractiveChatDiscordSrvAddon extends JavaPlugin implements Listen
     public static boolean debug = false;
 
     protected final ReentrantLock resourceReloadLock = new ReentrantLock(true);
-    public AtomicLong messagesCounter = new AtomicLong(0);
-    public AtomicLong imageCounter = new AtomicLong(0);
-    public AtomicLong inventoryImageCounter = new AtomicLong(0);
-    public AtomicLong attachmentCounter = new AtomicLong(0);
-    public AtomicLong attachmentImageCounter = new AtomicLong(0);
-    public AtomicLong imagesViewedCounter = new AtomicLong(0);
-    public Queue<Integer> playerModelRenderingTimes = new ConcurrentLinkedQueue<>();
+    public final AtomicLong messagesCounter = new AtomicLong(0);
+    public final AtomicLong imageCounter = new AtomicLong(0);
+    public final AtomicLong inventoryImageCounter = new AtomicLong(0);
+    public final AtomicLong attachmentCounter = new AtomicLong(0);
+    public final AtomicLong attachmentImageCounter = new AtomicLong(0);
+    public final AtomicLong imagesViewedCounter = new AtomicLong(0);
+    public final Queue<Integer> playerModelRenderingTimes = new ConcurrentLinkedQueue<>();
     public boolean itemImage = true;
     public boolean invImage = true;
     public boolean enderImage = true;
@@ -211,7 +211,7 @@ public class InteractiveChatDiscordSrvAddon extends JavaPlugin implements Listen
     public String shareEnderCommandTitle = "";
     public PlaceholderCooldownManager placeholderCooldownManager;
     public String defaultResourceHash = "N/A";
-    public List<String> resourceOrder = new ArrayList<>();
+    public final List<String> resourceOrder = new ArrayList<>();
     public boolean forceUnicode = false;
     public boolean includeServerResourcePack = true;
     public String alternateResourcePackURL = "";
@@ -233,7 +233,7 @@ public class InteractiveChatDiscordSrvAddon extends JavaPlugin implements Listen
     public ModelRenderer modelRenderer;
     public ExecutorService mediaReadingService;
 
-    protected Map<String, byte[]> extras = new ConcurrentHashMap<>();
+    protected final Map<String, byte[]> extras = new ConcurrentHashMap<>();
 
     public ResourceManager getResourceManager() {
         if (resourceManager == null) {

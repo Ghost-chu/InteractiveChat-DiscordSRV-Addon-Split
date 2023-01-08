@@ -72,8 +72,8 @@ public class FontManager extends AbstractManager implements IFontManager {
     }
 
     private Key defaultKey;
-    private Map<String, FontProvider> fonts;
-    private Map<String, Map<String, ResourcePackFile>> files;
+    private final Map<String, FontProvider> fonts;
+    private final Map<String, Map<String, ResourcePackFile>> files;
 
     public FontManager(ResourceManager manager) {
         super(manager);

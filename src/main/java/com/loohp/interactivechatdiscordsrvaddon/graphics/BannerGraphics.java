@@ -151,8 +151,8 @@ public class BannerGraphics {
 
     public static class BannerAssetResult {
 
-        private BufferedImage base;
-        private BufferedImage patterns;
+        private final BufferedImage base;
+        private final BufferedImage patterns;
 
         public BannerAssetResult(BufferedImage base, BufferedImage patterns) {
             this.base = base;

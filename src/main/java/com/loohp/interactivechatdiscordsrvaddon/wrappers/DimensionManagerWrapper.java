@@ -194,8 +194,8 @@ public class DimensionManagerWrapper {
         }
     }
 
-    private Object nmsDimensionManager;
-    private Environment environment;
+    private final Object nmsDimensionManager;
+    private final Environment environment;
 
     public DimensionManagerWrapper(World world) {
         if (InteractiveChat.version.isOlderThan(MCVersion.V1_16)) {

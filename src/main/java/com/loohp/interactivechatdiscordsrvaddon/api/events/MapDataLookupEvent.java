@@ -37,9 +37,9 @@ public class MapDataLookupEvent extends Event {
         return HANDLERS;
     }
 
-    private Player player;
-    private int mapId;
-    private MapView mapView;
+    private final Player player;
+    private final int mapId;
+    private final MapView mapView;
     private byte[] colors;
     private List<MapCursor> mapCursors;
 

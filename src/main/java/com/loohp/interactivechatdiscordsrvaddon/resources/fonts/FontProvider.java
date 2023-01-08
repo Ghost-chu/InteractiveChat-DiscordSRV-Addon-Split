@@ -40,9 +40,9 @@ import java.util.List;
 
 public class FontProvider {
 
-    private ResourceManager manager;
-    private String key;
-    private List<MinecraftFont> providers;
+    private final ResourceManager manager;
+    private final String key;
+    private final List<MinecraftFont> providers;
     private Int2ObjectMap<IntList> displayableCharactersByWidth;
 
     public FontProvider(ResourceManager manager, String key, List<MinecraftFont> providers) {

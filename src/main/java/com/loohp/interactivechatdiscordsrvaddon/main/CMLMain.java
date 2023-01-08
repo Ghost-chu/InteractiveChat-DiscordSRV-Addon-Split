@@ -48,7 +48,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class CMLMain {
 
-    protected static BufferedReader IN = new BufferedReader(new InputStreamReader(System.in));
+    protected static final BufferedReader IN = new BufferedReader(new InputStreamReader(System.in));
 
     public static void launch(String[] args) {
         try {
@@ -115,7 +115,7 @@ public class CMLMain {
         }
     }
 
-    protected static void checkForUpdates(String localPluginVersion) throws URISyntaxException, IOException {
+    protected static void checkForUpdates(String localPluginVersion) {
         JSONObject response = (JSONObject) HTTPRequestUtils.getJSONResponse("https://api.loohpjames.com/spigot/data").get("InteractiveChat-DiscordSRV-Addon");
         String spigotPluginVersion = (String) ((JSONObject) response.get("latestversion")).get("release");
         String devBuildVersion = (String) ((JSONObject) response.get("latestversion")).get("devbuild");

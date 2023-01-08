@@ -22,9 +22,9 @@ package com.loohp.interactivechatdiscordsrvaddon.resources.textures;
 
 public class TextureProperties {
 
-    private boolean blur;
-    private boolean clamp;
-    private int[] mipmaps;
+    private final boolean blur;
+    private final boolean clamp;
+    private final int[] mipmaps;
 
     public TextureProperties(boolean blur, boolean clamp, int[] mipmaps) {
         this.blur = blur;

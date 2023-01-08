@@ -60,9 +60,9 @@ public class LanguageManager extends AbstractManager implements ILanguageManager
         return () -> manager.translations.keySet();
     }
 
-    private Map<String, LanguageMeta> languageMeta;
-    private Map<String, Map<String, String>> translations;
-    private List<Consumer<LanguageReloadEvent>> reloadListeners;
+    private final Map<String, LanguageMeta> languageMeta;
+    private final Map<String, Map<String, String>> translations;
+    private final List<Consumer<LanguageReloadEvent>> reloadListeners;
     private TranslateFunction translateFunction;
     private Supplier<Collection<String>> availableLanguagesSupplier;
 
@@ -214,8 +214,8 @@ public class LanguageManager extends AbstractManager implements ILanguageManager
 
     public static class LanguageReloadEvent {
 
-        private LanguageManager languageManager;
-        private Map<String, Map<String, String>> translations;
+        private final LanguageManager languageManager;
+        private final Map<String, Map<String, String>> translations;
 
         public LanguageReloadEvent(LanguageManager languageManager, Map<String, Map<String, String>> translations) {
             this.languageManager = languageManager;

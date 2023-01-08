@@ -41,7 +41,7 @@ public class GameMessageEvent extends Event implements Cancellable {
         return HANDLERS;
     }
 
-    private ICPlayer sender;
+    private final ICPlayer sender;
     private Component component;
     private boolean cancel;
 

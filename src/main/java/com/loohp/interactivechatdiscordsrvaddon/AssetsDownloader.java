@@ -61,7 +61,7 @@ public class AssetsDownloader {
         if (!Arrays.asList(senders).contains(Bukkit.getConsoleSender())) {
             List<CommandSender> senderList = new ArrayList<>(Arrays.asList(senders));
             senderList.add(Bukkit.getConsoleSender());
-            senders = senderList.toArray(new CommandSender[senderList.size()]);
+            senders = senderList.toArray(new CommandSender[0]);
         }
         if (!LOCK.tryLock(0, TimeUnit.MILLISECONDS)) {
             return;
@@ -283,7 +283,7 @@ public class AssetsDownloader {
 
             try (PrintWriter pw = new PrintWriter(new OutputStreamWriter(Files.newOutputStream(hashes.toPath()), StandardCharsets.UTF_8))) {
                 Gson g = new GsonBuilder().setPrettyPrinting().create();
-                pw.println(g.toJson(new JsonParser().parse(json.toString())));
+                pw.println(g.toJson(JsonParser.parseString(json.toString())));
                 pw.flush();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -307,11 +307,11 @@ public class AssetsDownloader {
 
     public static class ServerResourcePackDownloadResult {
 
-        private ServerResourcePackDownloadResultType type;
-        private File resourcePackFile;
-        private String packHash;
-        private String expectedHash;
-        private Throwable error;
+        private final ServerResourcePackDownloadResultType type;
+        private final File resourcePackFile;
+        private final String packHash;
+        private final String expectedHash;
+        private final Throwable error;
 
         public ServerResourcePackDownloadResult(ServerResourcePackDownloadResultType type, File resourcePackFile, String packHash, String expectedHash, Throwable error) {
             this.type = type;
@@ -364,7 +364,7 @@ public class AssetsDownloader {
     }
 
     public enum ServerResourcePackDownloadResultType {
-        NO_PACK, SUCCESS_NO_CHANGES, SUCCESS_NO_HASH, SUCCESS_WITH_HASH, FAILURE_DOWNLOAD, FAILURE_WRONG_HASH;
+        NO_PACK, SUCCESS_NO_CHANGES, SUCCESS_NO_HASH, SUCCESS_WITH_HASH, FAILURE_DOWNLOAD, FAILURE_WRONG_HASH
     }
 
 }

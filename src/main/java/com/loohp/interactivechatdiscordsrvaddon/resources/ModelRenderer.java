@@ -112,12 +112,12 @@ public class ModelRenderer implements AutoCloseable {
         Arrays.fill(OVERLAY_ADDITION_FACTORS, ResourceRegistry.ENCHANTMENT_GLINT_FACTOR);
     }
 
-    private Function<String, ThreadFactory> threadFactoryBuilder;
-    private LongSupplier cacheTimeoutSupplier;
-    private IntSupplier renderThreads;
-    private ThreadPoolExecutor renderingService;
-    private ScheduledExecutorService controlService;
-    private AtomicBoolean isValid;
+    private final Function<String, ThreadFactory> threadFactoryBuilder;
+    private final LongSupplier cacheTimeoutSupplier;
+    private final IntSupplier renderThreads;
+    private final ThreadPoolExecutor renderingService;
+    private final ScheduledExecutorService controlService;
+    private final AtomicBoolean isValid;
 
     public ModelRenderer(Function<String, ThreadFactory> threadFactoryBuilder, LongSupplier cacheTimeoutSupplier, IntSupplier renderThreads) {
         this.isValid = new AtomicBoolean(true);
@@ -756,11 +756,11 @@ public class ModelRenderer implements AutoCloseable {
         RIGHT_HAND(new Coordinates3D(7.3, -2.5, 4.05), 0.9, false, true, ModelDisplayPosition.THIRDPERSON_RIGHTHAND),
         LEFT_HAND(new Coordinates3D(-5.6, -2.5, 4.05), 0.9, true, true, ModelDisplayPosition.THIRDPERSON_LEFTHAND);
 
-        private Coordinates3D defaultTranslate;
-        private double scale;
-        private boolean literalFlipped;
-        private boolean yIsZAxis;
-        private ModelDisplayPosition modelDisplayPosition;
+        private final Coordinates3D defaultTranslate;
+        private final double scale;
+        private final boolean literalFlipped;
+        private final boolean yIsZAxis;
+        private final ModelDisplayPosition modelDisplayPosition;
 
         PlayerModelItemPosition(Coordinates3D defaultTranslate, double scale, boolean literalFlipped, boolean yIsZAxis, ModelDisplayPosition modelDisplayPosition) {
             this.defaultTranslate = defaultTranslate;
@@ -794,15 +794,15 @@ public class ModelRenderer implements AutoCloseable {
 
     public static class PlayerModelItem {
 
-        private PlayerModelItemPosition position;
-        private String modelKey;
-        private Function<BlockModel, ValuePairs<BlockModel, Map<String, TextureResource>>> postResolveFunction;
-        private Map<ModelOverrideType, Float> predicate;
-        private boolean enchanted;
-        private Map<String, TextureResource> providedTextures;
-        private TintIndexData tintIndexData;
-        private UnaryOperator<BufferedImage> enchantmentGlintProvider;
-        private Function<BufferedImage, RawEnchantmentGlintData> rawEnchantmentGlintProvider;
+        private final PlayerModelItemPosition position;
+        private final String modelKey;
+        private final Function<BlockModel, ValuePairs<BlockModel, Map<String, TextureResource>>> postResolveFunction;
+        private final Map<ModelOverrideType, Float> predicate;
+        private final boolean enchanted;
+        private final Map<String, TextureResource> providedTextures;
+        private final TintIndexData tintIndexData;
+        private final UnaryOperator<BufferedImage> enchantmentGlintProvider;
+        private final Function<BufferedImage, RawEnchantmentGlintData> rawEnchantmentGlintProvider;
 
         public PlayerModelItem(PlayerModelItemPosition position, String modelKey, Function<BlockModel, ValuePairs<BlockModel, Map<String, TextureResource>>> postResolveFunction, Map<ModelOverrideType, Float> predicate, boolean enchanted, Map<String, TextureResource> providedTextures, TintIndexData tintIndexData, UnaryOperator<BufferedImage> enchantmentGlintProvider, Function<BufferedImage, RawEnchantmentGlintData> rawEnchantmentGlintProvider) {
             this.position = position;
@@ -860,8 +860,8 @@ public class ModelRenderer implements AutoCloseable {
 
     public static class RawEnchantmentGlintData {
 
-        private List<BufferedImage> overlay;
-        private List<OpenGLBlending> blending;
+        private final List<BufferedImage> overlay;
+        private final List<OpenGLBlending> blending;
 
         public RawEnchantmentGlintData(List<BufferedImage> overlay, List<OpenGLBlending> blending) {
             this.overlay = overlay;
@@ -880,8 +880,8 @@ public class ModelRenderer implements AutoCloseable {
 
     public static class RenderResult {
 
-        private BufferedImage image;
-        private String rejectedReason;
+        private final BufferedImage image;
+        private final String rejectedReason;
 
         public RenderResult(BufferedImage image) {
             this.image = image;

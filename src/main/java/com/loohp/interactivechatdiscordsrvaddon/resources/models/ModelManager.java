@@ -71,7 +71,7 @@ public class ModelManager extends AbstractManager implements IModelManager {
         }
     }
 
-    private Map<String, BlockModel> models;
+    private final Map<String, BlockModel> models;
     private TriFunction<IModelManager, String, JSONObject, ? extends BlockModel> modelParsingFunction;
 
     public ModelManager(ResourceManager manager) {

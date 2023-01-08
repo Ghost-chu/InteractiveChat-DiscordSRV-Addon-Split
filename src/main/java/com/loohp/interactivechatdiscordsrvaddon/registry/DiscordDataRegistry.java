@@ -32,8 +32,8 @@ import java.util.stream.Collectors;
 public class DiscordDataRegistry {
 
     public static final Color DISCORD_HOVER_COLOR = ColorUtils.hex2Rgb("#1F083A");
-    private static Set<String> markdownChars;
-    private static String markdownPattern;
+    private static final Set<String> markdownChars;
+    private static final String markdownPattern;
 
     static {
         markdownChars = new HashSet<>();
@@ -56,7 +56,7 @@ public class DiscordDataRegistry {
         markdownChars.add("~");
         markdownChars.add(":");
 
-        markdownPattern = "([" + CustomStringUtils.escapeMetaCharacters(markdownChars.stream().collect(Collectors.joining())) + "])";
+        markdownPattern = "([" + CustomStringUtils.escapeMetaCharacters(String.join("", markdownChars)) + "])";
     }
 
     public static Set<String> getMarkdownSpecialChars() {

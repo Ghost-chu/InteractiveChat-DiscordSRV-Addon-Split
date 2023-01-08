@@ -46,10 +46,10 @@ public class DiscordImageEvent extends Event implements Cancellable {
         return HANDLERS;
     }
 
-    private TextChannel channel;
+    private final TextChannel channel;
     private String originalMessage;
     private String newMessage;
-    private List<DiscordMessageContent> discordMessageContents;
+    private final List<DiscordMessageContent> discordMessageContents;
     private boolean cancel;
 
     public DiscordImageEvent(TextChannel channel, String originalMessage, String newMessage,

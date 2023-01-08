@@ -50,11 +50,11 @@ public class TrueTypeFont extends MinecraftFont {
 
     private static final BufferedImage INTERNAL_IMAGE = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
 
-    private String resourceLocation;
-    private AffineTransform shift;
-    private float size;
-    private float oversample;
-    private String exclude;
+    private final String resourceLocation;
+    private final AffineTransform shift;
+    private final float size;
+    private final float oversample;
+    private final String exclude;
 
     private IntSet displayableCharacters;
     private Graphics2D internalGraphics;

@@ -28,25 +28,13 @@ import com.loohp.interactivechat.objectholders.ICPlayer;
 import com.loohp.interactivechat.objectholders.ICPlayerFactory;
 import com.loohp.interactivechat.objectholders.OfflineICPlayer;
 import com.loohp.interactivechat.objectholders.ValuePairs;
-import com.loohp.interactivechat.utils.BookUtils;
-import com.loohp.interactivechat.utils.FilledMapUtils;
-import com.loohp.interactivechat.utils.InteractiveChatComponentSerializer;
-import com.loohp.interactivechat.utils.InventoryUtils;
-import com.loohp.interactivechat.utils.ItemStackUtils;
-import com.loohp.interactivechat.utils.LanguageUtils;
-import com.loohp.interactivechat.utils.PlaceholderParser;
+import com.loohp.interactivechat.utils.*;
 import com.loohp.interactivechatdiscordsrvaddon.InteractiveChatDiscordSrvAddon;
 import com.loohp.interactivechatdiscordsrvaddon.debug.Debug;
 import com.loohp.interactivechatdiscordsrvaddon.graphics.ImageGeneration;
 import com.loohp.interactivechatdiscordsrvaddon.graphics.ImageUtils;
 import com.loohp.interactivechatdiscordsrvaddon.listeners.DiscordInteractionEvents;
-import com.loohp.interactivechatdiscordsrvaddon.objectholders.DiscordDisplayData;
-import com.loohp.interactivechatdiscordsrvaddon.objectholders.DiscordMessageContent;
-import com.loohp.interactivechatdiscordsrvaddon.objectholders.HoverClickDisplayData;
-import com.loohp.interactivechatdiscordsrvaddon.objectholders.ImageDisplayData;
-import com.loohp.interactivechatdiscordsrvaddon.objectholders.ImageDisplayType;
-import com.loohp.interactivechatdiscordsrvaddon.objectholders.InteractionHandler;
-import com.loohp.interactivechatdiscordsrvaddon.objectholders.ToolTipComponent;
+import com.loohp.interactivechatdiscordsrvaddon.objectholders.*;
 import com.loohp.interactivechatdiscordsrvaddon.registry.ResourceRegistry;
 import com.loohp.interactivechatdiscordsrvaddon.resources.CustomItemTextureRegistry;
 import com.loohp.interactivechatdiscordsrvaddon.resources.models.ModelDisplay.ModelDisplayPosition;
@@ -75,16 +63,11 @@ import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.map.MapView;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
@@ -451,10 +434,10 @@ public class DiscordContentUtils {
                 }
                 Button leftButton = Button.danger(DiscordInteractionEvents.INTERACTION_ID_PREFIX + "left_book_" + interactionUuid, LEFT_EMOJI).asDisabled();
                 Button rightButton = Button.success(DiscordInteractionEvents.INTERACTION_ID_PREFIX + "right_book_" + interactionUuid, RIGHT_EMOJI);
-                if (cachedImages.length <= 1) {
+                if (cachedImages.length == 1) {
                     rightButton = rightButton.asDisabled();
                 }
-                SelectionMenu selectionMenu = SelectionMenu.create(DiscordInteractionEvents.INTERACTION_ID_PREFIX + "selection_book_" + interactionUuid).setRequiredRange(1, 1).addOptions(selectOptions).setDefaultValues(Arrays.asList("1")).build();
+                SelectionMenu selectionMenu = SelectionMenu.create(DiscordInteractionEvents.INTERACTION_ID_PREFIX + "selection_book_" + interactionUuid).setRequiredRange(1, 1).addOptions(selectOptions).setDefaultValues(Collections.singletonList("1")).build();
                 action.addActionRows(ActionRow.of(leftButton, rightButton), ActionRow.of(selectionMenu)).queue(h -> h.retrieveOriginal().queue(m -> DiscordInteractionEvents.getInteractionData(id).getMessageIds().add(m.getTextChannel().getId() + "/" + m.getId())));
                 return;
             }
@@ -486,7 +469,7 @@ public class DiscordContentUtils {
                         if (currentPage.get() >= cachedImages.length - 1) {
                             rightButton = rightButton.asDisabled();
                         }
-                        SelectionMenu selectionMenu = SelectionMenu.create(DiscordInteractionEvents.INTERACTION_ID_PREFIX + "selection_book_" + interactionUuid).setRequiredRange(1, 1).addOptions(selectOptions).setDefaultValues(Arrays.asList(String.valueOf(currentPage.get() + 1))).build();
+                        SelectionMenu selectionMenu = SelectionMenu.create(DiscordInteractionEvents.INTERACTION_ID_PREFIX + "selection_book_" + interactionUuid).setRequiredRange(1, 1).addOptions(selectOptions).setDefaultValues(Collections.singletonList(String.valueOf(currentPage.get() + 1))).build();
                         action.setActionRows(ActionRow.of(leftButton, rightButton), ActionRow.of(selectionMenu)).queue();
                     } else if (id.equals(DiscordInteractionEvents.INTERACTION_ID_PREFIX + "left_book_" + interactionUuid)) {
                         if (currentPage.get() > 0) {
@@ -509,7 +492,7 @@ public class DiscordContentUtils {
                             if (currentPage.get() >= cachedImages.length - 1) {
                                 rightButton = rightButton.asDisabled();
                             }
-                            SelectionMenu selectionMenu = SelectionMenu.create(DiscordInteractionEvents.INTERACTION_ID_PREFIX + "selection_book_" + interactionUuid).setRequiredRange(1, 1).addOptions(selectOptions).setDefaultValues(Arrays.asList(String.valueOf(currentPage.get() + 1))).build();
+                            SelectionMenu selectionMenu = SelectionMenu.create(DiscordInteractionEvents.INTERACTION_ID_PREFIX + "selection_book_" + interactionUuid).setRequiredRange(1, 1).addOptions(selectOptions).setDefaultValues(Collections.singletonList(String.valueOf(currentPage.get() + 1))).build();
                             action.setActionRows(ActionRow.of(leftButton, rightButton), ActionRow.of(selectionMenu)).queue();
                         }
                     } else if (id.equals(DiscordInteractionEvents.INTERACTION_ID_PREFIX + "right_book_" + interactionUuid)) {
@@ -533,7 +516,7 @@ public class DiscordContentUtils {
                             if (currentPage.get() >= cachedImages.length - 1) {
                                 rightButton = rightButton.asDisabled();
                             }
-                            SelectionMenu selectionMenu = SelectionMenu.create(DiscordInteractionEvents.INTERACTION_ID_PREFIX + "selection_book_" + interactionUuid).setRequiredRange(1, 1).addOptions(selectOptions).setDefaultValues(Arrays.asList(String.valueOf(currentPage.get() + 1))).build();
+                            SelectionMenu selectionMenu = SelectionMenu.create(DiscordInteractionEvents.INTERACTION_ID_PREFIX + "selection_book_" + interactionUuid).setRequiredRange(1, 1).addOptions(selectOptions).setDefaultValues(Collections.singletonList(String.valueOf(currentPage.get() + 1))).build();
                             action.setActionRows(ActionRow.of(leftButton, rightButton), ActionRow.of(selectionMenu)).queue();
                         }
                     }

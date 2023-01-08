@@ -109,10 +109,10 @@ public class DiscordInteractionEvents extends ListenerAdapter {
 
     public static class InteractionData {
 
-        private InteractionHandler interactionHandler;
-        private List<DiscordMessageContent> contents;
-        private List<String> interactionIds;
-        private List<String> messageIds;
+        private final InteractionHandler interactionHandler;
+        private final List<DiscordMessageContent> contents;
+        private final List<String> interactionIds;
+        private final List<String> messageIds;
 
         public InteractionData(InteractionHandler interactionHandler, List<DiscordMessageContent> contents, List<String> interactionIds, List<String> messageIds) {
             this.interactionHandler = interactionHandler;

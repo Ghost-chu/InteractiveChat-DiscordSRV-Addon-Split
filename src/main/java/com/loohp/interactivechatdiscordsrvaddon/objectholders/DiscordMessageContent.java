@@ -31,15 +31,8 @@ import github.scarsz.discordsrv.dependencies.jda.api.requests.restaction.Message
 import github.scarsz.discordsrv.objects.MessageFormat;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 
 public class DiscordMessageContent {
 
@@ -49,7 +42,7 @@ public class DiscordMessageContent {
     private List<String> description;
     private List<String> imageUrl;
     private String thumbnail;
-    private List<Field> fields;
+    private final List<Field> fields;
     private int color;
     private String footer;
     private String footerImageUrl;
@@ -68,11 +61,11 @@ public class DiscordMessageContent {
     }
 
     public DiscordMessageContent(String authorName, String authorIconUrl, String description, String imageUrl, Color color) {
-        this(authorName, authorIconUrl, new ArrayList<>(Arrays.asList(description)), new ArrayList<>(Arrays.asList(imageUrl)), color.getRGB(), new HashMap<>());
+        this(authorName, authorIconUrl, new ArrayList<>(Collections.singletonList(description)), new ArrayList<>(Collections.singletonList(imageUrl)), color.getRGB(), new HashMap<>());
     }
 
     public DiscordMessageContent(String authorName, String authorIconUrl, String description, String imageUrl, int color) {
-        this(authorName, authorIconUrl, new ArrayList<>(Arrays.asList(description)), new ArrayList<>(Arrays.asList(imageUrl)), color, new HashMap<>());
+        this(authorName, authorIconUrl, new ArrayList<>(Collections.singletonList(description)), new ArrayList<>(Collections.singletonList(imageUrl)), color, new HashMap<>());
     }
 
     public DiscordMessageContent(String authorName, String authorIconUrl, Color color) {

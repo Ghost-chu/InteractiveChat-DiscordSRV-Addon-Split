@@ -557,7 +557,7 @@ public class ImageUtils {
                 if (Character.isHighSurrogate(c)) {
                     continue;
                 } else if (Character.isLowSurrogate(c) && i + 1 < data.size()) {
-                    character = String.valueOf(data.get(++i).firstChar()) + character;
+                    character = data.get(++i).firstChar() + character;
                 }
             } else {
                 character += String.valueOf(c);
@@ -683,7 +683,7 @@ public class ImageUtils {
                 if (Character.isHighSurrogate(c)) {
                     continue;
                 } else if (Character.isLowSurrogate(c) && i + 1 < data.size()) {
-                    character = String.valueOf(data.get(++i).firstChar()) + character;
+                    character = data.get(++i).firstChar() + character;
                 }
             } else {
                 character += String.valueOf(c);

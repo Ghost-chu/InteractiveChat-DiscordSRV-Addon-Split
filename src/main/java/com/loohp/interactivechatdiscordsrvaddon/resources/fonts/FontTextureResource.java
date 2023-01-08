@@ -39,13 +39,13 @@ public class FontTextureResource {
         CACHE_TIME = cacheTime;
     }
 
-    private TextureResource resource;
-    private char resourceWidth;
-    private char resourceHeight;
-    private char x;
-    private char y;
-    private char width;
-    private char height;
+    private final TextureResource resource;
+    private final char resourceWidth;
+    private final char resourceHeight;
+    private final char x;
+    private final char y;
+    private final char width;
+    private final char height;
 
     public FontTextureResource(TextureResource resource, char resourceWidth, char resourceHeight, char x, char y, char width, char height) {
         this.resource = resource;

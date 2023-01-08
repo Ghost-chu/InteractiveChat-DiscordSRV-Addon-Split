@@ -476,8 +476,8 @@ public class DiscordCommands implements Listener, SlashCommandProvider {
         return players;
     }
 
-    private DiscordSRV discordsrv;
-    private Map<String, Component> components;
+    private final DiscordSRV discordsrv;
+    private final Map<String, Component> components;
 
     public DiscordCommands(DiscordSRV discordsrv) {
         this.discordsrv = discordsrv;
@@ -707,7 +707,6 @@ public class DiscordCommands implements Listener, SlashCommandProvider {
                 } catch (Throwable e) {
                     e.printStackTrace();
                     event.getHook().editOriginal(ChatColorUtils.stripColor(InteractiveChatDiscordSrvAddon.plugin.unableToRetrieveData) + " (" + errorCode + ")").queue();
-                    return;
                 }
             }
         } else if (InteractiveChatDiscordSrvAddon.plugin.playerlistCommandEnabled && label.equalsIgnoreCase(PLAYERLIST_LABEL)) {
@@ -812,7 +811,6 @@ public class DiscordCommands implements Listener, SlashCommandProvider {
                                 message.delete().queueAfter(InteractiveChatDiscordSrvAddon.plugin.playerlistCommandDeleteAfter, TimeUnit.SECONDS);
                             }
                         });
-                        return;
                     }
                 }
             }
@@ -952,7 +950,6 @@ public class DiscordCommands implements Listener, SlashCommandProvider {
                         message.delete().queueAfter(InteractiveChatDiscordSrvAddon.plugin.embedDeleteAfter, TimeUnit.SECONDS);
                     }
                 });
-                return;
             }
         } else if (InteractiveChatDiscordSrvAddon.plugin.shareInvCommandEnabled && (label.equalsIgnoreCase(INVENTORY_LABEL) || label.equalsIgnoreCase(INVENTORY_OTHER_LABEL))) {
             String minecraftChannel = discordsrv.getChannels().entrySet().stream().filter(entry -> channel.getId().equals(entry.getValue())).map(Map.Entry::getKey).findFirst().orElse(null);
@@ -1055,7 +1052,6 @@ public class DiscordCommands implements Listener, SlashCommandProvider {
                         message.delete().queueAfter(InteractiveChatDiscordSrvAddon.plugin.embedDeleteAfter, TimeUnit.SECONDS);
                     }
                 });
-                return;
             }
         } else if (InteractiveChatDiscordSrvAddon.plugin.shareEnderCommandEnabled && (label.equals(ENDERCHEST_LABEL) || label.equals(ENDERCHEST_OTHER_LABEL))) {
             String minecraftChannel = discordsrv.getChannels().entrySet().stream().filter(entry -> channel.getId().equals(entry.getValue())).map(Map.Entry::getKey).findFirst().orElse(null);
@@ -1156,7 +1152,6 @@ public class DiscordCommands implements Listener, SlashCommandProvider {
                         message.delete().queueAfter(InteractiveChatDiscordSrvAddon.plugin.embedDeleteAfter, TimeUnit.SECONDS);
                     }
                 });
-                return;
             }
         }
     }

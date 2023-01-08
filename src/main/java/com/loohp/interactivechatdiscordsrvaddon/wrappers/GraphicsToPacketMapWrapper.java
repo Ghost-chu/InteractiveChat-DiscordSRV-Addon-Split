@@ -81,8 +81,8 @@ public class GraphicsToPacketMapWrapper {
     private List<byte[]> colors;
     private ItemStack mapItem;
     private int totalTime;
-    private boolean playbackBar;
-    private Color backgroundColor;
+    private final boolean playbackBar;
+    private final Color backgroundColor;
 
     public GraphicsToPacketMapWrapper(List<ImageFrame> frames, boolean playbackBar, Color backgroundColor) {
         this.done = true;

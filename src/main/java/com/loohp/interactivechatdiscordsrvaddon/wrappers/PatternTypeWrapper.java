@@ -81,7 +81,7 @@ public enum PatternTypeWrapper {
         return MAPPING.get(type);
     }
 
-    private String assetName;
+    private final String assetName;
 
     PatternTypeWrapper(String assetName, String s1, boolean flag) {
         this.assetName = assetName;

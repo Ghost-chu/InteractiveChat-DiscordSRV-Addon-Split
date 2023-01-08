@@ -58,23 +58,23 @@ import java.util.regex.Pattern;
 
 public class ResourceManager implements AutoCloseable {
 
-    private List<ResourcePackInfo> resourcePackInfo;
+    private final List<ResourcePackInfo> resourcePackInfo;
 
-    private Map<String, IResourceRegistry> resourceRegistries;
+    private final Map<String, IResourceRegistry> resourceRegistries;
 
-    private ModelManager modelManager;
-    private TextureManager textureManager;
-    private FontManager fontManager;
-    private LanguageManager languageManager;
+    private final ModelManager modelManager;
+    private final TextureManager textureManager;
+    private final FontManager fontManager;
+    private final LanguageManager languageManager;
 
-    private Map<String, ModManager> modManagers;
+    private final Map<String, ModManager> modManagers;
 
-    private boolean flattenLegacy;
-    private boolean fontLegacy;
+    private final boolean flattenLegacy;
+    private final boolean fontLegacy;
 
-    private BiFunction<File, ResourcePackType, DefaultResourcePackInfo> defaultResourcePackInfoFunction;
-    private AtomicBoolean isValid;
-    private UUID uuid;
+    private final BiFunction<File, ResourcePackType, DefaultResourcePackInfo> defaultResourcePackInfoFunction;
+    private final AtomicBoolean isValid;
+    private final UUID uuid;
 
     public ResourceManager(boolean flattenLegacy, boolean fontLegacy, Collection<ModManagerSupplier<?>> modManagerProviders, Collection<ResourceRegistrySupplier<?>> resourceManagerUtilsProviders, BiFunction<File, ResourcePackType, DefaultResourcePackInfo> defaultResourcePackInfoFunction) {
         this.resourcePackInfo = new ArrayList<>();
@@ -479,9 +479,9 @@ public class ResourceManager implements AutoCloseable {
 
     public static class DefaultResourcePackInfo {
 
-        private Component name;
-        private int version;
-        private Component description;
+        private final Component name;
+        private final int version;
+        private final Component description;
 
         public DefaultResourcePackInfo(Component name, int version, Component description) {
             this.name = name;

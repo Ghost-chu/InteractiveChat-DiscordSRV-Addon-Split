@@ -68,7 +68,7 @@ public class TextureManager extends AbstractManager implements ITextureManager {
         return new GeneratedTextureResource(resourceManager, getMissingImage(16, 16));
     }
 
-    private Map<String, TextureResource> textures;
+    private final Map<String, TextureResource> textures;
 
     public TextureManager(ResourceManager manager) {
         super(manager);

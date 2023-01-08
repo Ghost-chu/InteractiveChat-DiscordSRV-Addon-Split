@@ -144,7 +144,7 @@ public class DiscordItemStackUtils {
                 String colorStr = ChatColorUtils.getFirstColors(meta.getDisplayName());
                 if (colorStr.length() > 1) {
                     ChatColor chatColor = ColorUtils.toChatColor(colorStr);
-                    if (chatColor != null && ChatColorUtils.isColor(chatColor)) {
+                    if (ChatColorUtils.isColor(chatColor)) {
                         return chatColorHasGetColor ? chatColor.getColor() : ColorUtils.getColor(chatColor);
                     }
                 }
@@ -741,8 +741,8 @@ public class DiscordItemStackUtils {
 
     public static class DiscordToolTip {
 
-        private List<ToolTipComponent<?>> components;
-        private boolean isBaseItem;
+        private final List<ToolTipComponent<?>> components;
+        private final boolean isBaseItem;
 
         public DiscordToolTip(List<ToolTipComponent<?>> components, boolean isBaseItem) {
             this.components = components;

@@ -22,8 +22,8 @@ package com.loohp.interactivechatdiscordsrvaddon.objectholders;
 
 public class AttachmentData {
 
-    private String name;
-    private byte[] data;
+    private final String name;
+    private final byte[] data;
 
     public AttachmentData(String name, byte[] data) {
         this.name = name;

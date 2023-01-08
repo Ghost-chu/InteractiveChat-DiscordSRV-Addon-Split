@@ -336,7 +336,7 @@ public class ComponentStringUtils {
     }
 
     public static Component join(Component parent, Component deliminator, List<? extends Component> components) {
-        if (components.size() <= 0) {
+        if (components.size() == 0) {
             return parent;
         }
         if (components.size() == 1) {
@@ -471,9 +471,9 @@ public class ComponentStringUtils {
 
     public static class CharacterLengthProviderData {
 
-        private String character;
-        private Key font;
-        private List<TextDecoration> decorations;
+        private final String character;
+        private final Key font;
+        private final List<TextDecoration> decorations;
 
         public CharacterLengthProviderData(String character, Key font, List<TextDecoration> decorations) {
             this.character = character;
