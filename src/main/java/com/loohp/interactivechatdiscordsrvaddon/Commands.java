@@ -33,8 +33,6 @@ import com.loohp.interactivechatdiscordsrvaddon.listeners.InboundToGameEvents;
 import com.loohp.interactivechatdiscordsrvaddon.listeners.InboundToGameEvents.DiscordAttachmentData;
 import com.loohp.interactivechatdiscordsrvaddon.registry.ResourceRegistry;
 import com.loohp.interactivechatdiscordsrvaddon.resources.ResourcePackInfo;
-import com.loohp.interactivechatdiscordsrvaddon.updater.Updater;
-import com.loohp.interactivechatdiscordsrvaddon.updater.Updater.UpdaterResponse;
 import com.loohp.interactivechatdiscordsrvaddon.utils.ResourcePackInfoUtils;
 import com.loohp.interactivechatdiscordsrvaddon.utils.TranslationKeyUtils;
 import com.loohp.interactivechatdiscordsrvaddon.wrappers.GraphicsToPacketMapWrapper;
@@ -139,28 +137,6 @@ public class Commands implements CommandExecutor, TabCompleter {
             if (sender.hasPermission("interactivechatdiscordsrv.reloadtexture")) {
                 sender.sendMessage(InteractiveChatDiscordSrvAddon.plugin.reloadTextureMessage);
                 InteractiveChatDiscordSrvAddon.plugin.reloadTextures(redownload, clean, sender);
-            } else {
-                sender.sendMessage(InteractiveChat.noPermissionMessage);
-            }
-            return true;
-        }
-
-        if (args[0].equalsIgnoreCase("update")) {
-            if (sender.hasPermission("interactivechatdiscordsrv.update")) {
-                sender.sendMessage(ChatColor.AQUA + "[ICDiscordSrvAddon] InteractiveChat DiscordSRV Addon written by LOOHP!");
-                sender.sendMessage(ChatColor.GOLD + "[ICDiscordSrvAddon] You are running ICDiscordSRVAddon version: " + InteractiveChatDiscordSrvAddon.plugin.getDescription().getVersion());
-                Bukkit.getScheduler().runTaskAsynchronously(InteractiveChatDiscordSrvAddon.plugin, () -> {
-                    UpdaterResponse version = Updater.checkUpdate();
-                    if (version.getResult().equals("latest")) {
-                        if (version.isDevBuildLatest()) {
-                            sender.sendMessage(ChatColor.GREEN + "[ICDiscordSrvAddon] You are running the latest version!");
-                        } else {
-                            Updater.sendUpdateMessage(sender, version.getResult(), version.getSpigotPluginId(), true);
-                        }
-                    } else {
-                        Updater.sendUpdateMessage(sender, version.getResult(), version.getSpigotPluginId());
-                    }
-                });
             } else {
                 sender.sendMessage(InteractiveChat.noPermissionMessage);
             }

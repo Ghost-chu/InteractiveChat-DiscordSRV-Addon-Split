@@ -31,45 +31,25 @@ import com.loohp.interactivechat.objectholders.ICPlayer;
 import com.loohp.interactivechat.objectholders.ICPlayerFactory;
 import com.loohp.interactivechat.objectholders.PlaceholderCooldownManager;
 import com.loohp.interactivechat.registry.Registry;
-import com.loohp.interactivechat.utils.ChatColorUtils;
-import com.loohp.interactivechat.utils.ColorUtils;
-import com.loohp.interactivechat.utils.LanguageUtils;
-import com.loohp.interactivechat.utils.MCVersion;
-import com.loohp.interactivechat.utils.SkinUtils;
+import com.loohp.interactivechat.utils.*;
 import com.loohp.interactivechatdiscordsrvaddon.AssetsDownloader.ServerResourcePackDownloadResult;
 import com.loohp.interactivechatdiscordsrvaddon.api.events.ResourceManagerInitializeEvent;
 import com.loohp.interactivechatdiscordsrvaddon.debug.Debug;
 import com.loohp.interactivechatdiscordsrvaddon.graphics.ImageGeneration;
 import com.loohp.interactivechatdiscordsrvaddon.graphics.ImageUtils;
-import com.loohp.interactivechatdiscordsrvaddon.listeners.DiscordCommandEvents;
-import com.loohp.interactivechatdiscordsrvaddon.listeners.DiscordInteractionEvents;
-import com.loohp.interactivechatdiscordsrvaddon.listeners.DiscordReadyEvents;
-import com.loohp.interactivechatdiscordsrvaddon.listeners.ICPlayerEvents;
-import com.loohp.interactivechatdiscordsrvaddon.listeners.InboundToGameEvents;
-import com.loohp.interactivechatdiscordsrvaddon.listeners.LegacyDiscordCommandEvents;
-import com.loohp.interactivechatdiscordsrvaddon.listeners.OutboundToDiscordEvents;
-import com.loohp.interactivechatdiscordsrvaddon.metrics.Charts;
-import com.loohp.interactivechatdiscordsrvaddon.metrics.Metrics;
+import com.loohp.interactivechatdiscordsrvaddon.listeners.*;
 import com.loohp.interactivechatdiscordsrvaddon.registry.InteractiveChatRegistry;
 import com.loohp.interactivechatdiscordsrvaddon.registry.ResourceRegistry;
-import com.loohp.interactivechatdiscordsrvaddon.resources.CustomItemTextureRegistry;
-import com.loohp.interactivechatdiscordsrvaddon.resources.ICacheManager;
-import com.loohp.interactivechatdiscordsrvaddon.resources.ModelRenderer;
-import com.loohp.interactivechatdiscordsrvaddon.resources.ResourceLoadingException;
-import com.loohp.interactivechatdiscordsrvaddon.resources.ResourceManager;
+import com.loohp.interactivechatdiscordsrvaddon.resources.*;
 import com.loohp.interactivechatdiscordsrvaddon.resources.ResourceManager.ModManagerSupplier;
-import com.loohp.interactivechatdiscordsrvaddon.resources.ResourcePackInfo;
-import com.loohp.interactivechatdiscordsrvaddon.resources.ResourcePackType;
 import com.loohp.interactivechatdiscordsrvaddon.resources.fonts.FontManager;
 import com.loohp.interactivechatdiscordsrvaddon.resources.fonts.FontTextureResource;
 import com.loohp.interactivechatdiscordsrvaddon.resources.mods.ModManager;
 import com.loohp.interactivechatdiscordsrvaddon.resources.mods.chime.ChimeManager;
 import com.loohp.interactivechatdiscordsrvaddon.resources.mods.optifine.OptifineManager;
-import com.loohp.interactivechatdiscordsrvaddon.updater.Updater;
 import com.loohp.interactivechatdiscordsrvaddon.utils.ResourcePackUtils;
 import com.loohp.interactivechatdiscordsrvaddon.utils.TranslationKeyUtils;
 import github.scarsz.discordsrv.DiscordSRV;
-import github.scarsz.discordsrv.api.ListenerPriority;
 import github.scarsz.discordsrv.dependencies.jda.api.Permission;
 import github.scarsz.discordsrv.dependencies.jda.api.requests.GatewayIntent;
 import net.md_5.bungee.api.ChatColor;
@@ -80,36 +60,21 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.*;
 import java.util.Queue;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.TimeUnit;
+import java.util.Map.Entry;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class InteractiveChatDiscordSrvAddon extends JavaPlugin implements Listener {
-
-    public static final int BSTATS_PLUGIN_ID = 8863;
     public static final String CONFIG_ID = "interactivechatdiscordsrvaddon_config";
 
     public static final List<Permission> requiredPermissions = Collections.unmodifiableList(Arrays.asList(
@@ -130,7 +95,6 @@ public class InteractiveChatDiscordSrvAddon extends JavaPlugin implements Listen
     public static boolean debug = false;
 
     protected final ReentrantLock resourceReloadLock = new ReentrantLock(true);
-    public Metrics metrics;
     public AtomicLong messagesCounter = new AtomicLong(0);
     public AtomicLong imageCounter = new AtomicLong(0);
     public AtomicLong inventoryImageCounter = new AtomicLong(0);
@@ -309,9 +273,6 @@ public class InteractiveChatDiscordSrvAddon extends JavaPlugin implements Listen
         }
         reloadConfig();
 
-        metrics = new Metrics(this, BSTATS_PLUGIN_ID);
-        Charts.setup(metrics);
-
         DiscordSRV.api.subscribe(new DiscordReadyEvents());
         DiscordSRV.api.subscribe(new LegacyDiscordCommandEvents());
         DiscordSRV.api.subscribe(new OutboundToDiscordEvents());
@@ -322,7 +283,6 @@ public class InteractiveChatDiscordSrvAddon extends JavaPlugin implements Listen
         getServer().getPluginManager().registerEvents(new OutboundToDiscordEvents(), this);
         getServer().getPluginManager().registerEvents(new ICPlayerEvents(), this);
         getServer().getPluginManager().registerEvents(new Debug(), this);
-        getServer().getPluginManager().registerEvents(new Updater(), this);
         getCommand("interactivechatdiscordsrv").setExecutor(new Commands());
 
         File resourcepacks = new File(getDataFolder(), "resourcepacks");
