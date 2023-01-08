@@ -48,7 +48,7 @@ public class ICPlayerEvents implements Listener {
     private static final ConcurrentCacheHashMap<UUID, Map<String, Object>> CACHED_PROPERTIES = new ConcurrentCacheHashMap<>(300000);
 
     static {
-        Bukkit.getScheduler().runTaskTimerAsynchronously(InteractiveChat.plugin, () -> CACHED_PROPERTIES.cleanUp(), 12000, 12000);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(InteractiveChat.plugin, CACHED_PROPERTIES::cleanUp, 12000, 12000);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)

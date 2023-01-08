@@ -80,7 +80,7 @@ public class CustomItemTextureRegistry implements IResourceRegistry {
     }
 
     public Optional<TextureResource> getElytraOverrideTextures(EquipmentSlot heldSlot, ItemStack itemStack, UnaryOperator<String> translateFunction) {
-        return resolvers.stream().map(each -> each.getElytraOverrideTextures(heldSlot, itemStack, translateFunction)).filter(each -> each.isPresent()).findFirst().flatMap(each -> each);
+        return resolvers.stream().map(each -> each.getElytraOverrideTextures(heldSlot, itemStack, translateFunction)).filter(Optional::isPresent).findFirst().flatMap(each -> each);
     }
 
     public List<ValuePairs<TextureResource, OpenGLBlending>> getEnchantmentGlintOverrideTextures(EquipmentSlot heldSlot, ItemStack itemStack, Supplier<List<ValuePairs<TextureResource, OpenGLBlending>>> ifEmpty, UnaryOperator<String> translateFunction) {
@@ -88,7 +88,7 @@ public class CustomItemTextureRegistry implements IResourceRegistry {
     }
 
     public Optional<TextureResource> getArmorOverrideTextures(String layer, EquipmentSlot heldSlot, ItemStack itemStack, OfflineICPlayer player, World world, LivingEntity entity, UnaryOperator<String> translateFunction) {
-        return resolvers.stream().map(each -> each.getArmorOverrideTextures(layer, heldSlot, itemStack, player, world, entity, translateFunction)).filter(each -> each.isPresent()).findFirst().flatMap(each -> each);
+        return resolvers.stream().map(each -> each.getArmorOverrideTextures(layer, heldSlot, itemStack, player, world, entity, translateFunction)).filter(Optional::isPresent).findFirst().flatMap(each -> each);
     }
 
     public interface CustomItemTextureResolver {

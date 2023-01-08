@@ -44,7 +44,7 @@ public class I18nUtils {
     }
 
     public static List<CharObjectPair<CharacterData>> bidirectionalReorder(Component component, boolean rightToLeft) {
-        ValuePairs<String, List<CharObjectPair<CharacterData>>> pair = CharacterData.fromComponent(component, str -> shaping(str));
+        ValuePairs<String, List<CharObjectPair<CharacterData>>> pair = CharacterData.fromComponent(component, I18nUtils::shaping);
         List<CharObjectPair<CharacterData>> data = pair.getSecond();
         Bidi bidi = new Bidi(pair.getFirst(), rightToLeft ? 127 : 126);
         bidi.setReorderingMode(0);

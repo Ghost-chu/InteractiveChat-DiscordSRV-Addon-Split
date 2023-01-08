@@ -86,11 +86,7 @@ public class TranslationKeyUtils {
                 getEffectKeyMethod = nmsMobEffectListClass.getMethod("a");
 
                 nmsItemRecordClass = NMSUtils.getNMSClass("net.minecraft.server.%s.ItemRecord", "net.minecraft.world.item.ItemRecord");
-                nmsItemRecordTranslationKeyField = NMSUtils.reflectiveLookup(Field.class, () -> {
-                    return nmsItemRecordClass.getDeclaredField("c");
-                }, () -> {
-                    return nmsItemRecordClass.getDeclaredField("a");
-                });
+                nmsItemRecordTranslationKeyField = NMSUtils.reflectiveLookup(Field.class, () -> nmsItemRecordClass.getDeclaredField("c"), () -> nmsItemRecordClass.getDeclaredField("a"));
 
                 nmsEntityTypesClass = NMSUtils.getNMSClass("net.minecraft.server.%s.EntityTypes");
                 getEntityKeyMethod = nmsEntityTypesClass.getMethod("b", int.class);
@@ -101,11 +97,7 @@ public class TranslationKeyUtils {
             try {
                 if (InteractiveChat.version.isOlderOrEqualTo(MCVersion.V1_17)) {
                     nmsMobEffectListClass = NMSUtils.getNMSClass("net.minecraft.server.%s.MobEffectList", "net.minecraft.world.effect.MobEffectList");
-                    getEffectFromIdMethod = NMSUtils.reflectiveLookup(Method.class, () -> {
-                        return nmsMobEffectListClass.getMethod("fromId", int.class);
-                    }, () -> {
-                        return nmsMobEffectListClass.getMethod("byId", int.class);
-                    });
+                    getEffectFromIdMethod = NMSUtils.reflectiveLookup(Method.class, () -> nmsMobEffectListClass.getMethod("fromId", int.class), () -> nmsMobEffectListClass.getMethod("byId", int.class));
                     if (InteractiveChat.version.isNewerOrEqualTo(MCVersion.V1_19)) {
                         getEffectKeyMethod = nmsMobEffectListClass.getMethod("d");
                     } else {
@@ -120,11 +112,7 @@ public class TranslationKeyUtils {
             craftItemStackClass = NMSUtils.getNMSClass("org.bukkit.craftbukkit.%s.inventory.CraftItemStack");
             nmsItemStackClass = NMSUtils.getNMSClass("net.minecraft.server.%s.ItemStack", "net.minecraft.world.item.ItemStack");
             asNMSCopyMethod = craftItemStackClass.getMethod("asNMSCopy", ItemStack.class);
-            nmsGetItemMethod = NMSUtils.reflectiveLookup(Method.class, () -> {
-                return nmsItemStackClass.getMethod("getItem");
-            }, () -> {
-                return nmsItemStackClass.getMethod("c");
-            });
+            nmsGetItemMethod = NMSUtils.reflectiveLookup(Method.class, () -> nmsItemStackClass.getMethod("getItem"), () -> nmsItemStackClass.getMethod("c"));
         } catch (SecurityException | ReflectiveOperationException e) {
             e.printStackTrace();
         }

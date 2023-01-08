@@ -48,10 +48,7 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.ToIntFunction;
 import java.util.function.UnaryOperator;
@@ -71,12 +68,12 @@ public class ComponentStringUtils {
         boolean nullCurrentLine = true;
         for (Component each : child) {
             Key font = each.font();
-            List<TextDecoration> decorations = each.decorations().entrySet().stream().filter(entry -> entry.getValue().equals(State.TRUE)).map(entry -> entry.getKey()).collect(Collectors.toList());
+            List<TextDecoration> decorations = each.decorations().entrySet().stream().filter(entry -> entry.getValue().equals(State.TRUE)).map(Map.Entry::getKey).collect(Collectors.toList());
             if (each instanceof TextComponent) {
                 TextComponent textComponent = (TextComponent) each;
                 String content = textComponent.content();
                 String[] parts = content.split("\\R", -1);
-                List<TextComponent> split = Arrays.stream(parts).map(p -> textComponent.content(p)).collect(Collectors.toList());
+                List<TextComponent> split = Arrays.stream(parts).map(textComponent::content).collect(Collectors.toList());
                 int j = 0;
                 for (TextComponent part : split) {
                     j++;

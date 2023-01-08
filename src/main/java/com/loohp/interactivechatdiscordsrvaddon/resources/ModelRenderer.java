@@ -132,7 +132,7 @@ public class ModelRenderer implements AutoCloseable {
         ThreadFactory factory2 = threadFactoryBuilder.apply("InteractiveChatDiscordSRVAddon Async Model Renderer Control Thread");
         this.controlService = Executors.newSingleThreadScheduledExecutor(factory2);
 
-        this.controlService.scheduleAtFixedRate(() -> reloadPoolSize(), 30, 30, TimeUnit.SECONDS);
+        this.controlService.scheduleAtFixedRate(this::reloadPoolSize, 30, 30, TimeUnit.SECONDS);
     }
 
     public ModelRenderer(LongSupplier cacheTimeoutSupplier, IntSupplier renderThreads) {
@@ -464,7 +464,7 @@ public class ModelRenderer implements AutoCloseable {
                             }
                         }
                         TextureUV uv = faceData.getUV();
-                        TextureResource resource = findKey(blockModel.getTextures(), faceData.getRawTexture()).stream().findFirst().map(each -> overrideTextures.get(each)).orElse(null);
+                        TextureResource resource = findKey(blockModel.getTextures(), faceData.getRawTexture()).stream().findFirst().map(overrideTextures::get).orElse(null);
                         String texture = faceData.getTexture();
                         if (resource == null) {
                             resource = providedTextures.get(texture);
@@ -594,7 +594,7 @@ public class ModelRenderer implements AutoCloseable {
                                     cachedEnchantmentGlint.put(key, overlayResult = rawEnchantmentGlintProvider.apply(image));
                                 }
                                 overlayImages[i] = overlayResult.getOverlay().toArray(EMPTY_IMAGE_ARRAY);
-                                overlayBlendMode[i] = overlayResult.getBlending().stream().map(each -> BlendingUtils.convert(each)).toArray(BlendingModes[]::new);
+                                overlayBlendMode[i] = overlayResult.getBlending().stream().map(BlendingUtils::convert).toArray(BlendingModes[]::new);
                             }
 
                             images[i] = image;
@@ -716,9 +716,7 @@ public class ModelRenderer implements AutoCloseable {
     private String cacheKeyMap(Map<?, ?> map) {
         Comparator<Entry<?, ?>> c = Comparator.comparing(entry -> entry.getKey() == null ? "null" : entry.getKey().toString());
         c = c.thenComparing(entry -> entry.getValue() == null ? "null" : entry.getValue().toString());
-        return map.entrySet().stream().sorted(c).map(entry -> {
-            return (entry.getKey() == null ? "null" : entry.getKey().toString()) + ":" + (entry.getValue() == null ? "null" : entry.getValue().toString());
-        }).collect(Collectors.joining(", ", "{", "}"));
+        return map.entrySet().stream().sorted(c).map(entry -> (entry.getKey() == null ? "null" : entry.getKey().toString()) + ":" + (entry.getValue() == null ? "null" : entry.getValue().toString())).collect(Collectors.joining(", ", "{", "}"));
     }
 
     private String cacheKeyProvidedTextures(Map<String, TextureResource> providedTextures) {

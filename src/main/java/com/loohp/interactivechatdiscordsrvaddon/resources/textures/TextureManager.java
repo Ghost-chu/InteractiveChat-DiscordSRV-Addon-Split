@@ -106,7 +106,7 @@ public class TextureManager extends AbstractManager implements ITextureManager {
                             fileName = fileName.substring(0, fileName.lastIndexOf("."));
                             key = ((TextureAtlases.TextureAtlasDirectorySource) atlasSource).getPrefix() + fileName;
                         } else if (sourceType.equals(TextureAtlases.TextureAtlasSourceType.UNSTITCH)) {
-                            imageTransformFunctions = ((TextureAtlases.TextureAtlasUnstitchSource) atlasSource).getRegions().stream().collect(Collectors.toMap(each -> each.getSpriteName(), each -> each.getImageTransformFunction(), (a, b) -> b));
+                            imageTransformFunctions = ((TextureAtlases.TextureAtlasUnstitchSource) atlasSource).getRegions().stream().collect(Collectors.toMap(TextureAtlases.TextureAtlasUnstitchSource.Region::getSpriteName, TextureAtlases.TextureAtlasUnstitchSource.Region::getImageTransformFunction, (a, b) -> b));
                         }
                     }
                     if (extension.equalsIgnoreCase("png")) {

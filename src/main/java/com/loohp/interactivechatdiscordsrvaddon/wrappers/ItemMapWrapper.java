@@ -39,9 +39,9 @@ public class ItemMapWrapper {
 
     static {
         @SuppressWarnings("deprecation")
-        Comparator<MapCursor> first = Comparator.comparing(each -> each.getRawType());
-        Comparator<MapCursor> second = Collections.reverseOrder(Comparator.comparing(each -> each.getY()));
-        Comparator<MapCursor> third = Collections.reverseOrder(Comparator.comparing(each -> each.getX()));
+        Comparator<MapCursor> first = Comparator.comparing(MapCursor::getRawType);
+        Comparator<MapCursor> second = Collections.reverseOrder(Comparator.comparing(MapCursor::getY));
+        Comparator<MapCursor> third = Collections.reverseOrder(Comparator.comparing(MapCursor::getX));
         ICON_ORDER = first.thenComparing(second).thenComparing(third);
     }
 

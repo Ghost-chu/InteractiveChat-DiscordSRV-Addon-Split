@@ -132,11 +132,7 @@ public class AssetsDownloader {
                 });
             }
 
-            downloadManager.downloadExtras(() -> {
-                InteractiveChatDiscordSrvAddon.plugin.extras.clear();
-            }, (key, dataBytes) -> {
-                InteractiveChatDiscordSrvAddon.plugin.extras.put(key, dataBytes);
-            });
+            downloadManager.downloadExtras(() -> InteractiveChatDiscordSrvAddon.plugin.extras.clear(), (key, dataBytes) -> InteractiveChatDiscordSrvAddon.plugin.extras.put(key, dataBytes));
 
             InteractiveChatDiscordSrvAddon.plugin.defaultResourceHash = hash;
 
@@ -158,11 +154,7 @@ public class AssetsDownloader {
 
     public static void loadExtras() {
         ResourceDownloadManager downloadManager = new ResourceDownloadManager(InteractiveChat.exactMinecraftVersion, null);
-        downloadManager.downloadExtras(() -> {
-            InteractiveChatDiscordSrvAddon.plugin.extras.clear();
-        }, (key, dataBytes) -> {
-            InteractiveChatDiscordSrvAddon.plugin.extras.put(key, dataBytes);
-        });
+        downloadManager.downloadExtras(() -> InteractiveChatDiscordSrvAddon.plugin.extras.clear(), (key, dataBytes) -> InteractiveChatDiscordSrvAddon.plugin.extras.put(key, dataBytes));
     }
 
     public static ServerResourcePackDownloadResult downloadServerResourcePack(File packFolder) {

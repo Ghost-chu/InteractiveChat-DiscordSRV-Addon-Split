@@ -48,7 +48,7 @@ import java.util.regex.Pattern;
 
 public class ModelManager extends AbstractManager implements IModelManager {
 
-    public static final TriFunction<IModelManager, String, JSONObject, BlockModel> DEFAULT_MODEL_PARSING_FUNCTION = (manager, key, json) -> BlockModel.fromJson(manager, key, json);
+    public static final TriFunction<IModelManager, String, JSONObject, BlockModel> DEFAULT_MODEL_PARSING_FUNCTION = BlockModel::fromJson;
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 

@@ -255,7 +255,7 @@ public class BlockModelRenderer extends JFrame {
                         fieldButton.setText(fieldFileChooser.getSelectedFile().getName());
                     }
                 });
-                providedTextureSettings.put(fieldLabel, new ValueTrios<>(() -> fieldLabel.getText(), fieldButton, fieldFileChooser));
+                providedTextureSettings.put(fieldLabel, new ValueTrios<>(fieldLabel::getText, fieldButton, fieldFileChooser));
                 builtInProvidedTexturesPanel.add(fieldButton);
             }
         }
@@ -284,7 +284,7 @@ public class BlockModelRenderer extends JFrame {
                     fieldButton.setText(fieldFileChooser.getSelectedFile().getName());
                 }
             });
-            providedTextureSettings.put(fieldText, new ValueTrios<>(() -> fieldText.getText(), fieldButton, fieldFileChooser));
+            providedTextureSettings.put(fieldText, new ValueTrios<>(fieldText::getText, fieldButton, fieldFileChooser));
             builtInProvidedTexturesPanel.add(fieldButton);
             SwingUtilities.invokeLater(() -> providedTexturesDialog.pack());
         });
@@ -330,21 +330,15 @@ public class BlockModelRenderer extends JFrame {
             }
         });
 
-        renderModelButton.addActionListener(e -> {
-            executorService.submit(() -> render());
-        });
+        renderModelButton.addActionListener(e -> executorService.submit(this::render));
 
-        reloadResourcesButton.addActionListener(e -> {
-            executorService.submit(() -> loadResources());
-        });
+        reloadResourcesButton.addActionListener(e -> executorService.submit(this::loadResources));
 
-        textFieldResourceKey.addActionListener(e -> {
-            executorService.submit(() -> {
-                if (renderModelButton.isEnabled()) {
-                    render();
-                }
-            });
-        });
+        textFieldResourceKey.addActionListener(e -> executorService.submit(() -> {
+            if (renderModelButton.isEnabled()) {
+                render();
+            }
+        }));
 
         textFieldResourceKey.setFocusTraversalKeysEnabled(false);
         textFieldResourceKey.addMouseListener(new MouseAdapter() {
@@ -430,9 +424,7 @@ public class BlockModelRenderer extends JFrame {
             }
         });
 
-        buttonSave.addActionListener(e -> {
-            executorService.submit(() -> saveImage());
-        });
+        buttonSave.addActionListener(e -> executorService.submit(this::saveImage));
 
         backgroundColorTextField.addFocusListener(new FocusAdapter() {
             @Override
@@ -482,7 +474,7 @@ public class BlockModelRenderer extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
 
-        executorService.submit(() -> loadResources());
+        executorService.submit(this::loadResources);
     }
 
     private void createUIComponents() {
@@ -700,7 +692,7 @@ public class BlockModelRenderer extends JFrame {
         modelRenderer.reloadPoolSize();
         long start = System.currentTimeMillis();
         try {
-            RenderResult result = modelRenderer.render((int) spinnerWidth.getValue(), (int) spinnerHeight.getValue(), (int) spinnerWidth.getValue(), (int) spinnerHeight.getValue(), resourceManager, null, false, key, ModelDisplayPosition.GUI, predicates, providedTextures, tintIndexData, enchantedCheckBox.isSelected(), altPosBox.isSelected(), source -> getEnchantedImage(source), source -> new RawEnchantmentGlintData(Collections.singletonList(getRawEnchantedImage(source)), Collections.singletonList(OpenGLBlending.GLINT)));
+            RenderResult result = modelRenderer.render((int) spinnerWidth.getValue(), (int) spinnerHeight.getValue(), (int) spinnerWidth.getValue(), (int) spinnerHeight.getValue(), resourceManager, null, false, key, ModelDisplayPosition.GUI, predicates, providedTextures, tintIndexData, enchantedCheckBox.isSelected(), altPosBox.isSelected(), this::getEnchantedImage, source -> new RawEnchantmentGlintData(Collections.singletonList(getRawEnchantedImage(source)), Collections.singletonList(OpenGLBlending.GLINT)));
             long end = System.currentTimeMillis();
             if (result.isSuccessful()) {
                 renderedImage = result.getImage();

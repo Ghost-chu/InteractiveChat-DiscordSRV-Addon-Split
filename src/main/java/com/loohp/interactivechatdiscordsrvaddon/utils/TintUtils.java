@@ -208,7 +208,7 @@ public class TintUtils {
         public TintIndexData(List<IntSupplier> data) {
             this.data = data;
             IntSet availableTintIndex = new IntArraySet();
-            IntStream.range(0, data.size()).filter(i -> data.get(i) != null).forEach(i -> availableTintIndex.add(i));
+            IntStream.range(0, data.size()).filter(i -> data.get(i) != null).forEach(availableTintIndex::add);
             this.availableTintIndex = IntSets.unmodifiable(availableTintIndex);
         }
 

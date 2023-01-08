@@ -29,13 +29,7 @@ import com.loohp.interactivechatdiscordsrvaddon.graphics.ImageUtils;
 import java.awt.image.BufferedImage;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -133,7 +127,7 @@ public class TextureAtlases {
     }
 
     public List<TextureAtlasSource> getAllTextureAtlases() {
-        return textureAtlases.values().stream().flatMap(each -> each.stream()).collect(Collectors.toList());
+        return textureAtlases.values().stream().flatMap(Collection::stream).collect(Collectors.toList());
     }
 
     public enum TextureAtlasType {

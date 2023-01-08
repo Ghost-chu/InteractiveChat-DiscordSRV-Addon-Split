@@ -57,7 +57,7 @@ public class ChimeManager extends ModManager implements IChimeManager {
 
     public static final String MOD_NAME = "Chime";
     public static final List<String> ASSETS_FOLDERS = Collections.singletonList("overrides");
-    public static final TriFunction<IModelManager, String, JSONObject, ChimeBlockModel> CHIME_MODEL_PARSING_FUNCTION = (manager, key, json) -> ChimeBlockModel.fromJson(manager, key, json);
+    public static final TriFunction<IModelManager, String, JSONObject, ChimeBlockModel> CHIME_MODEL_PARSING_FUNCTION = ChimeBlockModel::fromJson;
 
     private final List<String> overrideLocations;
     private final Map<String, TextureResource> textures;

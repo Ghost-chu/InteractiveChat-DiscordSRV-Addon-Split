@@ -37,6 +37,7 @@ import it.unimi.dsi.fastutil.chars.CharObjectPair;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
@@ -52,7 +53,7 @@ public class CharacterData {
             if (color == null) {
                 color = NamedTextColor.WHITE;
             }
-            List<TextDecoration> decorations = each.decorations().entrySet().stream().filter(entry -> entry.getValue().equals(State.TRUE)).map(entry -> entry.getKey()).collect(Collectors.toList());
+            List<TextDecoration> decorations = each.decorations().entrySet().stream().filter(entry -> entry.getValue().equals(State.TRUE)).map(Map.Entry::getKey).collect(Collectors.toList());
             String content;
             if (each instanceof TextComponent) {
                 content = ((TextComponent) each).content();

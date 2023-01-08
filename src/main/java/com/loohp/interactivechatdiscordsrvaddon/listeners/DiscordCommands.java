@@ -407,13 +407,13 @@ public class DiscordCommands implements Listener, SlashCommandProvider {
             switch (sections[0].toUpperCase()) {
                 case "GROUP":
                     if (sections.length > 1) {
-                        List<String> groupOrder = Arrays.stream(sections[1].split(",")).map(each -> each.trim()).collect(Collectors.toList());
+                        List<String> groupOrder = Arrays.stream(sections[1].split(",")).map(String::trim).collect(Collectors.toList());
                         comparator = comparator.thenComparing(each -> {
                             ValuePairs<List<String>, String> info = playerInfo.get(each.getFirst().getUniqueId());
                             if (info == null) {
                                 return Integer.MAX_VALUE;
                             }
-                            return info.getFirst().stream().mapToInt(e -> groupOrder.indexOf(e)).max().orElse(Integer.MAX_VALUE - 1);
+                            return info.getFirst().stream().mapToInt(groupOrder::indexOf).max().orElse(Integer.MAX_VALUE - 1);
                         });
                     }
                     break;
@@ -446,9 +446,7 @@ public class DiscordCommands implements Listener, SlashCommandProvider {
                             } catch (NumberFormatException ignore) {
                             }
                             return value;
-                        }).thenComparing(each -> {
-                            return PlaceholderParser.parse(ICPlayerFactory.getUnsafe().getOfflineICPPlayerWithoutInitialization(((ValueTrios<OfflineICPlayer, Component, Integer>) each).getFirst().getUniqueId()), placeholder);
-                        }));
+                        }).thenComparing(each -> PlaceholderParser.parse(ICPlayerFactory.getUnsafe().getOfflineICPPlayerWithoutInitialization(((ValueTrios<OfflineICPlayer, Component, Integer>) each).getFirst().getUniqueId()), placeholder)));
                     }
                     break;
                 case "PLACEHOLDER_REVERSE":
@@ -462,9 +460,7 @@ public class DiscordCommands implements Listener, SlashCommandProvider {
                             } catch (NumberFormatException ignore) {
                             }
                             return value;
-                        }).thenComparing(each -> {
-                            return PlaceholderParser.parse(ICPlayerFactory.getUnsafe().getOfflineICPPlayerWithoutInitialization(((ValueTrios<OfflineICPlayer, Component, Integer>) each).getFirst().getUniqueId()), placeholder);
-                        }).reversed());
+                        }).thenComparing(each -> PlaceholderParser.parse(ICPlayerFactory.getUnsafe().getOfflineICPPlayerWithoutInitialization(((ValueTrios<OfflineICPlayer, Component, Integer>) each).getFirst().getUniqueId()), placeholder)).reversed());
                     }
                     break;
                 default:
@@ -514,7 +510,7 @@ public class DiscordCommands implements Listener, SlashCommandProvider {
 
     @EventHandler
     public void onConfigReload(InteractiveChatDiscordSRVConfigReloadEvent event) {
-        Bukkit.getScheduler().runTaskAsynchronously(InteractiveChatDiscordSrvAddon.plugin, () -> reload());
+        Bukkit.getScheduler().runTaskAsynchronously(InteractiveChatDiscordSrvAddon.plugin, this::reload);
     }
 
     @Override
@@ -751,7 +747,7 @@ public class DiscordCommands implements Listener, SlashCommandProvider {
                     players = Bukkit.getOnlinePlayers().stream().filter(each -> {
                         ICPlayer icPlayer = ICPlayerFactory.getICPlayer(each);
                         return icPlayer == null || !icPlayer.isVanished();
-                    }).collect(Collectors.toMap(each -> each, each -> PlayerUtils.getPing(each), (a, b) -> a));
+                    }).collect(Collectors.toMap(each -> each, PlayerUtils::getPing, (a, b) -> a));
                 }
                 if (players.isEmpty()) {
                     event.getHook().editOriginal(ChatColorUtils.stripColor(InteractiveChatDiscordSrvAddon.plugin.playerlistCommandEmptyServer)).queue();

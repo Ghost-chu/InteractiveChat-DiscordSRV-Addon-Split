@@ -213,23 +213,17 @@ public class MinecraftFontRenderer extends JFrame {
             backgroundColorTextField.setText(rgb2Hex(backgroundColor).toUpperCase());
         });
 
-        reloadResourcesButton.addActionListener(e -> {
-            executorService.submit(() -> loadResources());
-        });
+        reloadResourcesButton.addActionListener(e -> executorService.submit(this::loadResources));
 
-        saveButton.addActionListener(e -> {
-            executorService.submit(() -> saveImage());
-        });
+        saveButton.addActionListener(e -> executorService.submit(this::saveImage));
 
         textAreaInput.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
-                SwingUtilities.invokeLater(() -> {
-                    executorService.submit(() -> {
-                        updateTextComponent();
-                        repaintTextImage();
-                    });
-                });
+                SwingUtilities.invokeLater(() -> executorService.submit(() -> {
+                    updateTextComponent();
+                    repaintTextImage();
+                }));
             }
         });
         spinnerOffsetX.addChangeListener(e -> scheduleTextReload());
@@ -260,12 +254,10 @@ public class MinecraftFontRenderer extends JFrame {
             scheduleTextReload();
         });
 
-        buttonDownloadLanguages.addActionListener(e -> {
-            executorService.submit(() -> {
-                downloadAllLanguages(title, image, icon);
-                loadResources();
-            });
-        });
+        buttonDownloadLanguages.addActionListener(e -> executorService.submit(() -> {
+            downloadAllLanguages(title, image, icon);
+            loadResources();
+        }));
 
         JPopupMenu menu = new JPopupMenu("Actions");
         JMenuItem copy = new JMenuItem("Copy image");
@@ -303,7 +295,7 @@ public class MinecraftFontRenderer extends JFrame {
             }
         });
 
-        executorService.submit(() -> loadResources());
+        executorService.submit(this::loadResources);
     }
 
     private void createUIComponents() {

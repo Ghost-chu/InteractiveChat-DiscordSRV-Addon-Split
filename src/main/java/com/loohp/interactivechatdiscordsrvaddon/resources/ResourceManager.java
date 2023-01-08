@@ -105,9 +105,7 @@ public class ResourceManager implements AutoCloseable {
     }
 
     public ResourceManager(boolean flattenLegacy, boolean fontLegacy, Collection<ModManagerSupplier<?>> modManagerProviders, Collection<ResourceRegistrySupplier<?>> resourceManagerUtilsProviders, int defaultResourcePackVersion) {
-        this(flattenLegacy, fontLegacy, modManagerProviders, resourceManagerUtilsProviders, (resourcePackFile, type) -> {
-            return new ResourceManager.DefaultResourcePackInfo(Component.text(resourcePackFile.getName()), defaultResourcePackVersion, Component.text("The default look and feel of Minecraft (Modified by LOOHP)"));
-        });
+        this(flattenLegacy, fontLegacy, modManagerProviders, resourceManagerUtilsProviders, (resourcePackFile, type) -> new DefaultResourcePackInfo(Component.text(resourcePackFile.getName()), defaultResourcePackVersion, Component.text("The default look and feel of Minecraft (Modified by LOOHP)")));
     }
 
     public ResourcePackInfo loadResources(File resourcePackFile, ResourcePackType type) {

@@ -37,7 +37,7 @@ public class PreviewableImageContainer {
     }
 
     public static PreviewableImageContainer fromAttachment(Message.Attachment attachment) {
-        return new PreviewableImageContainer(attachment.getFileName(), attachment.getUrl(), Collections.singletonList(attachment.getProxyUrl()), attachment.getContentType(), () -> attachment.retrieveInputStream());
+        return new PreviewableImageContainer(attachment.getFileName(), attachment.getUrl(), Collections.singletonList(attachment.getProxyUrl()), attachment.getContentType(), attachment::retrieveInputStream);
     }
 
     private final String name;

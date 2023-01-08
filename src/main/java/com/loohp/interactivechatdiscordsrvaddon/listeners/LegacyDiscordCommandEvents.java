@@ -102,7 +102,7 @@ public class LegacyDiscordCommandEvents {
                 players = Bukkit.getOnlinePlayers().stream().filter(each -> {
                     ICPlayer icPlayer = ICPlayerFactory.getICPlayer(each);
                     return icPlayer == null || !icPlayer.isVanished();
-                }).collect(Collectors.toMap(each -> each, each -> PlayerUtils.getPing(each), (a, b) -> a));
+                }).collect(Collectors.toMap(each -> each, PlayerUtils::getPing, (a, b) -> a));
             }
             if (players.isEmpty()) {
                 event.setPlayerListMessage(ChatColorUtils.stripColor(InteractiveChatDiscordSrvAddon.plugin.playerlistCommandEmptyServer));

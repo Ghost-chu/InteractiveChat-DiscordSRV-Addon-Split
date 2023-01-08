@@ -143,9 +143,9 @@ public class ItemRenderUtils {
             requiresEnchantmentGlint = true;
         }
 
-        List<ValuePairs<TextureResource, OpenGLBlending>> enchantmentGlintResource = manager.getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getEnchantmentGlintOverrideTextures(null, item, () -> ImageGeneration.getDefaultEnchantmentTint(), manager.getLanguageManager().getTranslateFunction().ofLanguage(language));
+        List<ValuePairs<TextureResource, OpenGLBlending>> enchantmentGlintResource = manager.getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getEnchantmentGlintOverrideTextures(null, item, ImageGeneration::getDefaultEnchantmentTint, manager.getLanguageManager().getTranslateFunction().ofLanguage(language));
         UnaryOperator<BufferedImage> enchantmentGlintFunction = image -> ImageGeneration.getEnchantedImage(enchantmentGlintResource, image);
-        Function<BufferedImage, RawEnchantmentGlintData> rawEnchantmentGlintFunction = image -> new RawEnchantmentGlintData(enchantmentGlintResource.stream().map(each -> ImageGeneration.getRawEnchantedImage(each.getFirst(), image)).collect(Collectors.toList()), enchantmentGlintResource.stream().map(each -> each.getSecond()).collect(Collectors.toList()));
+        Function<BufferedImage, RawEnchantmentGlintData> rawEnchantmentGlintFunction = image -> new RawEnchantmentGlintData(enchantmentGlintResource.stream().map(each -> ImageGeneration.getRawEnchantedImage(each.getFirst(), image)).collect(Collectors.toList()), enchantmentGlintResource.stream().map(ValuePairs::getSecond).collect(Collectors.toList()));
 
         TintIndexData tintIndexData = TintUtils.getTintData(icMaterial);
         Map<ModelOverrideType, Float> predicates = new EnumMap<>(ModelOverrideType.class);
@@ -548,111 +548,109 @@ public class ItemRenderUtils {
 
         String modelKey = directLocation == null ? ResourceRegistry.ITEM_MODEL_LOCATION + ModelUtils.getItemModelKey(icMaterial) : directLocation;
 
-        Function<BlockModel, ValuePairs<BlockModel, Map<String, TextureResource>>> postResolveFunction = manager.getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getItemPostResolveFunction(modelKey, slot, item, is1_8, predicates, player, world, livingEntity, manager.getLanguageManager().getTranslateFunction().ofLanguage(language)).map(function -> {
-            return function.andThen(result -> {
-                Map<String, TextureResource> overrideTextures = result.getSecond();
-                for (Entry<String, TextureResource> entry : overrideTextures.entrySet()) {
-                    String overriddenResource = result.getFirst().getTextures().get(entry.getKey());
-                    if (overriddenResource == null) {
-                        continue;
+        Function<BlockModel, ValuePairs<BlockModel, Map<String, TextureResource>>> postResolveFunction = manager.getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getItemPostResolveFunction(modelKey, slot, item, is1_8, predicates, player, world, livingEntity, manager.getLanguageManager().getTranslateFunction().ofLanguage(language)).map(function -> function.andThen(result -> {
+            Map<String, TextureResource> overrideTextures = result.getSecond();
+            for (Entry<String, TextureResource> entry : overrideTextures.entrySet()) {
+                String overriddenResource = result.getFirst().getTextures().get(entry.getKey());
+                if (overriddenResource == null) {
+                    continue;
+                }
+                if (!overriddenResource.contains(":")) {
+                    String namespace = result.getFirst().getResourceLocation();
+                    if (namespace.contains(":")) {
+                        namespace = namespace.substring(0, namespace.indexOf(":"));
+                    } else {
+                        namespace = ResourceRegistry.DEFAULT_NAMESPACE;
                     }
-                    if (!overriddenResource.contains(":")) {
-                        String namespace = result.getFirst().getResourceLocation();
-                        if (namespace.contains(":")) {
-                            namespace = namespace.substring(0, namespace.indexOf(":"));
-                        } else {
-                            namespace = ResourceRegistry.DEFAULT_NAMESPACE;
+                    overriddenResource = namespace + ":" + overriddenResource;
+                }
+                if (item.getItemMeta() instanceof PotionMeta) {
+                    if (icMaterial.isMaterial(XMaterial.TIPPED_ARROW)) {
+                        if (overriddenResource.equalsIgnoreCase(ResourceRegistry.TIPPED_ARROW_HEAD_PLACEHOLDER)) {
+                            PotionMeta meta = (PotionMeta) item.getItemMeta();
+                            PotionType potiontype = InteractiveChat.version.isOld() ? Potion.fromItemStack(item).getType() : meta.getBasePotionData().getType();
+                            BufferedImage tippedArrowHead = manager.getTextureManager().getTexture(ResourceRegistry.ITEM_TEXTURE_LOCATION + "tipped_arrow_head").getTexture(32, 32);
+
+                            int color;
+                            try {
+                                if (meta.hasColor()) {
+                                    color = meta.getColor().asRGB();
+                                } else {
+                                    color = PotionUtils.getPotionBaseColor(potiontype);
+                                }
+                            } catch (Throwable e) {
+                                color = PotionUtils.getPotionBaseColor(PotionType.WATER);
+                            }
+
+                            BufferedImage colorOverlay = ImageUtils.changeColorTo(ImageUtils.copyImage(tippedArrowHead), color);
+                            tippedArrowHead = ImageUtils.multiply(tippedArrowHead, colorOverlay);
+
+                            entry.setValue(new GeneratedTextureResource(manager, tippedArrowHead));
                         }
-                        overriddenResource = namespace + ":" + overriddenResource;
+                    } else {
+                        if (overriddenResource.equalsIgnoreCase(ResourceRegistry.POTION_OVERLAY_PLACEHOLDER)) {
+                            PotionMeta meta = (PotionMeta) item.getItemMeta();
+                            PotionType potiontype = InteractiveChat.version.isOld() ? Potion.fromItemStack(item).getType() : meta.getBasePotionData().getType();
+                            BufferedImage potionOverlay = entry.getValue().getTexture(32, 32);
+
+                            int color;
+                            try {
+                                if (meta.hasColor()) {
+                                    color = meta.getColor().asRGB();
+                                } else {
+                                    color = PotionUtils.getPotionBaseColor(potiontype);
+                                }
+                            } catch (Throwable e) {
+                                color = PotionUtils.getPotionBaseColor(PotionType.WATER);
+                            }
+
+                            BufferedImage colorOverlay = ImageUtils.changeColorTo(ImageUtils.copyImage(potionOverlay), color);
+                            potionOverlay = ImageUtils.multiply(potionOverlay, colorOverlay);
+
+                            entry.setValue(new GeneratedTextureResource(manager, potionOverlay));
+                        }
                     }
-                    if (item.getItemMeta() instanceof PotionMeta) {
-                        if (icMaterial.isMaterial(XMaterial.TIPPED_ARROW)) {
-                            if (overriddenResource.equalsIgnoreCase(ResourceRegistry.TIPPED_ARROW_HEAD_PLACEHOLDER)) {
-                                PotionMeta meta = (PotionMeta) item.getItemMeta();
-                                PotionType potiontype = InteractiveChat.version.isOld() ? Potion.fromItemStack(item).getType() : meta.getBasePotionData().getType();
-                                BufferedImage tippedArrowHead = manager.getTextureManager().getTexture(ResourceRegistry.ITEM_TEXTURE_LOCATION + "tipped_arrow_head").getTexture(32, 32);
-
-                                int color;
-                                try {
-                                    if (meta.hasColor()) {
-                                        color = meta.getColor().asRGB();
-                                    } else {
-                                        color = PotionUtils.getPotionBaseColor(potiontype);
-                                    }
-                                } catch (Throwable e) {
-                                    color = PotionUtils.getPotionBaseColor(PotionType.WATER);
-                                }
-
-                                BufferedImage colorOverlay = ImageUtils.changeColorTo(ImageUtils.copyImage(tippedArrowHead), color);
-                                tippedArrowHead = ImageUtils.multiply(tippedArrowHead, colorOverlay);
-
-                                entry.setValue(new GeneratedTextureResource(manager, tippedArrowHead));
-                            }
-                        } else {
-                            if (overriddenResource.equalsIgnoreCase(ResourceRegistry.POTION_OVERLAY_PLACEHOLDER)) {
-                                PotionMeta meta = (PotionMeta) item.getItemMeta();
-                                PotionType potiontype = InteractiveChat.version.isOld() ? Potion.fromItemStack(item).getType() : meta.getBasePotionData().getType();
-                                BufferedImage potionOverlay = entry.getValue().getTexture(32, 32);
-
-                                int color;
-                                try {
-                                    if (meta.hasColor()) {
-                                        color = meta.getColor().asRGB();
-                                    } else {
-                                        color = PotionUtils.getPotionBaseColor(potiontype);
-                                    }
-                                } catch (Throwable e) {
-                                    color = PotionUtils.getPotionBaseColor(PotionType.WATER);
-                                }
-
-                                BufferedImage colorOverlay = ImageUtils.changeColorTo(ImageUtils.copyImage(potionOverlay), color);
-                                potionOverlay = ImageUtils.multiply(potionOverlay, colorOverlay);
-
-                                entry.setValue(new GeneratedTextureResource(manager, potionOverlay));
-                            }
+                } else if (icMaterial.isOneOf(Collections.singletonList("CONTAINS:spawn_egg"))) {
+                    if (overriddenResource.equalsIgnoreCase(ResourceRegistry.SPAWN_EGG_PLACEHOLDER)) {
+                        SpawnEggTintData tintData = TintUtils.getSpawnEggTint(icMaterial);
+                        if (tintData != null) {
+                            BufferedImage baseImage = entry.getValue().getTexture();
+                            BufferedImage colorBase = ImageUtils.changeColorTo(ImageUtils.copyImage(baseImage), tintData.getBase());
+                            baseImage = ImageUtils.multiply(baseImage, colorBase);
+                            entry.setValue(new GeneratedTextureResource(manager, baseImage));
                         }
-                    } else if (icMaterial.isOneOf(Collections.singletonList("CONTAINS:spawn_egg"))) {
-                        if (overriddenResource.equalsIgnoreCase(ResourceRegistry.SPAWN_EGG_PLACEHOLDER)) {
-                            SpawnEggTintData tintData = TintUtils.getSpawnEggTint(icMaterial);
-                            if (tintData != null) {
-                                BufferedImage baseImage = entry.getValue().getTexture();
-                                BufferedImage colorBase = ImageUtils.changeColorTo(ImageUtils.copyImage(baseImage), tintData.getBase());
-                                baseImage = ImageUtils.multiply(baseImage, colorBase);
-                                entry.setValue(new GeneratedTextureResource(manager, baseImage));
-                            }
-                        } else if (overriddenResource.equalsIgnoreCase(ResourceRegistry.SPAWN_EGG_OVERLAY_PLACEHOLDER)) {
-                            SpawnEggTintData tintData = TintUtils.getSpawnEggTint(icMaterial);
-                            if (tintData != null) {
-                                BufferedImage overlayImage = entry.getValue().getTexture();
-                                BufferedImage colorOverlay = ImageUtils.changeColorTo(ImageUtils.copyImage(overlayImage), tintData.getOverlay());
-                                overlayImage = ImageUtils.multiply(overlayImage, colorOverlay);
-                                entry.setValue(new GeneratedTextureResource(manager, overlayImage));
-                            }
+                    } else if (overriddenResource.equalsIgnoreCase(ResourceRegistry.SPAWN_EGG_OVERLAY_PLACEHOLDER)) {
+                        SpawnEggTintData tintData = TintUtils.getSpawnEggTint(icMaterial);
+                        if (tintData != null) {
+                            BufferedImage overlayImage = entry.getValue().getTexture();
+                            BufferedImage colorOverlay = ImageUtils.changeColorTo(ImageUtils.copyImage(overlayImage), tintData.getOverlay());
+                            overlayImage = ImageUtils.multiply(overlayImage, colorOverlay);
+                            entry.setValue(new GeneratedTextureResource(manager, overlayImage));
                         }
-                    } else if (item.getItemMeta() instanceof LeatherArmorMeta) {
-                        LeatherArmorMeta meta = (LeatherArmorMeta) item.getItemMeta();
-                        Color color = new Color(meta.getColor().asRGB());
-                        if (icMaterial.isMaterial(XMaterial.LEATHER_HORSE_ARMOR)) {
-                            if (overriddenResource.equalsIgnoreCase(ResourceRegistry.LEATHER_HORSE_ARMOR_PLACEHOLDER)) {
-                                BufferedImage itemImage = entry.getValue().getTexture(32, 32);
-                                BufferedImage colorOverlay = ImageUtils.changeColorTo(ImageUtils.copyImage(itemImage), color);
-                                itemImage = ImageUtils.multiply(itemImage, colorOverlay);
-                                entry.setValue(new GeneratedTextureResource(manager, itemImage));
-                            }
-                        } else {
-                            if (overriddenResource.equalsIgnoreCase(ResourceRegistry.LEATHER_HELMET_PLACEHOLDER) || overriddenResource.equalsIgnoreCase(ResourceRegistry.LEATHER_CHESTPLATE_PLACEHOLDER) || overriddenResource.equalsIgnoreCase(ResourceRegistry.LEATHER_LEGGINGS_PLACEHOLDER) || overriddenResource.equalsIgnoreCase(ResourceRegistry.LEATHER_BOOTS_PLACEHOLDER)) {
-                                BufferedImage itemImage = entry.getValue().getTexture(32, 32);
-                                BufferedImage colorOverlay = ImageUtils.changeColorTo(ImageUtils.copyImage(itemImage), color);
-                                itemImage = ImageUtils.multiply(itemImage, colorOverlay);
-                                entry.setValue(new GeneratedTextureResource(manager, itemImage));
-                            }
+                    }
+                } else if (item.getItemMeta() instanceof LeatherArmorMeta) {
+                    LeatherArmorMeta meta = (LeatherArmorMeta) item.getItemMeta();
+                    Color color = new Color(meta.getColor().asRGB());
+                    if (icMaterial.isMaterial(XMaterial.LEATHER_HORSE_ARMOR)) {
+                        if (overriddenResource.equalsIgnoreCase(ResourceRegistry.LEATHER_HORSE_ARMOR_PLACEHOLDER)) {
+                            BufferedImage itemImage = entry.getValue().getTexture(32, 32);
+                            BufferedImage colorOverlay = ImageUtils.changeColorTo(ImageUtils.copyImage(itemImage), color);
+                            itemImage = ImageUtils.multiply(itemImage, colorOverlay);
+                            entry.setValue(new GeneratedTextureResource(manager, itemImage));
+                        }
+                    } else {
+                        if (overriddenResource.equalsIgnoreCase(ResourceRegistry.LEATHER_HELMET_PLACEHOLDER) || overriddenResource.equalsIgnoreCase(ResourceRegistry.LEATHER_CHESTPLATE_PLACEHOLDER) || overriddenResource.equalsIgnoreCase(ResourceRegistry.LEATHER_LEGGINGS_PLACEHOLDER) || overriddenResource.equalsIgnoreCase(ResourceRegistry.LEATHER_BOOTS_PLACEHOLDER)) {
+                            BufferedImage itemImage = entry.getValue().getTexture(32, 32);
+                            BufferedImage colorOverlay = ImageUtils.changeColorTo(ImageUtils.copyImage(itemImage), color);
+                            itemImage = ImageUtils.multiply(itemImage, colorOverlay);
+                            entry.setValue(new GeneratedTextureResource(manager, itemImage));
                         }
                     }
                 }
+            }
 
-                return result;
-            });
-        }).orElse(null);
+            return result;
+        })).orElse(null);
 
         return new ItemStackProcessResult(requiresEnchantmentGlint, predicates, providedTextures, tintIndexData, modelKey, postResolveFunction, enchantmentGlintFunction, rawEnchantmentGlintFunction);
     }

@@ -47,25 +47,15 @@ public class ResourcePackUtils {
             if (InteractiveChat.version.isOlderThan(MCVersion.V1_19)) {
                 craftServerClass = NMSUtils.getNMSClass("org.bukkit.craftbukkit.%s.CraftServer");
                 craftServerGetServerMethod = craftServerClass.getMethod("getServer");
-                nmsGetResourcePackMethod = NMSUtils.reflectiveLookup(Method.class, () -> {
-                    return craftServerGetServerMethod.getReturnType().getMethod("getResourcePack");
-                }, () -> {
-                    return craftServerGetServerMethod.getReturnType().getMethod("S");
-                });
-                nmsGetResourcePackHashMethod = NMSUtils.reflectiveLookup(Method.class, () -> {
-                    return craftServerGetServerMethod.getReturnType().getMethod("getResourcePackHash");
-                }, () -> {
-                    return craftServerGetServerMethod.getReturnType().getMethod("T");
-                });
+                nmsGetResourcePackMethod = NMSUtils.reflectiveLookup(Method.class, () -> craftServerGetServerMethod.getReturnType().getMethod("getResourcePack"), () -> craftServerGetServerMethod.getReturnType().getMethod("S"));
+                nmsGetResourcePackHashMethod = NMSUtils.reflectiveLookup(Method.class, () -> craftServerGetServerMethod.getReturnType().getMethod("getResourcePackHash"), () -> craftServerGetServerMethod.getReturnType().getMethod("T"));
             }
             try {
                 nmsMinecraftVersionClass = NMSUtils.getNMSClass("net.minecraft.server.%s.MinecraftVersion", "net.minecraft.MinecraftVersion");
                 nmsMinecraftVersionConstructor = nmsMinecraftVersionClass.getDeclaredConstructor();
                 nmsMinecraftVersionConstructor.setAccessible(true);
                 nmsMinecraftVersionObject = nmsMinecraftVersionConstructor.newInstance();
-                nmsMinecraftVersionGetPackVersionMethod = NMSUtils.reflectiveLookup(Method.class, () -> {
-                    return nmsMinecraftVersionClass.getMethod("getPackVersion");
-                }, () -> {
+                nmsMinecraftVersionGetPackVersionMethod = NMSUtils.reflectiveLookup(Method.class, () -> nmsMinecraftVersionClass.getMethod("getPackVersion"), () -> {
                     mojangPackTypeResourceEnumObject = com.mojang.bridge.game.PackType.RESOURCE;
                     return nmsMinecraftVersionClass.getMethod("getPackVersion", com.mojang.bridge.game.PackType.class);
                 });

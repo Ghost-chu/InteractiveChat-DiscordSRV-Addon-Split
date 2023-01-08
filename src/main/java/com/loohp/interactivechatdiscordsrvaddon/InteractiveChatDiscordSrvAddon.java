@@ -647,10 +647,10 @@ public class InteractiveChatDiscordSrvAddon extends JavaPlugin implements Listen
 
                 List<ModManagerSupplier<?>> mods = new ArrayList<>();
                 if (chimeOverrideModels) {
-                    mods.add(manager -> new ChimeManager(manager));
+                    mods.add(ChimeManager::new);
                 }
                 if (optifineCustomTextures) {
-                    mods.add(manager -> new OptifineManager(manager));
+                    mods.add(OptifineManager::new);
                 }
 
                 Bukkit.getPluginManager().callEvent(new ResourceManagerInitializeEvent(mods));
@@ -673,8 +673,8 @@ public class InteractiveChatDiscordSrvAddon extends JavaPlugin implements Listen
                 }
 
                 resourceManager.getFontManager().setDefaultKey(forceUnicode ? FontManager.UNIFORM_FONT : FontManager.DEFAULT_FONT);
-                resourceManager.getLanguageManager().setTranslateFunction((translateKey, language) -> LanguageUtils.getTranslation(translateKey, language));
-                resourceManager.getLanguageManager().setAvailableLanguagesSupplier(() -> LanguageUtils.getLoadedLanguages());
+                resourceManager.getLanguageManager().setTranslateFunction(LanguageUtils::getTranslation);
+                resourceManager.getLanguageManager().setAvailableLanguagesSupplier(LanguageUtils::getLoadedLanguages);
                 resourceManager.getLanguageManager().registerReloadListener(e -> {
                     LanguageUtils.clearPluginTranslations(InteractiveChatDiscordSrvAddon.plugin);
                     for (Entry<String, Map<String, String>> entry : e.getTranslations().entrySet()) {
@@ -734,7 +734,7 @@ public class InteractiveChatDiscordSrvAddon extends JavaPlugin implements Listen
                 Bukkit.getScheduler().callSyncMethod(plugin, () -> {
                     InteractiveChatDiscordSrvAddon.plugin.resourceManager = resourceManager;
 
-                    if (resourceManager.getResourcePackInfo().stream().allMatch(each -> each.getStatus())) {
+                    if (resourceManager.getResourcePackInfo().stream().allMatch(ResourcePackInfo::getStatus)) {
                         sendMessage(ChatColor.AQUA + "[ICDiscordSrvAddon] Loaded all resources!", senders);
                         isReady = true;
                     } else {

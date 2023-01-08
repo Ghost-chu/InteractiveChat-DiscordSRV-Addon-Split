@@ -60,9 +60,7 @@ public class BundleUtils {
     }
 
     private static int getContentWeight(List<ItemStack> items) {
-        return items.stream().mapToInt(each -> {
-            return getWeight(each) * each.getAmount();
-        }).sum();
+        return items.stream().mapToInt(each -> getWeight(each) * each.getAmount()).sum();
     }
 
 }

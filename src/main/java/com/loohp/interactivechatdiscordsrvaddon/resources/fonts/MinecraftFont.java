@@ -83,7 +83,7 @@ public abstract class MinecraftFont {
                 String resourceLocation = fontJson.get("file").toString();
                 int height = ((Number) fontJson.getOrDefault("height", 8)).intValue();
                 int ascent = ((Number) fontJson.get("ascent")).intValue();
-                List<String> chars = (List<String>) ((JSONArray) fontJson.get("chars")).stream().map(each -> each.toString()).collect(Collectors.toList());
+                List<String> chars = (List<String>) ((JSONArray) fontJson.get("chars")).stream().map(Object::toString).collect(Collectors.toList());
                 return new BitmapFont(manager, provider, resourceLocation, height, ascent, chars);
             case LegacyUnicodeFont.TYPE_KEY:
                 String template = fontJson.get("template").toString();

@@ -87,10 +87,7 @@ public class FontManager extends AbstractManager implements IFontManager {
         if (!root.exists() || !root.isDirectory()) {
             throw new IllegalArgumentException(root.getAbsolutePath() + " is not a directory.");
         }
-        Map<String, ResourcePackFile> fileList = files.get(namespace);
-        if (fileList == null) {
-            files.put(namespace, fileList = new HashMap<>());
-        }
+        Map<String, ResourcePackFile> fileList = files.computeIfAbsent(namespace, k -> new HashMap<>());
         JSONParser parser = new JSONParser();
         Map<String, FontProvider> fonts = new HashMap<>(this.fonts);
         Collection<ResourcePackFile> files = root.listFilesRecursively();

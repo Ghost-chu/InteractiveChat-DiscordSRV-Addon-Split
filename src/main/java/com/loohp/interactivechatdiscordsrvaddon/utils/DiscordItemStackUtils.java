@@ -301,7 +301,7 @@ public class DiscordItemStackUtils {
             if (translations.size() > 0) {
                 prints.add(ToolTipComponent.text(Component.translatable(translations.get(0)).color(NamedTextColor.GRAY).decorate(TextDecoration.ITALIC)));
                 if (translations.size() > 1) {
-                    prints.add(ToolTipComponent.text(ComponentStringUtils.join(Component.empty().color(NamedTextColor.GRAY).decorate(TextDecoration.ITALIC), Component.text(", "), translations.stream().skip(1).map(each -> Component.translatable(each)).collect(Collectors.toList()))));
+                    prints.add(ToolTipComponent.text(ComponentStringUtils.join(Component.empty().color(NamedTextColor.GRAY).decorate(TextDecoration.ITALIC), Component.text(", "), translations.stream().skip(1).map(Component::translatable).collect(Collectors.toList()))));
                 }
             }
         }

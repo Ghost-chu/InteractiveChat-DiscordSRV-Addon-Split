@@ -139,7 +139,7 @@ import java.util.regex.Pattern;
 
 public class OutboundToDiscordEvents implements Listener {
 
-    public static final Comparator<DiscordDisplayData> DISPLAY_DATA_COMPARATOR = Comparator.comparing(each -> each.getPosition());
+    public static final Comparator<DiscordDisplayData> DISPLAY_DATA_COMPARATOR = Comparator.comparing(DiscordDisplayData::getPosition);
     public static final Int2ObjectMap<DiscordDisplayData> DATA = Int2ObjectMaps.synchronize(new Int2ObjectLinkedOpenHashMap<>());
     public static final IntFunction<Pattern> DATA_PATTERN = i -> Pattern.compile("<ICD=" + i + "\\\\?>");
     public static final Int2ObjectMap<AttachmentData> RESEND_WITH_ATTACHMENT = Int2ObjectMaps.synchronize(new Int2ObjectLinkedOpenHashMap<>());
@@ -879,9 +879,7 @@ public class OutboundToDiscordEvents implements Listener {
             }
             if (InteractiveChatDiscordSrvAddon.plugin.embedDeleteAfter > 0) {
                 String finalText = text;
-                Bukkit.getScheduler().runTaskLaterAsynchronously(InteractiveChatDiscordSrvAddon.plugin, () -> {
-                    WebhookUtil.editMessage(channel, String.valueOf(messageId), finalText, Collections.emptyList(), Collections.emptyMap(), Collections.emptyList());
-                }, InteractiveChatDiscordSrvAddon.plugin.embedDeleteAfter * 20L);
+                Bukkit.getScheduler().runTaskLaterAsynchronously(InteractiveChatDiscordSrvAddon.plugin, () -> WebhookUtil.editMessage(channel, String.valueOf(messageId), finalText, Collections.emptyList(), Collections.emptyMap(), Collections.emptyList()), InteractiveChatDiscordSrvAddon.plugin.embedDeleteAfter * 20L);
             }
         }
     }

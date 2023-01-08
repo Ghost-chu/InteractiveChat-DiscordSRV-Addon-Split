@@ -91,7 +91,7 @@ public class DimensionManagerWrapper {
                             }
                         });
                     }
-                    effectsLocationField = FieldAccessor.fromField(dimensionManagerClass.getDeclaredField("w"), obj -> obj.toString());
+                    effectsLocationField = FieldAccessor.fromField(dimensionManagerClass.getDeclaredField("w"), Object::toString);
                     ambientLightField = FieldAccessor.fromField(dimensionManagerClass.getDeclaredField("x"));
 
                     tagKeyGetMinecraftKeyMethod = infiniburnField.getField().getType().getMethod("b");
@@ -141,9 +141,9 @@ public class DimensionManagerWrapper {
                             }
                         });
                     } else {
-                        infiniburnField = FieldAccessor.fromField(dimensionManagerClass.getDeclaredField("K"), obj -> obj.toString());
+                        infiniburnField = FieldAccessor.fromField(dimensionManagerClass.getDeclaredField("K"), Object::toString);
                     }
-                    effectsLocationField = FieldAccessor.fromField(dimensionManagerClass.getDeclaredField("L"), obj -> obj.toString());
+                    effectsLocationField = FieldAccessor.fromField(dimensionManagerClass.getDeclaredField("L"), Object::toString);
                     ambientLightField = FieldAccessor.fromField(dimensionManagerClass.getDeclaredField("M"));
 
                     tagKeyGetMinecraftKeyMethod = infiniburnField.getField().getType().getMethod("b");
@@ -162,8 +162,8 @@ public class DimensionManagerWrapper {
                     minYField = FieldAccessor.fromField(dimensionManagerClass.getDeclaredField("F"));
                     heightField = FieldAccessor.fromField(dimensionManagerClass.getDeclaredField("G"));
                     logicalHeightField = FieldAccessor.fromField(dimensionManagerClass.getDeclaredField("H"));
-                    infiniburnField = FieldAccessor.fromField(dimensionManagerClass.getDeclaredField("J"), obj -> obj.toString());
-                    effectsLocationField = FieldAccessor.fromField(dimensionManagerClass.getDeclaredField("K"), obj -> obj.toString());
+                    infiniburnField = FieldAccessor.fromField(dimensionManagerClass.getDeclaredField("J"), Object::toString);
+                    effectsLocationField = FieldAccessor.fromField(dimensionManagerClass.getDeclaredField("K"), Object::toString);
                     ambientLightField = FieldAccessor.fromField(dimensionManagerClass.getDeclaredField("L"));
                 } else if (InteractiveChat.version.isNewerOrEqualTo(MCVersion.V1_16)) {
                     fixedTimeField = FieldAccessor.fromField(dimensionManagerClass.getDeclaredField("fixedTime"));
@@ -180,9 +180,9 @@ public class DimensionManagerWrapper {
                     minYField = FieldAccessor.ofValue(0);
                     heightField = FieldAccessor.ofValue(256);
                     logicalHeightField = FieldAccessor.fromField(dimensionManagerClass.getDeclaredField("logicalHeight"));
-                    infiniburnField = FieldAccessor.fromField(dimensionManagerClass.getDeclaredField("infiniburn"), obj -> obj.toString());
+                    infiniburnField = FieldAccessor.fromField(dimensionManagerClass.getDeclaredField("infiniburn"), Object::toString);
                     if (InteractiveChat.version.isNewerOrEqualTo(MCVersion.V1_16_2)) {
-                        effectsLocationField = FieldAccessor.fromField(dimensionManagerClass.getDeclaredField("effects"), obj -> obj.toString());
+                        effectsLocationField = FieldAccessor.fromField(dimensionManagerClass.getDeclaredField("effects"), Object::toString);
                     } else {
                         effectsLocationField = FieldAccessor.ofValue("");
                     }

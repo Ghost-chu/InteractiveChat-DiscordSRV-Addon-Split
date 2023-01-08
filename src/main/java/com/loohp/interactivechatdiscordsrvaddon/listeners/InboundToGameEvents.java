@@ -136,7 +136,7 @@ public class InboundToGameEvents implements Listener {
             String senderDiscordName = authorAsMember == null ? author.getName() : authorAsMember.getEffectiveName();
             UUID senderUUID = srv.getAccountLinkManager().getUuid(author.getId());
 
-            for (Entry<UUID, String> entry : srv.getAccountLinkManager().getManyDiscordIds(Bukkit.getOnlinePlayers().stream().map(each -> each.getUniqueId()).collect(Collectors.toSet())).entrySet()) {
+            for (Entry<UUID, String> entry : srv.getAccountLinkManager().getManyDiscordIds(Bukkit.getOnlinePlayers().stream().map(Entity::getUniqueId).collect(Collectors.toSet())).entrySet()) {
                 Member member = guild.getMemberById(entry.getValue());
                 if (member != null && member.hasAccess(channel)) {
                     channelMembers.put(member, entry.getKey());
