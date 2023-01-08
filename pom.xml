@@ -359,12 +359,12 @@
             <version>1.19.3-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>com.discordsrv</groupId>
-            <artifactId>discordsrv</artifactId>
-            <version>1.26.0</version>
-            <scope>provided</scope>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.discordsrv</groupId>-->
+        <!--            <artifactId>discordsrv</artifactId>-->
+        <!--            <version>1.26.0</version>-->
+        <!--            <scope>provided</scope>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>

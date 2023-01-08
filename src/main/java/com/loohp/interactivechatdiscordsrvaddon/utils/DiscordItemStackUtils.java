@@ -42,10 +42,6 @@ import com.loohp.interactivechatdiscordsrvaddon.graphics.ImageGeneration;
 import com.loohp.interactivechatdiscordsrvaddon.objectholders.ToolTipComponent;
 import com.loohp.interactivechatdiscordsrvaddon.objectholders.ToolTipComponent.ToolTipType;
 import com.loohp.interactivechatdiscordsrvaddon.wrappers.PatternTypeWrapper;
-import github.scarsz.discordsrv.dependencies.kyori.adventure.text.KeybindComponent;
-import github.scarsz.discordsrv.dependencies.kyori.adventure.text.TranslatableComponent;
-import github.scarsz.discordsrv.dependencies.mcdiscordreserializer.discord.DiscordSerializer;
-import github.scarsz.discordsrv.dependencies.mcdiscordreserializer.discord.DiscordSerializerOptions;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.FireworkEffect;
@@ -75,7 +71,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.*;
 import java.util.Map.Entry;
-import java.util.function.Function;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
@@ -689,23 +684,23 @@ public class DiscordItemStackUtils {
         }
     }
 
-    public static String toDiscordText(List<ToolTipComponent<?>> toolTipComponents, Function<ToolTipComponent<BufferedImage>, Component> imageToolTipHandler, String language, boolean embedLinks) {
-        UnaryOperator<String> translationFunction = InteractiveChatDiscordSrvAddon.plugin.getResourceManager().getLanguageManager().getTranslateFunction().ofLanguage(language);
-        DiscordSerializer serializerSpecial = new DiscordSerializer(DiscordSerializerOptions.defaults().withEmbedLinks(embedLinks));
-        Function<?, String> resolver = component -> serializerSpecial.serialize(ComponentStringUtils.toDiscordSRVComponent(ComponentStringUtils.resolve((Component) component, translationFunction)));
-        DiscordSerializer serializerRegular = new DiscordSerializer(new DiscordSerializerOptions(embedLinks, true, (Function<KeybindComponent, String>) resolver, (Function<TranslatableComponent, String>) resolver));
-        return toolTipComponents.stream().map(toolTipComponent -> {
-            if (toolTipComponent.getType().equals(ToolTipType.TEXT)) {
-                Component component = (Component) toolTipComponent.getToolTipComponent();
-                if (component != null) {
-                    return serializerRegular.serialize(ComponentStringUtils.toDiscordSRVComponent(component));
-                }
-            } else if (toolTipComponent.getType().equals(ToolTipType.IMAGE)) {
-                return serializerRegular.serialize(ComponentStringUtils.toDiscordSRVComponent(imageToolTipHandler.apply((ToolTipComponent<BufferedImage>) toolTipComponent)));
-            }
-            return "";
-        }).collect(Collectors.joining("\n"));
-    }
+//    public static String toDiscordText(List<ToolTipComponent<?>> toolTipComponents, Function<ToolTipComponent<BufferedImage>, Component> imageToolTipHandler, String language, boolean embedLinks) {
+//        UnaryOperator<String> translationFunction = InteractiveChatDiscordSrvAddon.plugin.getResourceManager().getLanguageManager().getTranslateFunction().ofLanguage(language);
+//        DiscordSerializer serializerSpecial = new DiscordSerializer(DiscordSerializerOptions.defaults().withEmbedLinks(embedLinks));
+//        Function<?, String> resolver = component -> serializerSpecial.serialize(ComponentStringUtils.toDiscordSRVComponent(ComponentStringUtils.resolve((Component) component, translationFunction)));
+//        DiscordSerializer serializerRegular = new DiscordSerializer(new DiscordSerializerOptions(embedLinks, true, (Function<KeybindComponent, String>) resolver, (Function<TranslatableComponent, String>) resolver));
+//        return toolTipComponents.stream().map(toolTipComponent -> {
+//            if (toolTipComponent.getType().equals(ToolTipType.TEXT)) {
+//                Component component = (Component) toolTipComponent.getToolTipComponent();
+//                if (component != null) {
+//                    return serializerRegular.serialize(ComponentStringUtils.toDiscordSRVComponent(component));
+//                }
+//            } else if (toolTipComponent.getType().equals(ToolTipType.IMAGE)) {
+//                return serializerRegular.serialize(ComponentStringUtils.toDiscordSRVComponent(imageToolTipHandler.apply((ToolTipComponent<BufferedImage>) toolTipComponent)));
+//            }
+//            return "";
+//        }).collect(Collectors.joining("\n"));
+//    }
 
     public static class DiscordToolTip {
 

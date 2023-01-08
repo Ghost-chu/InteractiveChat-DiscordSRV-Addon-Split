@@ -22,14 +22,7 @@ package com.loohp.interactivechatdiscordsrvaddon.utils;
 
 import com.loohp.interactivechat.libs.com.cryptomorin.xseries.XMaterial;
 import com.loohp.interactivechat.libs.net.kyori.adventure.key.Key;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.BlockNBTComponent;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.Component;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.EntityNBTComponent;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.KeybindComponent;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.ScoreComponent;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.StorageNBTComponent;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.TextComponent;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.TranslatableComponent;
+import com.loohp.interactivechat.libs.net.kyori.adventure.text.*;
 import com.loohp.interactivechat.libs.net.kyori.adventure.text.event.HoverEvent;
 import com.loohp.interactivechat.libs.net.kyori.adventure.text.event.HoverEvent.ShowItem;
 import com.loohp.interactivechat.libs.net.kyori.adventure.text.format.TextDecoration;
@@ -37,11 +30,7 @@ import com.loohp.interactivechat.libs.net.kyori.adventure.text.format.TextDecora
 import com.loohp.interactivechat.libs.net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import com.loohp.interactivechat.libs.org.apache.commons.lang3.RandomStringUtils;
 import com.loohp.interactivechat.objectholders.LegacyIdKey;
-import com.loohp.interactivechat.utils.ComponentCompacting;
-import com.loohp.interactivechat.utils.ComponentFlattening;
-import com.loohp.interactivechat.utils.ComponentModernizing;
-import com.loohp.interactivechat.utils.InteractiveChatComponentSerializer;
-import com.loohp.interactivechat.utils.ItemNBTUtils;
+import com.loohp.interactivechat.utils.*;
 import com.loohp.interactivechatdiscordsrvaddon.resources.fonts.FontProvider;
 import it.unimi.dsi.fastutil.ints.IntList;
 import net.md_5.bungee.api.ChatColor;
@@ -456,14 +445,6 @@ public class ComponentStringUtils {
             }
         }
         return null;
-    }
-
-    public static github.scarsz.discordsrv.dependencies.kyori.adventure.text.Component toDiscordSRVComponent(Component component) {
-        return github.scarsz.discordsrv.dependencies.kyori.adventure.text.serializer.gson.GsonComponentSerializer.gson().deserialize(InteractiveChatComponentSerializer.gson().serialize(component));
-    }
-
-    public static Component toRegularComponent(github.scarsz.discordsrv.dependencies.kyori.adventure.text.Component component) {
-        return InteractiveChatComponentSerializer.gson().deserialize(github.scarsz.discordsrv.dependencies.kyori.adventure.text.serializer.gson.GsonComponentSerializer.gson().serialize(component));
     }
 
     public static class CharacterLengthProviderData {

@@ -21,8 +21,6 @@
 package com.loohp.interactivechatdiscordsrvaddon.wrappers;
 
 import com.loohp.interactivechat.utils.FilledMapUtils;
-import com.loohp.interactivechatdiscordsrvaddon.api.events.MapDataLookupEvent;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.map.MapCursor;
@@ -69,10 +67,8 @@ public class ItemMapWrapper {
             colors = FilledMapUtils.getColors(mapView, player);
             icons = FilledMapUtils.getCursors(mapView, player).stream().sorted(ICON_ORDER).collect(Collectors.toList());
         }
-        MapDataLookupEvent event = new MapDataLookupEvent(player, mapId, mapView, colors, icons);
-        Bukkit.getPluginManager().callEvent(event);
-        this.colors = event.getColors();
-        this.icons = event.getMapCursors();
+        this.colors = colors;
+        this.icons = icons;
     }
 
     public byte[] getColors() {

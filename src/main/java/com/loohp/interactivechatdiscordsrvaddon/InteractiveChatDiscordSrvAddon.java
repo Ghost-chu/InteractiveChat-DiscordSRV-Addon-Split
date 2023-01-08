@@ -33,11 +33,10 @@ import com.loohp.interactivechat.objectholders.PlaceholderCooldownManager;
 import com.loohp.interactivechat.registry.Registry;
 import com.loohp.interactivechat.utils.*;
 import com.loohp.interactivechatdiscordsrvaddon.AssetsDownloader.ServerResourcePackDownloadResult;
-import com.loohp.interactivechatdiscordsrvaddon.api.events.ResourceManagerInitializeEvent;
 import com.loohp.interactivechatdiscordsrvaddon.debug.Debug;
 import com.loohp.interactivechatdiscordsrvaddon.graphics.ImageGeneration;
 import com.loohp.interactivechatdiscordsrvaddon.graphics.ImageUtils;
-import com.loohp.interactivechatdiscordsrvaddon.listeners.*;
+import com.loohp.interactivechatdiscordsrvaddon.listeners.ICPlayerEvents;
 import com.loohp.interactivechatdiscordsrvaddon.registry.InteractiveChatRegistry;
 import com.loohp.interactivechatdiscordsrvaddon.registry.ResourceRegistry;
 import com.loohp.interactivechatdiscordsrvaddon.resources.*;
@@ -49,9 +48,6 @@ import com.loohp.interactivechatdiscordsrvaddon.resources.mods.chime.ChimeManage
 import com.loohp.interactivechatdiscordsrvaddon.resources.mods.optifine.OptifineManager;
 import com.loohp.interactivechatdiscordsrvaddon.utils.ResourcePackUtils;
 import com.loohp.interactivechatdiscordsrvaddon.utils.TranslationKeyUtils;
-import github.scarsz.discordsrv.DiscordSRV;
-import github.scarsz.discordsrv.dependencies.jda.api.Permission;
-import github.scarsz.discordsrv.dependencies.jda.api.requests.GatewayIntent;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -77,18 +73,8 @@ import java.util.concurrent.locks.ReentrantLock;
 public class InteractiveChatDiscordSrvAddon extends JavaPlugin implements Listener {
     public static final String CONFIG_ID = "interactivechatdiscordsrvaddon_config";
 
-    public static final List<Permission> requiredPermissions = Collections.unmodifiableList(Arrays.asList(
-        Permission.MESSAGE_READ,
-        Permission.MESSAGE_WRITE,
-        Permission.MESSAGE_MANAGE,
-        Permission.MESSAGE_EMBED_LINKS,
-        Permission.MESSAGE_ATTACH_FILES,
-        Permission.MANAGE_WEBHOOKS
-    ));
-
     public static InteractiveChatDiscordSrvAddon plugin;
     public static InteractiveChat interactivechat;
-    public static DiscordSRV discordsrv;
 
     public static boolean isReady = false;
 
@@ -248,15 +234,14 @@ public class InteractiveChatDiscordSrvAddon extends JavaPlugin implements Listen
 
     @Override
     public void onLoad() {
-        DiscordSRV.api.requireIntent(GatewayIntent.GUILD_MESSAGE_REACTIONS);
-        DiscordSRV.api.subscribe(new DiscordCommandEvents());
+
     }
 
     @Override
     public void onEnable() {
         plugin = this;
         interactivechat = InteractiveChat.plugin;
-        discordsrv = DiscordSRV.getPlugin();
+
 
         if (!getDataFolder().exists()) {
             getDataFolder().mkdirs();
@@ -273,14 +258,8 @@ public class InteractiveChatDiscordSrvAddon extends JavaPlugin implements Listen
         }
         reloadConfig();
 
-        DiscordSRV.api.subscribe(new DiscordReadyEvents());
-        DiscordSRV.api.subscribe(new LegacyDiscordCommandEvents());
-        DiscordSRV.api.subscribe(new OutboundToDiscordEvents());
-        DiscordSRV.api.subscribe(new InboundToGameEvents());
 
         getServer().getPluginManager().registerEvents(this, this);
-        getServer().getPluginManager().registerEvents(new InboundToGameEvents(), this);
-        getServer().getPluginManager().registerEvents(new OutboundToDiscordEvents(), this);
         getServer().getPluginManager().registerEvents(new ICPlayerEvents(), this);
         getServer().getPluginManager().registerEvents(new Debug(), this);
         getCommand("interactivechatdiscordsrv").setExecutor(new Commands());
@@ -371,7 +350,6 @@ public class InteractiveChatDiscordSrvAddon extends JavaPlugin implements Listen
 
     @Override
     public void onDisable() {
-        DiscordInteractionEvents.unregisterAll();
         modelRenderer.close();
         mediaReadingService.shutdown();
         if (resourceManager != null) {
@@ -568,8 +546,6 @@ public class InteractiveChatDiscordSrvAddon extends JavaPlugin implements Listen
         forceUnicode = config.getConfiguration().getBoolean("Resources.ForceUnicodeFont");
 
         FontTextureResource.setCacheTime(cacheTimeout);
-
-        discordsrv.reloadRegexes();
     }
 
     public byte[] getExtras(String str) {
@@ -652,8 +628,6 @@ public class InteractiveChatDiscordSrvAddon extends JavaPlugin implements Listen
                 if (optifineCustomTextures) {
                     mods.add(OptifineManager::new);
                 }
-
-                Bukkit.getPluginManager().callEvent(new ResourceManagerInitializeEvent(mods));
 
                 @SuppressWarnings("resource")
                 ResourceManager resourceManager = new ResourceManager(

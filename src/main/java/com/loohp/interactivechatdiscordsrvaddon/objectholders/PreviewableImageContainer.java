@@ -20,25 +20,13 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.objectholders;
 
-import github.scarsz.discordsrv.dependencies.jda.api.entities.Message;
-import github.scarsz.discordsrv.dependencies.jda.api.entities.MessageSticker;
-
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
 public class PreviewableImageContainer {
-
-    public static PreviewableImageContainer fromSticker(MessageSticker sticker) {
-        return new PreviewableImageContainer(sticker.getName(), sticker.getIconUrl(), Collections.emptyList(), sticker.getFormatType().getExtension(), null);
-    }
-
-    public static PreviewableImageContainer fromAttachment(Message.Attachment attachment) {
-        return new PreviewableImageContainer(attachment.getFileName(), attachment.getUrl(), Collections.singletonList(attachment.getProxyUrl()), attachment.getContentType(), attachment::retrieveInputStream);
-    }
 
     private final String name;
     private final String url;
