@@ -23,7 +23,6 @@ package com.loohp.interactivechatdiscordsrvaddon.listeners;
 import com.loohp.interactivechat.utils.ChatColorUtils;
 import com.loohp.interactivechat.utils.HashUtils;
 import com.loohp.interactivechatdiscordsrvaddon.InteractiveChatDiscordSrvAddon;
-import com.loohp.interactivechatdiscordsrvaddon.metrics.Metrics;
 import com.loohp.interactivechatdiscordsrvaddon.objectholders.DiscordMessageContent;
 import com.loohp.interactivechatdiscordsrvaddon.objectholders.InteractionHandler;
 import github.scarsz.discordsrv.dependencies.jda.api.entities.Message;
@@ -47,11 +46,7 @@ public class DiscordInteractionEvents extends ListenerAdapter {
 
     static {
         try {
-            String uuid = Metrics.getServerUUID();
-            if (uuid == null) {
-                uuid = UUID.randomUUID().toString();
-            }
-            INTERACTION_ID_PREFIX = "ICD_" + HashUtils.createSha1String(new ByteArrayInputStream(uuid.getBytes(StandardCharsets.UTF_8))) + "_";
+            INTERACTION_ID_PREFIX = "ICD_" + HashUtils.createSha1String(new ByteArrayInputStream(UUID.randomUUID().toString().getBytes(StandardCharsets.UTF_8))) + "_";
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
