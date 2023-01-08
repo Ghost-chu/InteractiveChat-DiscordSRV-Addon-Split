@@ -37,11 +37,7 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.text.DecimalFormat;
@@ -170,11 +166,9 @@ public class AssetsDownloader {
         File desFile = hash != null && !hash.isEmpty() ? new File(packFolder, hash) : null;
         if (desFile != null && desFile.exists()) {
             try {
-                if (hash != null && !hash.isEmpty()) {
-                    String packHash = HashUtils.createSha1String(desFile);
-                    if (packHash.equalsIgnoreCase(hash)) {
-                        return new ServerResourcePackDownloadResult(ServerResourcePackDownloadResultType.SUCCESS_NO_CHANGES, desFile, packHash, hash);
-                    }
+                String packHash = HashUtils.createSha1String(desFile);
+                if (packHash.equalsIgnoreCase(hash)) {
+                    return new ServerResourcePackDownloadResult(ServerResourcePackDownloadResultType.SUCCESS_NO_CHANGES, desFile, packHash, hash);
                 }
             } catch (Exception ignore) {
             }

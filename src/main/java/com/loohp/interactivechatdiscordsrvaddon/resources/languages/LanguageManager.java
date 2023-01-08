@@ -31,13 +31,7 @@ import com.loohp.interactivechatdiscordsrvaddon.resources.ResourcePackFile;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -80,12 +74,10 @@ public class LanguageManager extends AbstractManager implements ILanguageManager
         if (!root.exists() || !root.isDirectory()) {
             throw new IllegalArgumentException(root.getAbsolutePath() + " is not a directory.");
         }
-        if (meta.length >= 0) {
-            try {
-                this.languageMeta.putAll((Map<? extends String, ? extends LanguageMeta>) meta[0]);
-            } catch (Throwable e) {
-                new ResourceLoadingException("Invalid meta arguments, Map<? extends String, ? extends LanguageMeta> expected!", e).printStackTrace();
-            }
+        try {
+            this.languageMeta.putAll((Map<? extends String, ? extends LanguageMeta>) meta[0]);
+        } catch (Throwable e) {
+            new ResourceLoadingException("Invalid meta arguments, Map<? extends String, ? extends LanguageMeta> expected!", e).printStackTrace();
         }
         JSONParser parser = new JSONParser();
         Map<String, Map<String, String>> translations = new HashMap<>();

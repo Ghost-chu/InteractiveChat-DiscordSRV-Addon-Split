@@ -73,12 +73,10 @@ public class DiscordToGameMention {
 
         int time = (int) Math.round(config.getConfiguration().getDouble("DiscordMention.MentionedTitleDuration") * 20);
         TitleUtils.sendTitle(receiver, title, subtitle, actionbar, 10, time, 20);
-        if (sound != null) {
-            if (sound.isLeft()) {
-                receiver.playSound(receiver.getLocation(), sound.getLeft(), volume, pitch);
-            } else {
-                receiver.playSound(receiver.getLocation(), sound.getRight(), volume, pitch);
-            }
+        if (sound.isLeft()) {
+            receiver.playSound(receiver.getLocation(), sound.getLeft(), volume, pitch);
+        } else {
+            receiver.playSound(receiver.getLocation(), sound.getRight(), volume, pitch);
         }
     }
 

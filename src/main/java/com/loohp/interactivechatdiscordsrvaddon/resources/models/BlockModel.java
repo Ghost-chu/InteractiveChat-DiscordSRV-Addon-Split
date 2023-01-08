@@ -28,15 +28,8 @@ import com.loohp.interactivechatdiscordsrvaddon.resources.models.ModelElement.Mo
 import com.loohp.interactivechatdiscordsrvaddon.resources.models.ModelFace.ModelFaceSide;
 import com.loohp.interactivechatdiscordsrvaddon.resources.models.ModelOverride.ModelOverrideType;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Objects;
 
 public class BlockModel {
 
@@ -278,9 +271,9 @@ public class BlockModel {
         if (post1_8) {
             String newRawParent = newBlockModel.getRawParent();
             if (newRawParent == null) {
-                return newBlockModel.getManager().getRawBlockModel(ResourceRegistry.IC_OLD_BASE_BLOCK_MODEL).resolve(newBlockModel, post1_8);
+                return newBlockModel.getManager().getRawBlockModel(ResourceRegistry.IC_OLD_BASE_BLOCK_MODEL).resolve(newBlockModel, true);
             } else if (newRawParent.equals(ModelManager.ITEM_BASE)) {
-                return newBlockModel.getManager().getRawBlockModel(ResourceRegistry.IC_OLD_BASE_ITEM_MODEL).resolve(newBlockModel, post1_8);
+                return newBlockModel.getManager().getRawBlockModel(ResourceRegistry.IC_OLD_BASE_ITEM_MODEL).resolve(newBlockModel, true);
             }
         }
         return newBlockModel;

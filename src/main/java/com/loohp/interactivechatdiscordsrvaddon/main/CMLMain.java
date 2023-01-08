@@ -23,26 +23,19 @@ package com.loohp.interactivechatdiscordsrvaddon.main;
 import com.loohp.interactivechat.libs.org.json.simple.JSONObject;
 import com.loohp.interactivechat.libs.org.simpleyaml.configuration.ConfigurationSection;
 import com.loohp.interactivechat.libs.org.simpleyaml.configuration.file.YamlFile;
-import com.loohp.interactivechat.registry.Registry;
 import com.loohp.interactivechat.updater.Version;
 import com.loohp.interactivechat.utils.FileUtils;
 import com.loohp.interactivechat.utils.HTTPRequestUtils;
 import com.loohp.interactivechatdiscordsrvaddon.libs.LibraryDownloadManager;
-import com.loohp.interactivechatdiscordsrvaddon.registry.InteractiveChatRegistry;
 import com.loohp.interactivechatdiscordsrvaddon.resources.ResourceDownloadManager;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
-import java.util.Enumeration;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.CompletableFuture;
 
@@ -80,12 +73,6 @@ public class CMLMain {
                 System.out.println("GitHub: \"https://github.com/LOOHP/InteractiveChat-DiscordSRV-Addon\"");
                 System.out.println("Discord: \"http://dev.discord.loohpjames.com\"");
                 System.out.println("Build Server: \"https://ci.loohpjames.com\"");
-                if (Registry.INTERACTIVE_CHAT_DISCORD_SRV_ADDON_COMPATIBLE_VERSION != InteractiveChatRegistry.INTERACTIVE_CHAT_DISCORD_SRV_ADDON_COMPATIBLE_VERSION) {
-                    System.out.println();
-                    System.out.println("These versions of InteractiveChat & InteractiveChat DiscordSRV Addon are incompatible! Please Upgrade!");
-                    System.out.println("These versions of InteractiveChat & InteractiveChat DiscordSRV Addon are incompatible! Please Upgrade!");
-                    System.out.println("These versions of InteractiveChat & InteractiveChat DiscordSRV Addon are incompatible! Please Upgrade!");
-                }
                 System.out.println();
                 System.out.println("Select one of the tools by typing in their corresponding number");
 
@@ -196,9 +183,7 @@ public class CMLMain {
         FileUtils.removeFolderRecursively(folder);
         folder.mkdirs();
         FileUtils.copy(GUIMain.class.getClassLoader().getResourceAsStream("config.yml"), new File(folder, "config.yml"));
-        if (folder != null) {
-            System.out.println("Files saved at: " + folder.getAbsolutePath());
-        }
+        System.out.println("Files saved at: " + folder.getAbsolutePath());
     }
 
     protected static void downloadAssets() throws IOException {

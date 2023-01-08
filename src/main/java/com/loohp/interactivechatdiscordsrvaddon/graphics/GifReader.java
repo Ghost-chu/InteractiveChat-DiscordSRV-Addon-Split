@@ -31,8 +31,7 @@ import javax.imageio.ImageReader;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
 import javax.imageio.stream.ImageInputStream;
-import java.awt.Color;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -119,7 +118,7 @@ public class GifReader {
 
             NodeList globalScreenDescriptor = globalRoot.getElementsByTagName("LogicalScreenDescriptor");
 
-            if (globalScreenDescriptor != null && globalScreenDescriptor.getLength() > 0) {
+            if (globalScreenDescriptor.getLength() > 0) {
                 IIOMetadataNode screenDescriptor = (IIOMetadataNode) globalScreenDescriptor.item(0);
 
                 if (screenDescriptor != null) {

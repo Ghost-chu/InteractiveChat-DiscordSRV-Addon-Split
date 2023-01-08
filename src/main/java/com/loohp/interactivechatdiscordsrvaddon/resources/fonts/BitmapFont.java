@@ -28,16 +28,9 @@ import com.loohp.interactivechatdiscordsrvaddon.resources.ResourceLoadingExcepti
 import com.loohp.interactivechatdiscordsrvaddon.resources.ResourceManager;
 import com.loohp.interactivechatdiscordsrvaddon.resources.textures.TextureResource;
 import com.loohp.interactivechatdiscordsrvaddon.utils.ComponentStringUtils;
-import it.unimi.dsi.fastutil.ints.Int2IntMap;
-import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-import it.unimi.dsi.fastutil.ints.IntSet;
-import it.unimi.dsi.fastutil.ints.IntSets;
+import it.unimi.dsi.fastutil.ints.*;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -62,85 +55,6 @@ public class BitmapFont extends MinecraftFont {
         this.height = height;
         this.ascent = ascent;
         this.chars = chars;
-    }
-
-    @Override
-    public void reloadFonts() {
-        this.charImages = new Int2ObjectOpenHashMap<>();
-        this.charWidth = new Int2IntOpenHashMap();
-        if (chars.isEmpty()) {
-            return;
-        }
-
-        TextureResource resource = manager.getFontManager().getFontResource(resourceLocation);
-        if (resource == null || !resource.isTexture()) {
-            if (provider == null) {
-                throw new ResourceLoadingException(resourceLocation + " is not a valid font resource");
-            } else {
-                throw new ResourceLoadingException(resourceLocation + " is not a valid font resource (Defined in " + provider.getNamespacedKey() + ")");
-            }
-        }
-        BufferedImage fontBaseImage = resource.getTexture();
-
-        int yIncrement = fontBaseImage.getHeight() / chars.size();
-        this.scale = Math.abs(height == 0 ? 0 : yIncrement / height);
-        int y = 0;
-        for (String line : chars) {
-            if (!line.isEmpty()) {
-                int xIncrement = fontBaseImage.getWidth() / line.codePointCount(0, line.length());
-                int x = 0;
-                for (int i = 0; i < line.length(); ) {
-                    int character = line.codePointAt(i);
-                    i += character < 0x10000 ? 1 : 2;
-                    if (i != 0 && i != 32) {
-                        int lastX = 0;
-                        for (int x0 = x; x0 < x + xIncrement; x0++) {
-                            for (int y0 = y; y0 < y + yIncrement; y0++) {
-                                int alpha = ColorUtils.getAlpha(fontBaseImage.getRGB(x0, y0));
-                                if (alpha != 0) {
-                                    lastX = x0 - x + 1;
-                                    break;
-                                }
-                            }
-                        }
-                        if (x + lastX > fontBaseImage.getWidth()) {
-                            lastX = fontBaseImage.getWidth() - x;
-                        }
-                        if (lastX > 0) {
-                            charImages.put(character, new FontTextureResource(resource, x, y, lastX, yIncrement));
-                            charWidth.put(character, lastX);
-                        }
-                    }
-                    x += xIncrement;
-                }
-            }
-            y += yIncrement;
-        }
-    }
-
-    public String getResourceLocation() {
-        return resourceLocation;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public int getAscent() {
-        return ascent;
-    }
-
-    public int getScale() {
-        return scale;
-    }
-
-    public List<String> getChars() {
-        return chars;
-    }
-
-    @Override
-    public boolean canDisplayCharacter(String character) {
-        return charImages.containsKey(character.codePointAt(0));
     }
 
     @Override
@@ -206,14 +120,14 @@ public class BitmapFont extends MinecraftFont {
                     italic = true;
                     break;
                 case STRIKETHROUGH:
-                    charImage = ImageUtils.expandCenterAligned(charImage, 0, 0, 0, underlineStrikethroughExpanded ? 0 : (pixelSize * this.scale));
+                    charImage = ImageUtils.expandCenterAligned(charImage, 0, 0, 0, pixelSize * this.scale);
                     g = charImage.createGraphics();
                     g.setColor(awtColor);
                     g.fillRect(0, Math.round((fontSize / 2) - ((float) strikeSize / 2)), w + pixelSize * this.scale, strikeSize);
                     g.dispose();
                     break;
                 case UNDERLINED:
-                    charImage = ImageUtils.expandCenterAligned(charImage, 0, strikeSize * 2, 0, underlineStrikethroughExpanded ? 0 : (pixelSize * this.scale));
+                    charImage = ImageUtils.expandCenterAligned(charImage, 0, strikeSize * 2, 0, pixelSize * this.scale);
                     g = charImage.createGraphics();
                     g.setColor(awtColor);
                     g.fillRect(0, Math.round(fontSize), w + pixelSize * this.scale, strikeSize);
@@ -235,6 +149,85 @@ public class BitmapFont extends MinecraftFont {
         }
         g.dispose();
         return new FontRenderResult(image, w * sign + extraWidth, h, spaceWidth, italicExtraWidth);
+    }
+
+    public String getResourceLocation() {
+        return resourceLocation;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getAscent() {
+        return ascent;
+    }
+
+    public int getScale() {
+        return scale;
+    }
+
+    public List<String> getChars() {
+        return chars;
+    }
+
+    @Override
+    public boolean canDisplayCharacter(String character) {
+        return charImages.containsKey(character.codePointAt(0));
+    }
+
+    @Override
+    public void reloadFonts() {
+        this.charImages = new Int2ObjectOpenHashMap<>();
+        this.charWidth = new Int2IntOpenHashMap();
+        if (chars.isEmpty()) {
+            return;
+        }
+
+        TextureResource resource = manager.getFontManager().getFontResource(resourceLocation);
+        if (resource == null || !resource.isTexture()) {
+            if (provider == null) {
+                throw new ResourceLoadingException(resourceLocation + " is not a valid font resource");
+            } else {
+                throw new ResourceLoadingException(resourceLocation + " is not a valid font resource (Defined in " + provider.getNamespacedKey() + ")");
+            }
+        }
+        BufferedImage fontBaseImage = resource.getTexture();
+
+        int yIncrement = fontBaseImage.getHeight() / chars.size();
+        this.scale = Math.abs(height == 0 ? 0 : yIncrement / height);
+        int y = 0;
+        for (String line : chars) {
+            if (!line.isEmpty()) {
+                int xIncrement = fontBaseImage.getWidth() / line.codePointCount(0, line.length());
+                int x = 0;
+                for (int i = 0; i < line.length(); ) {
+                    int character = line.codePointAt(i);
+                    i += character < 0x10000 ? 1 : 2;
+                    if (i != 32) {
+                        int lastX = 0;
+                        for (int x0 = x; x0 < x + xIncrement; x0++) {
+                            for (int y0 = y; y0 < y + yIncrement; y0++) {
+                                int alpha = ColorUtils.getAlpha(fontBaseImage.getRGB(x0, y0));
+                                if (alpha != 0) {
+                                    lastX = x0 - x + 1;
+                                    break;
+                                }
+                            }
+                        }
+                        if (x + lastX > fontBaseImage.getWidth()) {
+                            lastX = fontBaseImage.getWidth() - x;
+                        }
+                        if (lastX > 0) {
+                            charImages.put(character, new FontTextureResource(resource, x, y, lastX, yIncrement));
+                            charWidth.put(character, lastX);
+                        }
+                    }
+                    x += xIncrement;
+                }
+            }
+            y += yIncrement;
+        }
     }
 
     @Override

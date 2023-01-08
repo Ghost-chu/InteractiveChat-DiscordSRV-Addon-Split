@@ -22,11 +22,7 @@ package com.loohp.interactivechatdiscordsrvaddon.resources.models;
 
 import com.loohp.interactivechatdiscordsrvaddon.registry.ResourceRegistry;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class ModelFace {
 
@@ -62,7 +58,7 @@ public class ModelFace {
         if (texture.startsWith("#")) {
             return texture;
         }
-        return texture == null ? null : (texture.contains(":") ? texture : ResourceRegistry.DEFAULT_NAMESPACE + ":" + texture);
+        return texture.contains(":") ? texture : ResourceRegistry.DEFAULT_NAMESPACE + ":" + texture;
     }
 
     public ModelFace cloneWithNewTexture(String texture) {

@@ -29,8 +29,7 @@ import it.unimi.dsi.fastutil.ints.Int2IntMaps;
 import it.unimi.dsi.fastutil.ints.IntSet;
 import it.unimi.dsi.fastutil.ints.IntSets;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Optional;
@@ -93,9 +92,9 @@ public class SpaceFont extends MinecraftFont {
                         break;
                     case STRIKETHROUGH:
                         if (charImage == null) {
-                            charImage = new BufferedImage(w + (underlineStrikethroughExpanded ? 0 : pixelSize), h, BufferedImage.TYPE_INT_ARGB);
+                            charImage = new BufferedImage(w + pixelSize, h, BufferedImage.TYPE_INT_ARGB);
                         } else {
-                            charImage = ImageUtils.expandCenterAligned(charImage, 0, 0, 0, underlineStrikethroughExpanded ? 0 : pixelSize);
+                            charImage = ImageUtils.expandCenterAligned(charImage, 0, 0, 0, pixelSize);
                         }
                         Graphics2D g = charImage.createGraphics();
                         g.setColor(awtColor);
@@ -104,9 +103,9 @@ public class SpaceFont extends MinecraftFont {
                         break;
                     case UNDERLINED:
                         if (charImage == null) {
-                            charImage = new BufferedImage(w + (underlineStrikethroughExpanded ? 0 : pixelSize), h + (strikeSize * 2), BufferedImage.TYPE_INT_ARGB);
+                            charImage = new BufferedImage(w + pixelSize, h + (strikeSize * 2), BufferedImage.TYPE_INT_ARGB);
                         } else {
-                            charImage = ImageUtils.expandCenterAligned(charImage, 0, strikeSize * 2, 0, underlineStrikethroughExpanded ? 0 : pixelSize);
+                            charImage = ImageUtils.expandCenterAligned(charImage, 0, strikeSize * 2, 0, pixelSize);
                         }
                         g = charImage.createGraphics();
                         g.setColor(awtColor);

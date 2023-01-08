@@ -23,11 +23,7 @@ package com.loohp.interactivechatdiscordsrvaddon.utils;
 import com.loohp.interactivechat.InteractiveChat;
 import com.loohp.interactivechat.libs.com.cryptomorin.xseries.XMaterial;
 import com.loohp.interactivechat.libs.io.github.bananapuncher714.nbteditor.NBTEditor;
-import com.loohp.interactivechat.libs.net.querz.nbt.tag.CompoundTag;
-import com.loohp.interactivechat.libs.net.querz.nbt.tag.IntArrayTag;
-import com.loohp.interactivechat.libs.net.querz.nbt.tag.ListTag;
-import com.loohp.interactivechat.libs.net.querz.nbt.tag.StringTag;
-import com.loohp.interactivechat.libs.net.querz.nbt.tag.Tag;
+import com.loohp.interactivechat.libs.net.querz.nbt.tag.*;
 import com.loohp.interactivechat.libs.org.json.simple.JSONObject;
 import com.loohp.interactivechat.libs.org.json.simple.parser.JSONParser;
 import com.loohp.interactivechat.libs.org.json.simple.parser.ParseException;
@@ -35,12 +31,7 @@ import com.loohp.interactivechat.objectholders.ICMaterial;
 import com.loohp.interactivechat.objectholders.ICPlayer;
 import com.loohp.interactivechat.objectholders.OfflineICPlayer;
 import com.loohp.interactivechat.objectholders.ValuePairs;
-import com.loohp.interactivechat.utils.CompassUtils;
-import com.loohp.interactivechat.utils.FilledMapUtils;
-import com.loohp.interactivechat.utils.ItemNBTUtils;
-import com.loohp.interactivechat.utils.MCVersion;
-import com.loohp.interactivechat.utils.NBTParsingUtils;
-import com.loohp.interactivechat.utils.SkinUtils;
+import com.loohp.interactivechat.utils.*;
 import com.loohp.interactivechatdiscordsrvaddon.graphics.BannerGraphics;
 import com.loohp.interactivechatdiscordsrvaddon.graphics.BannerGraphics.BannerAssetResult;
 import com.loohp.interactivechatdiscordsrvaddon.graphics.ImageGeneration;
@@ -63,30 +54,19 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BundleMeta;
-import org.bukkit.inventory.meta.CompassMeta;
-import org.bukkit.inventory.meta.CrossbowMeta;
-import org.bukkit.inventory.meta.Damageable;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
-import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.inventory.meta.*;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionType;
 import org.bukkit.util.Vector;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Base64;
-import java.util.Collections;
-import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Random;
-import java.util.UUID;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
 import java.util.regex.Matcher;
@@ -254,7 +234,7 @@ public class ItemRenderUtils {
         } else if (icMaterial.isMaterial(XMaterial.CROSSBOW)) {
             CrossbowMeta meta = (CrossbowMeta) item.getItemMeta();
             List<ItemStack> charged = meta.getChargedProjectiles();
-            if (charged != null && !charged.isEmpty()) {
+            if (!charged.isEmpty()) {
                 predicates.put(ModelOverrideType.CHARGED, 1F);
                 ItemStack charge = charged.get(0);
                 ICMaterial chargeType = ICMaterial.from(charge);
@@ -447,10 +427,8 @@ public class ItemRenderUtils {
                 potionOverlay = ImageUtils.multiply(potionOverlay, colorOverlay);
 
                 providedTextures.put(ResourceRegistry.POTION_OVERLAY_PLACEHOLDER, new GeneratedTextureResource(manager, potionOverlay));
-                if (potiontype != null) {
-                    if (!(potiontype.name().equals("WATER") || potiontype.name().equals("AWKWARD") || potiontype.name().equals("MUNDANE") || potiontype.name().equals("THICK") || potiontype.name().equals("UNCRAFTABLE"))) {
-                        requiresEnchantmentGlint = true;
-                    }
+                if (!(potiontype.name().equals("WATER") || potiontype.name().equals("AWKWARD") || potiontype.name().equals("MUNDANE") || potiontype.name().equals("THICK") || potiontype.name().equals("UNCRAFTABLE"))) {
+                    requiresEnchantmentGlint = true;
                 }
             }
         } else if (icMaterial.isOneOf(Collections.singletonList("CONTAINS:spawn_egg"))) {
@@ -518,12 +496,12 @@ public class ItemRenderUtils {
                 if (FishUtils.getPlayerFishingHook(bukkitPlayer) != null) {
                     ItemStack mainHandItem = bukkitPlayer.getEquipment().getItemInHand();
                     if (InteractiveChat.version.isOld()) {
-                        if (mainHandItem != null && mainHandItem.equals(item)) {
+                        if (mainHandItem.equals(item)) {
                             predicates.put(ModelOverrideType.CAST, 1F);
                         }
                     } else {
                         ItemStack offHandItem = bukkitPlayer.getEquipment().getItemInOffHand();
-                        if ((mainHandItem != null && mainHandItem.equals(item)) || ((offHandItem != null && offHandItem.equals(item)) && (mainHandItem == null || !XMaterial.matchXMaterial(mainHandItem).equals(XMaterial.FISHING_ROD)))) {
+                        if (mainHandItem != null && mainHandItem.equals(item) || offHandItem != null && offHandItem.equals(item) && !XMaterial.matchXMaterial(mainHandItem).equals(XMaterial.FISHING_ROD)) {
                             predicates.put(ModelOverrideType.CAST, 1F);
                         }
                     }

@@ -36,14 +36,7 @@ import com.loohp.interactivechat.libs.net.querz.nbt.tag.StringTag;
 import com.loohp.interactivechat.libs.org.apache.commons.text.WordUtils;
 import com.loohp.interactivechat.objectholders.ICMaterial;
 import com.loohp.interactivechat.objectholders.OfflineICPlayer;
-import com.loohp.interactivechat.utils.ChatColorUtils;
-import com.loohp.interactivechat.utils.ColorUtils;
-import com.loohp.interactivechat.utils.FilledMapUtils;
-import com.loohp.interactivechat.utils.InteractiveChatComponentSerializer;
-import com.loohp.interactivechat.utils.ItemStackUtils;
-import com.loohp.interactivechat.utils.MCVersion;
-import com.loohp.interactivechat.utils.NBTParsingUtils;
-import com.loohp.interactivechat.utils.RarityUtils;
+import com.loohp.interactivechat.utils.*;
 import com.loohp.interactivechatdiscordsrvaddon.InteractiveChatDiscordSrvAddon;
 import com.loohp.interactivechatdiscordsrvaddon.graphics.ImageGeneration;
 import com.loohp.interactivechatdiscordsrvaddon.objectholders.ToolTipComponent;
@@ -69,35 +62,18 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BannerMeta;
-import org.bukkit.inventory.meta.BlockStateMeta;
-import org.bukkit.inventory.meta.BookMeta;
+import org.bukkit.inventory.meta.*;
 import org.bukkit.inventory.meta.BookMeta.Generation;
-import org.bukkit.inventory.meta.BundleMeta;
-import org.bukkit.inventory.meta.CrossbowMeta;
-import org.bukkit.inventory.meta.Damageable;
-import org.bukkit.inventory.meta.EnchantmentStorageMeta;
-import org.bukkit.inventory.meta.FireworkEffectMeta;
-import org.bukkit.inventory.meta.FireworkMeta;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
-import org.bukkit.inventory.meta.MapMeta;
-import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.map.MapView;
 import org.bukkit.potion.PotionEffect;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
@@ -167,7 +143,7 @@ public class DiscordItemStackUtils {
         }
         ICMaterial icMaterial = ICMaterial.from(item);
         String name = InteractiveChatComponentSerializer.bungeecordApiLegacy().serialize(ItemStackUtils.getDisplayName(item), language);
-        if (item.getAmount() == 1 || item == null || item.getType().equals(Material.AIR)) {
+        if (item.getAmount() == 1 || item.getType().equals(Material.AIR)) {
             name = InteractiveChatDiscordSrvAddon.plugin.itemDisplaySingle.replace("{Item}", ComponentStringUtils.stripColorAndConvertMagic(name)).replace("{Amount}", String.valueOf(item.getAmount()));
         } else {
             name = InteractiveChatDiscordSrvAddon.plugin.itemDisplayMultiple.replace("{Item}", ComponentStringUtils.stripColorAndConvertMagic(name)).replace("{Amount}", String.valueOf(item.getAmount()));
@@ -206,13 +182,7 @@ public class DiscordItemStackUtils {
                 if (blockState instanceof CreatureSpawner) {
                     CreatureSpawner spawner = (CreatureSpawner) meta.getBlockState();
                     EntityType entityType = spawner.getSpawnedType();
-                    if (entityType == null) {
-                        prints.add(ToolTipComponent.text(Component.empty()));
-                        prints.add(ToolTipComponent.text(Component.translatable(TranslationKeyUtils.getSpawnerDescription1()).color(NamedTextColor.GRAY)));
-                        prints.add(ToolTipComponent.text(Component.text(" ").append(Component.translatable(TranslationKeyUtils.getSpawnerDescription2()).color(NamedTextColor.BLUE))));
-                    } else {
-                        prints.add(ToolTipComponent.text(Component.translatable(TranslationKeyUtils.getEntityTypeName(entityType)).color(NamedTextColor.GRAY)));
-                    }
+                    prints.add(ToolTipComponent.text(Component.translatable(TranslationKeyUtils.getEntityTypeName(entityType)).color(NamedTextColor.GRAY)));
                 }
             }
         }
@@ -246,7 +216,7 @@ public class DiscordItemStackUtils {
             prints.add(ToolTipComponent.text(Component.translatable(TranslationKeyUtils.getBookGeneration(generation)).color(NamedTextColor.GRAY)));
         }
 
-        if (icMaterial.isMaterial(XMaterial.SHIELD) && (!hasMeta || (hasMeta && !item.getItemMeta().hasItemFlag(ItemFlag.HIDE_POTION_EFFECTS)))) {
+        if (icMaterial.isMaterial(XMaterial.SHIELD) && (!hasMeta || !item.getItemMeta().hasItemFlag(ItemFlag.HIDE_POTION_EFFECTS))) {
             if (NBTEditor.contains(item, "BlockEntityTag")) {
                 List<Pattern> patterns = Collections.emptyList();
                 if (!(item.getItemMeta() instanceof BannerMeta)) {
@@ -273,7 +243,7 @@ public class DiscordItemStackUtils {
             }
         }
 
-        if (icMaterial.isOneOf(Collections.singletonList("CONTAINS:Banner")) && (!hasMeta || (hasMeta && !item.getItemMeta().hasItemFlag(ItemFlag.HIDE_POTION_EFFECTS)))) {
+        if (icMaterial.isOneOf(Collections.singletonList("CONTAINS:Banner")) && (!hasMeta || !item.getItemMeta().hasItemFlag(ItemFlag.HIDE_POTION_EFFECTS))) {
             List<Pattern> patterns = Collections.emptyList();
             if (!(item.getItemMeta() instanceof BannerMeta)) {
                 if (item.getItemMeta() instanceof BlockStateMeta) {
@@ -364,7 +334,7 @@ public class DiscordItemStackUtils {
         if (icMaterial.isMaterial(XMaterial.CROSSBOW)) {
             CrossbowMeta meta = (CrossbowMeta) item.getItemMeta();
             List<ItemStack> charged = meta.getChargedProjectiles();
-            if (charged != null && !charged.isEmpty()) {
+            if (!charged.isEmpty()) {
                 ItemStack charge = charged.get(0);
                 List<ToolTipComponent<?>> chargedItemInfo = getToolTip(charge, player).getComponents();
                 Component chargeItemName = (Component) chargedItemInfo.get(0).getToolTipComponent();
@@ -495,7 +465,7 @@ public class DiscordItemStackUtils {
             }
         }
 
-        if (!hasMeta || (hasMeta && !item.getItemMeta().hasItemFlag(ItemFlag.HIDE_ENCHANTS))) {
+        if (!hasMeta || !item.getItemMeta().hasItemFlag(ItemFlag.HIDE_ENCHANTS)) {
             Map<Enchantment, Integer> enchantments;
             if (hasMeta && item.getItemMeta() instanceof EnchantmentStorageMeta) {
                 enchantments = ((EnchantmentStorageMeta) item.getItemMeta()).getStoredEnchants();
@@ -512,12 +482,10 @@ public class DiscordItemStackUtils {
                 } else {
                     enchantmentName = key;
                 }
-                if (enchantmentName != null) {
-                    if (enchantment.getMaxLevel() == 1 && level == 1) {
-                        prints.add(ToolTipComponent.text(Component.translatable(enchantmentName).color(NamedTextColor.GRAY)));
-                    } else {
-                        prints.add(ToolTipComponent.text(Component.translatable(enchantmentName).append(Component.text(" ")).append(Component.translatable(TranslationKeyUtils.getEnchantmentLevel(level))).color(NamedTextColor.GRAY)));
-                    }
+                if (enchantment.getMaxLevel() == 1 && level == 1) {
+                    prints.add(ToolTipComponent.text(Component.translatable(enchantmentName).color(NamedTextColor.GRAY)));
+                } else {
+                    prints.add(ToolTipComponent.text(Component.translatable(enchantmentName).append(Component.text(" ")).append(Component.translatable(TranslationKeyUtils.getEnchantmentLevel(level))).color(NamedTextColor.GRAY)));
                 }
             }
         }
@@ -704,7 +672,7 @@ public class DiscordItemStackUtils {
             }
         }
 
-        return new DiscordToolTip(prints, !hasCustomName && prints.size() <= 1);
+        return new DiscordToolTip(prints, false);
     }
 
     public static boolean isUnbreakable(ItemStack item) {
