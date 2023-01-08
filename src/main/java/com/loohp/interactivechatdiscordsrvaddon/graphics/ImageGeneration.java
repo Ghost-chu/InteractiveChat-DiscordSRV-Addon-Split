@@ -1164,8 +1164,8 @@ public class ImageGeneration {
             }
             g.dispose();
             ImageUtils.printComponent(resourceManager.get(), image, name, InteractiveChatDiscordSrvAddon.plugin.language, version.get().isLegacyRGB(), offsetX, (TABLIST_INTERNAL_HEIGHT - 18) / 2 - 1, 16);
-            int lastX = InteractiveChatDiscordSrvAddon.plugin.playerlistCommandMinWidth;
-            for (int x = InteractiveChatDiscordSrvAddon.plugin.playerlistCommandMinWidth; x < image.getWidth(); x++) {
+            int lastX = 0;
+            for (int x = 0; x < image.getWidth(); x++) {
                 for (int y = 0; y < image.getHeight(); y++) {
                     if (image.getRGB(x, y) != 0) {
                         lastX = x;

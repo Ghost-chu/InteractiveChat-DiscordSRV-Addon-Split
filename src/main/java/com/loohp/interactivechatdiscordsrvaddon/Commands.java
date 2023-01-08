@@ -183,9 +183,6 @@ public class Commands implements CommandExecutor, TabCompleter {
                 if (sender.hasPermission("interactivechatdiscordsrv.reloadtexture")) {
                     tab.add("reloadtexture");
                 }
-                if (sender.hasPermission("interactivechatdiscordsrv.update")) {
-                    tab.add("update");
-                }
                 if (sender.hasPermission("interactivechatdiscordsrv.status")) {
                     tab.add("status");
                 }
@@ -199,11 +196,6 @@ public class Commands implements CommandExecutor, TabCompleter {
                 if (sender.hasPermission("interactivechatdiscordsrv.reloadtexture")) {
                     if ("reloadtexture".startsWith(args[0].toLowerCase())) {
                         tab.add("reloadtexture");
-                    }
-                }
-                if (sender.hasPermission("interactivechatdiscordsrv.update")) {
-                    if ("update".startsWith(args[0].toLowerCase())) {
-                        tab.add("update");
                     }
                 }
                 if (sender.hasPermission("interactivechatdiscordsrv.status")) {
