@@ -304,6 +304,10 @@
             <id>loohp-repo</id>
             <url>https://repo.loohpjames.com/repository</url>
         </repository>
+        <repository>
+            <id>nms-repo</id>
+            <url>https://repo.codemc.io/repository/nms/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -358,7 +362,7 @@
         <dependency>
             <groupId>com.discordsrv</groupId>
             <artifactId>discordsrv</artifactId>
-            <version>1.26.0-SNAPSHOT</version>
+            <version>1.26.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
