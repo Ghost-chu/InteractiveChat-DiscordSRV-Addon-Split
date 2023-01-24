@@ -142,7 +142,7 @@ public class ItemRenderUtils {
             int maxDur = item.getType().getMaxDurability();
             int damage = InteractiveChat.version.isLegacy() ? item.getDurability() : ((Damageable) item.getItemMeta()).getDamage();
             predicates.put(ModelOverrideType.DAMAGE, (float) damage / (float) maxDur);
-            predicates.put(ModelOverrideType.DAMAGED, DiscordItemStackUtils.isUnbreakable(item) || (damage <= 0) ? 0F : 1F);
+            predicates.put(ModelOverrideType.DAMAGED, isUnbreakable(item) || (damage <= 0) ? 0F : 1F);
         }
 
         if (icMaterial.isMaterial(XMaterial.CHEST) || icMaterial.isMaterial(XMaterial.TRAPPED_CHEST)) {
@@ -641,6 +641,16 @@ public class ItemRenderUtils {
         }
     }
 
+    public static boolean isUnbreakable(ItemStack item) {
+        if (item.hasItemMeta()) {
+            ItemMeta meta = item.getItemMeta();
+            if (meta != null) {
+                return meta.isUnbreakable();
+            }
+        }
+        return false;
+    }
+
     public static class ItemStackProcessResult {
 
         private final boolean requiresEnchantmentGlint;
@@ -696,5 +706,4 @@ public class ItemRenderUtils {
         }
 
     }
-
 }

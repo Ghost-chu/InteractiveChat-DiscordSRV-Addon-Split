@@ -51,7 +51,7 @@ public class CacheManager implements ICacheManager {
         this.db = DBMaker.fileDB(new File(folder, "data.dat")).fileMmapEnableIfSupported().fileDeleteAfterClose().make();
         this.cacheObjectMap = db.hashMap("cache", Serializer.STRING, Serializer.BYTE_ARRAY).createOrOpen();
         this.service = Executors.newSingleThreadScheduledExecutor();
-        service.scheduleAtFixedRate(() -> cacheObjectMap.expireEvict(), 5, 5, TimeUnit.MINUTES);
+        service.scheduleAtFixedRate(cacheObjectMap::expireEvict, 5, 5, TimeUnit.MINUTES);
         this.isValid = new AtomicBoolean(true);
     }
 

@@ -70,20 +70,12 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class InteractiveChatDiscordSrvAddon extends JavaPlugin implements Listener {
     public static final String CONFIG_ID = "interactivechatdiscordsrvaddon_config";
-
     public static InteractiveChatDiscordSrvAddon plugin;
     public static InteractiveChat interactivechat;
-
     public static boolean isReady = false;
-
     public static boolean debug = false;
-    public final AtomicLong messagesCounter = new AtomicLong(0);
     public final AtomicLong imageCounter = new AtomicLong(0);
     public final AtomicLong inventoryImageCounter = new AtomicLong(0);
-    public final AtomicLong attachmentCounter = new AtomicLong(0);
-    public final AtomicLong attachmentImageCounter = new AtomicLong(0);
-    public final AtomicLong imagesViewedCounter = new AtomicLong(0);
-    public final Queue<Integer> playerModelRenderingTimes = new ConcurrentLinkedQueue<>();
     public final List<String> resourceOrder = new ArrayList<>();
     protected final ReentrantLock resourceReloadLock = new ReentrantLock(true);
     protected final Map<String, byte[]> extras = new ConcurrentHashMap<>();

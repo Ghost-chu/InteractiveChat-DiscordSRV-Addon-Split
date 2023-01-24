@@ -24,10 +24,8 @@ import com.loohp.interactivechat.InteractiveChat;
 import com.loohp.interactivechat.utils.MCVersion;
 import com.loohp.interactivechat.utils.NMSUtils;
 import com.loohp.interactivechatdiscordsrvaddon.objectholders.BiomePrecipitation;
-import com.loohp.interactivechatdiscordsrvaddon.wrappers.DimensionManagerWrapper;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.World.Environment;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -71,37 +69,11 @@ public class WorldUtils {
     }
 
     public static String getNamespacedKey(World world) {
-        if (InteractiveChat.version.isNewerOrEqualTo(MCVersion.V1_16)) {
-            try {
-                Object craftWorldObject = craftWorldClass.cast(world);
-                Object nmsWorldServerObject = getHandleMethod.invoke(craftWorldObject);
-                Object nmsResourceKeyObject = getWorldTypeKeyMethod.invoke(nmsWorldServerObject);
-                return getMinecraftKeyMethod.invoke(nmsResourceKeyObject).toString();
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        } else {
-            if (world.getEnvironment().equals(Environment.NORMAL)) {
-                return "minecraft:overworld";
-            } else if (world.getEnvironment().equals(Environment.NETHER)) {
-                return "minecraft:the_nether";
-            } else if (world.getEnvironment().equals(Environment.THE_END)) {
-                return "minecraft:the_end";
-            } else {
-                return "minecraft:custom";
-            }
-        }
-        return null;
+        return world.getKey().toString();
     }
 
     public static boolean isNatural(World world) {
-        if (InteractiveChat.version.isNewerOrEqualTo(MCVersion.V1_19)) {
-            return world.isNatural();
-        } else if (InteractiveChat.version.isNewerOrEqualTo(MCVersion.V1_16)) {
-            return new DimensionManagerWrapper(world).natural();
-        } else {
-            return world.getEnvironment().equals(Environment.NORMAL);
-        }
+        return world.isNatural();
     }
 
     @SuppressWarnings("deprecation")

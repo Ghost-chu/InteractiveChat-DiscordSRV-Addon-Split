@@ -228,7 +228,7 @@ public class BlockModelRenderer extends JFrame {
             });
             providedTextureSettings.put(fieldText, new ValueTrios<>(fieldText::getText, fieldButton, fieldFileChooser));
             builtInProvidedTexturesPanel.add(fieldButton);
-            SwingUtilities.invokeLater(() -> providedTexturesDialog.pack());
+            SwingUtilities.invokeLater(providedTexturesDialog::pack);
         });
         JPanel layoutPanel = new JPanel();
         BoxLayout layout = new BoxLayout(layoutPanel, BoxLayout.Y_AXIS);
@@ -257,7 +257,7 @@ public class BlockModelRenderer extends JFrame {
                         }
                     }
                 }
-                SwingUtilities.invokeLater(() -> providedTexturesDialog.pack());
+                SwingUtilities.invokeLater(providedTexturesDialog::pack);
             }
         });
 

@@ -51,7 +51,7 @@ public class LanguageManager extends AbstractManager implements ILanguageManager
     }
 
     public static Supplier<Collection<String>> defaultAvailableLanguagesSupplier(LanguageManager manager) {
-        return () -> manager.translations.keySet();
+        return manager.translations::keySet;
     }
 
     private final Map<String, LanguageMeta> languageMeta;
