@@ -20,8 +20,8 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.objectholders;
 
-import com.loohp.interactivechat.utils.ComponentCompacting;
-import com.loohp.interactivechat.utils.ComponentFlattening;
+import com.loohp.interactivechatdiscordsrvaddon.utils.ComponentCompacting;
+import com.loohp.interactivechatdiscordsrvaddon.utils.ComponentFlattening;
 import com.loohp.interactivechatdiscordsrvaddon.utils.ValuePairs;
 import it.unimi.dsi.fastutil.chars.CharObjectImmutablePair;
 import it.unimi.dsi.fastutil.chars.CharObjectPair;

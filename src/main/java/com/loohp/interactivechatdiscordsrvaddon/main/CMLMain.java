@@ -21,10 +21,13 @@
 package com.loohp.interactivechatdiscordsrvaddon.main;
 
 
+import com.loohp.interactivechat.updater.Version;
+import com.loohp.interactivechat.utils.FileUtils;
+import com.loohp.interactivechat.utils.HTTPRequestUtils;
 import com.loohp.interactivechatdiscordsrvaddon.libs.LibraryDownloadManager;
 import com.loohp.interactivechatdiscordsrvaddon.resources.ResourceDownloadManager;
-import org.bukkit.configuration.ConfigurationSection;
-import org.json.simple.JSONObject;
+import org.simpleyaml.configuration.ConfigurationSection;
+import org.simpleyaml.configuration.file.YamlFile;
 
 import java.io.BufferedReader;
 import java.io.File;

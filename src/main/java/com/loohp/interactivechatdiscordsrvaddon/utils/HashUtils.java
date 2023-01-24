@@ -57,8 +57,8 @@ public class HashUtils {
     public static String createSha1String(File file) throws Exception {
         byte[] b = createSha1(file);
         String result = "";
-        for (int i = 0; i < b.length; i++) {
-            result += Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1);
+        for (byte value : b) {
+            result += Integer.toString((value & 0xff) + 0x100, 16).substring(1);
         }
         return result;
     }
@@ -66,8 +66,8 @@ public class HashUtils {
     public static String createSha1String(InputStream fis) throws Exception {
         byte[] b = createSha1(fis);
         String result = "";
-        for (int i = 0; i < b.length; i++) {
-            result += Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1);
+        for (byte value : b) {
+            result += Integer.toString((value & 0xff) + 0x100, 16).substring(1);
         }
         return result;
     }

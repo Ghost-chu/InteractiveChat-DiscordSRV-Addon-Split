@@ -25,7 +25,7 @@ import com.ibm.icu.text.Bidi;
 import com.ibm.icu.text.BidiRun;
 import com.loohp.interactivechatdiscordsrvaddon.objectholders.CharacterData;
 import it.unimi.dsi.fastutil.chars.CharObjectPair;
-import me.clip.placeholderapi.libs.kyori.adventure.text.Component;
+import net.kyori.adventure.text.Component;
 
 import java.util.ArrayList;
 import java.util.List;

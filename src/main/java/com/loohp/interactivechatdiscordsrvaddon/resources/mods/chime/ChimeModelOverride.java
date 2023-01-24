@@ -21,7 +21,6 @@
 package com.loohp.interactivechatdiscordsrvaddon.resources.mods.chime;
 
 import com.google.common.collect.Range;
-import com.loohp.interactivechat.objectholders.OfflineICPlayer;
 import com.loohp.interactivechat.utils.ItemNBTUtils;
 import com.loohp.interactivechat.utils.NBTParsingUtils;
 import com.loohp.interactivechatdiscordsrvaddon.objectholders.BiomePrecipitation;
@@ -84,7 +83,7 @@ public class ChimeModelOverride extends ModelOverride {
         return false;
     }
 
-    public boolean test(Map<ModelOverrideType, Float> data, OfflineICPlayer player, World world, LivingEntity entity, ItemStack itemStack, UnaryOperator<String> translateFunction) {
+    public boolean test(Map<ModelOverrideType, Float> data, Player player, World world, LivingEntity entity, ItemStack itemStack, UnaryOperator<String> translateFunction) {
         if (!super.test(data)) {
             return false;
         }
@@ -372,7 +371,7 @@ public class ChimeModelOverride extends ModelOverride {
             return predicate;
         }
 
-        public boolean test(Object value, OfflineICPlayer player, World world, LivingEntity entity, ItemStack itemStack, UnaryOperator<String> translateFunction) {
+        public boolean test(Object value, Player player, World world, LivingEntity entity, ItemStack itemStack, UnaryOperator<String> translateFunction) {
             try {
                 return predicate.test(value, player, world, entity, itemStack, translateFunction);
             } catch (Throwable e) {
@@ -411,7 +410,7 @@ public class ChimeModelOverride extends ModelOverride {
     @FunctionalInterface
     public interface ChimeOverridePredicate<T> {
 
-        boolean test(T t, OfflineICPlayer player, World world, LivingEntity entity, ItemStack itemStack, UnaryOperator<String> translateFunction);
+        boolean test(T t, Player player, World world, LivingEntity entity, ItemStack itemStack, UnaryOperator<String> translateFunction);
 
     }
 

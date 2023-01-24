@@ -47,10 +47,11 @@ public class DataTypeIO {
         boolean hasTitle = in.readBoolean();
         String title = hasTitle ? readString(in, charset) : null;
         switch (encodingScheme) {
-            case 0:
+            case 0 -> {
                 String data = readString(in, charset);
                 return InventoryUtils.fromBase64(data, title);
-            case 1:
+            }
+            case 1 -> {
                 int size = in.readInt();
                 Inventory inventory;
                 if (type.equals(InventoryType.CHEST)) {
@@ -62,8 +63,8 @@ public class DataTypeIO {
                     inventory.setItem(i, readItemStack(in, charset));
                 }
                 return inventory;
-            default:
-                throw new IllegalArgumentException("Unknown encodingScheme version!");
+            }
+            default -> throw new IllegalArgumentException("Unknown encodingScheme version!");
         }
     }
 
@@ -77,17 +78,14 @@ public class DataTypeIO {
             writeString(out, title, charset);
         }
         switch (encodingScheme) {
-            case 0:
-                writeString(out, InventoryUtils.toBase64(inventory), charset);
-                break;
-            case 1:
+            case 0 -> writeString(out, InventoryUtils.toBase64(inventory), charset);
+            case 1 -> {
                 out.writeInt(inventory.getSize());
                 for (int i = 0; i < inventory.getSize(); i++) {
                     writeItemStack(out, 1, inventory.getItem(i), charset);
                 }
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown encodingScheme version!");
+            }
+            default -> throw new IllegalArgumentException("Unknown encodingScheme version!");
         }
     }
 
@@ -95,7 +93,7 @@ public class DataTypeIO {
     public static ItemStack readItemStack(ByteArrayDataInput in, Charset charset) throws IOException {
         int encodingScheme = in.readByte();
         switch (encodingScheme) {
-            case 0:
+            case 0 -> {
                 String data = readString(in, charset);
                 YamlConfiguration config = new YamlConfiguration();
                 try {
@@ -104,7 +102,8 @@ public class DataTypeIO {
                     return null;
                 }
                 return config.getItemStack("i", null);
-            case 1:
+            }
+            case 1 -> {
                 if (in.readBoolean()) {
                     Material material = Material.matchMaterial(readString(in, charset));
                     ItemStack itemStack = new ItemStack(material);
@@ -129,12 +128,11 @@ public class DataTypeIO {
                 } else {
                     return null;
                 }
-            default:
-                throw new IllegalArgumentException("Unknown encodingScheme version!");
+            }
+            default -> throw new IllegalArgumentException("Unknown encodingScheme version!");
         }
     }
 
-    @SuppressWarnings("deprecation")
     public static void writeItemStack(ByteArrayDataOutput out, int defaultEncodingScheme, ItemStack itemStack, Charset charset) throws IOException {
         int encodingScheme = defaultEncodingScheme;
         ByteArrayDataOutput itemByte = ByteStreams.newDataOutput();
@@ -176,11 +174,11 @@ public class DataTypeIO {
         out.write(itemByte.toByteArray());
     }
 
-    public static UUID readUUID(ByteArrayDataInput in) throws IOException {
+    public static UUID readUUID(ByteArrayDataInput in) {
         return new UUID(in.readLong(), in.readLong());
     }
 
-    public static void writeUUID(ByteArrayDataOutput out, UUID uuid) throws IOException {
+    public static void writeUUID(ByteArrayDataOutput out, UUID uuid) {
         out.writeLong(uuid.getMostSignificantBits());
         out.writeLong(uuid.getLeastSignificantBits());
     }
@@ -197,12 +195,12 @@ public class DataTypeIO {
         return new String(b, charset);
     }
 
-    public static int getStringLength(String string, Charset charset) throws IOException {
+    public static int getStringLength(String string, Charset charset) {
         byte[] bytes = string.getBytes(charset);
         return bytes.length;
     }
 
-    public static void writeString(ByteArrayDataOutput out, String string, Charset charset) throws IOException {
+    public static void writeString(ByteArrayDataOutput out, String string, Charset charset) {
         byte[] bytes = string.getBytes(charset);
         out.writeInt(bytes.length);
         out.write(bytes);

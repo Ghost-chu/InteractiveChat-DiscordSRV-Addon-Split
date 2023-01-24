@@ -268,7 +268,6 @@ public class TextureAtlases {
         public boolean isIncluded(String namespace, String relativePath) {
             String file = resource;
             if (!resource.contains(".")) {
-                file += ".png";
             }
             return relativePath.equals(resource);
         }
@@ -342,7 +341,6 @@ public class TextureAtlases {
         public boolean isIncluded(String namespace, String relativePath) {
             String file = resource;
             if (!resource.contains(".")) {
-                file += ".png";
             }
             return relativePath.equals(resource);
         }

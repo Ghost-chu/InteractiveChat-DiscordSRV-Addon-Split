@@ -24,8 +24,8 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.loohp.interactivechat.InteractiveChat;
 import com.loohp.interactivechat.api.events.ICPlayerJoinEvent;
-import com.loohp.interactivechat.api.events.OfflineICPlayerCreationEvent;
-import com.loohp.interactivechat.api.events.OfflineICPlayerUpdateEvent;
+import com.loohp.interactivechat.api.events.PlayerCreationEvent;
+import com.loohp.interactivechat.api.events.PlayerUpdateEvent;
 import com.loohp.interactivechatdiscordsrvaddon.InteractiveChatDiscordSrvAddon;
 import com.loohp.interactivechatdiscordsrvaddon.graphics.ImageUtils;
 import kong.unirest.HttpResponse;
@@ -63,12 +63,12 @@ public class ICPlayerEvents implements Listener {
     }
 
     @EventHandler
-    public void onCreation(OfflineICPlayerCreationEvent event) {
+    public void onCreation(PlayerCreationEvent event) {
         populate(event.getPlayer(), false);
     }
 
     @EventHandler
-    public void onUpdate(OfflineICPlayerUpdateEvent event) {
+    public void onUpdate(PlayerUpdateEvent event) {
         populate(event.getPlayer(), false);
     }
 
@@ -83,9 +83,9 @@ public class ICPlayerEvents implements Listener {
             HttpResponse<JsonNode> json = Unirest.get(PROFILE_URL.replace("%s", player.getName())).asJson();
             if (json.isSuccess() && json.getBody().getObject().has("properties")) {
                 JSONObject properties = json.getBody().getObject().getJSONObject("properties");
-                for (Object obj : properties.keySet()) {
+                for (String obj : properties.keySet()) {
                     try {
-                        String key = (String) obj;
+                        String key = obj;
                         String value = (String) properties.get(key);
                         if (value.endsWith(".png")) {
                             BufferedImage image = ImageUtils.downloadImage(value);

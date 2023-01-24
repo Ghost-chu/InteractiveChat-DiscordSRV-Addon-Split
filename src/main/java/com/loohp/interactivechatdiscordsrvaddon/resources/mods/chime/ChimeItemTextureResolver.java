@@ -20,7 +20,7 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.resources.mods.chime;
 
-import com.loohp.interactivechat.objectholders.OfflineICPlayer;
+import com.loohp.interactivechat.objectholders.Player;
 import com.loohp.interactivechatdiscordsrvaddon.resources.CustomItemTextureRegistry.CustomItemTextureResolver;
 import com.loohp.interactivechatdiscordsrvaddon.resources.models.BlockModel;
 import com.loohp.interactivechatdiscordsrvaddon.resources.models.ModelOverride.ModelOverrideType;
@@ -52,7 +52,7 @@ public class ChimeItemTextureResolver implements CustomItemTextureResolver {
 
 
     @Override
-    public ValuePairs<BlockModel, Map<String, TextureResource>> getItemPostResolveFunction(ValuePairs<BlockModel, Map<String, TextureResource>> previousResult, String modelKey, EquipmentSlot heldSlot, ItemStack itemStack, boolean is1_8, Map<ModelOverrideType, Float> predicates, OfflineICPlayer player, World world, LivingEntity entity, UnaryOperator<String> translateFunction) {
+    public ValuePairs<BlockModel, Map<String, TextureResource>> getItemPostResolveFunction(ValuePairs<BlockModel, Map<String, TextureResource>> previousResult, String modelKey, EquipmentSlot heldSlot, ItemStack itemStack, boolean is1_8, Map<ModelOverrideType, Float> predicates, Player player, World world, LivingEntity entity, UnaryOperator<String> translateFunction) {
         return new ValuePairs<>(chimeManager.resolveBlockModel(modelKey, is1_8, predicates, player, world, entity, itemStack, translateFunction), previousResult.getSecond());
     }
 
@@ -67,7 +67,7 @@ public class ChimeItemTextureResolver implements CustomItemTextureResolver {
     }
 
     @Override
-    public Optional<TextureResource> getArmorOverrideTextures(String layer, EquipmentSlot heldSlot, ItemStack itemStack, OfflineICPlayer player, World world, LivingEntity entity, UnaryOperator<String> translateFunction) {
+    public Optional<TextureResource> getArmorOverrideTextures(String layer, EquipmentSlot heldSlot, ItemStack itemStack, Player player, World world, LivingEntity entity, UnaryOperator<String> translateFunction) {
         return Optional.ofNullable(chimeManager.getArmorOverrideTextures(layer, itemStack, player, world, entity, translateFunction));
     }
 

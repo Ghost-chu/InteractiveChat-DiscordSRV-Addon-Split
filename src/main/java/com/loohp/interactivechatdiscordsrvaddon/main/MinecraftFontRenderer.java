@@ -23,10 +23,7 @@ package com.loohp.interactivechatdiscordsrvaddon.main;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import com.loohp.interactivechat.utils.ChatColorUtils;
-import com.loohp.interactivechat.utils.ComponentStyling;
 import com.loohp.interactivechatdiscordsrvaddon.graphics.ImageUtils;
-import com.loohp.interactivechatdiscordsrvaddon.libs.URLClassLoaderAccess;
 import com.loohp.interactivechatdiscordsrvaddon.registry.ResourceRegistry;
 import com.loohp.interactivechatdiscordsrvaddon.resources.*;
 import com.loohp.interactivechatdiscordsrvaddon.resources.languages.LanguageManager;
@@ -34,6 +31,7 @@ import com.loohp.interactivechatdiscordsrvaddon.resources.textures.TextureAnimat
 import com.loohp.interactivechatdiscordsrvaddon.resources.textures.TextureMeta;
 import com.loohp.interactivechatdiscordsrvaddon.resources.textures.TextureProperties;
 import com.loohp.interactivechatdiscordsrvaddon.resources.textures.TextureResource;
+import com.loohp.interactivechatdiscordsrvaddon.utils.ComponentStyling;
 import com.loohp.interactivechatdiscordsrvaddon.utils.ResourcePackInfoUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;

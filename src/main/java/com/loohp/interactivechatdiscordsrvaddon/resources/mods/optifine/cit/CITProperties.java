@@ -275,7 +275,6 @@ public abstract class CITProperties {
         return nbtMatch;
     }
 
-    @SuppressWarnings("deprecation")
     public boolean test(EquipmentSlot heldSlot, ItemStack itemStack, UnaryOperator<String> translateFunction) {
         if (itemStack == null || itemStack.getType().equals(Material.AIR)) {
             return false;

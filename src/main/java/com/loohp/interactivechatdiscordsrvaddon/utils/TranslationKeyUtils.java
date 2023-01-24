@@ -305,7 +305,6 @@ public class TranslationKeyUtils {
             case FEET -> "item.modifiers.feet";
             case HAND -> "item.modifiers.mainhand";
             case OFF_HAND -> "item.modifiers.offhand";
-            default -> "item.modifiers." + slot.toString().toLowerCase();
         };
     }
 
@@ -326,7 +325,7 @@ public class TranslationKeyUtils {
             case COPY_OF_ORIGINAL -> "book.generation.1";
             case COPY_OF_COPY -> "book.generation.2";
             case TATTERED -> "book.generation.3";
-            case ORIGINAL, default -> "book.generation.0";
+            case ORIGINAL -> "book.generation.0";
         };
     }
 
@@ -353,7 +352,6 @@ public class TranslationKeyUtils {
             case STAR -> "item.minecraft.firework_star.shape.star";
             case CREEPER -> "item.minecraft.firework_star.shape.creeper";
             case BURST -> "item.minecraft.firework_star.shape.burst";
-            default -> "item.minecraft.firework_star.shape";
         };
     }
 

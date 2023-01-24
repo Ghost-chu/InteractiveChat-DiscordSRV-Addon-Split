@@ -602,11 +602,9 @@ public class ModelRenderer implements AutoCloseable {
                     hexahedrons.add(task.get());
                 } catch (Throwable e) {
                     new RuntimeException("Unable to generate model: " + blockModel.getResourceLocation(), e).printStackTrace();
-                    hexahedrons = null;
                     for (Future<Hexahedron> t : tasks) {
                         t.cancel(true);
                     }
-                    tasks = null;
                     if (e instanceof OutOfMemoryError) {
                         System.gc();
                     }

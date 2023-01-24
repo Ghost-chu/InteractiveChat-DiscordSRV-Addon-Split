@@ -49,6 +49,8 @@ import org.bukkit.inventory.MainHand;
 import org.bukkit.inventory.meta.*;
 import org.bukkit.potion.PotionType;
 import org.bukkit.util.Vector;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.awt.Color;
@@ -438,7 +440,7 @@ public class ItemRenderUtils {
                     j += (l & 0xFF00) >> 8;
                     k += (l & 0xFF);
                 }
-                overlayColor = (i /= is.length) << 16 | (j /= is.length) << 8 | (k /= is.length);
+                overlayColor = i / is.length << 16 | j / is.length << 8 | k / is.length;
             }
 
             BufferedImage fireworkStarOverlay = manager.getTextureManager().getTexture(ResourceRegistry.FIREWORK_STAR_OVERLAY_LOCATION).getTexture();

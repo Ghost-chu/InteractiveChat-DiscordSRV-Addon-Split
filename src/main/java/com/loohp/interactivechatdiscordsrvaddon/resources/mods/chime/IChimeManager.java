@@ -20,7 +20,7 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.resources.mods.chime;
 
-import com.loohp.interactivechat.objectholders.OfflineICPlayer;
+import com.loohp.interactivechat.objectholders.Player;
 import com.loohp.interactivechatdiscordsrvaddon.resources.models.IModelManager;
 import com.loohp.interactivechatdiscordsrvaddon.resources.textures.ITextureManager;
 import com.loohp.interactivechatdiscordsrvaddon.resources.textures.TextureResource;
@@ -32,6 +32,6 @@ import java.util.function.UnaryOperator;
 
 public interface IChimeManager extends IModelManager, ITextureManager {
 
-    TextureResource getArmorOverrideTextures(String layer, ItemStack itemStack, OfflineICPlayer player, World world, LivingEntity entity, UnaryOperator<String> translateFunction);
+    TextureResource getArmorOverrideTextures(String layer, ItemStack itemStack, Player player, World world, LivingEntity entity, UnaryOperator<String> translateFunction);
 
 }

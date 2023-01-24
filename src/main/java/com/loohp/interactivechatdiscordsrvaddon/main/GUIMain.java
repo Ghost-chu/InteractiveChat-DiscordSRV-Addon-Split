@@ -314,7 +314,7 @@ public class GUIMain {
                 if (downloadResult) {
                     label.setText("<html>Downloading libraries: (4 of 4)<br>Downloaded library \"" + jarName + "\"<html/>");
                 }
-                progressBar.setValue((int) (percentage * 100));
+                progressBar.setValue(percentage * 100);
             });
             label.setText("<html>Done!<html/>");
             future.complete(null);

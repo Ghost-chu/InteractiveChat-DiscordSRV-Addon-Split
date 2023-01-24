@@ -20,7 +20,7 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.resources;
 
-import com.loohp.interactivechat.objectholders.OfflineICPlayer;
+import com.loohp.interactivechat.objectholders.Player;
 import com.loohp.interactivechatdiscordsrvaddon.resources.ResourceManager.ResourceRegistrySupplier;
 import com.loohp.interactivechatdiscordsrvaddon.resources.models.BlockModel;
 import com.loohp.interactivechatdiscordsrvaddon.resources.models.ModelOverride.ModelOverrideType;
@@ -72,7 +72,7 @@ public class CustomItemTextureRegistry implements IResourceRegistry {
         resolvers.remove(resolver);
     }
 
-    public Optional<Function<BlockModel, ValuePairs<BlockModel, Map<String, TextureResource>>>> getItemPostResolveFunction(String modelKey, EquipmentSlot heldSlot, ItemStack itemStack, boolean is1_8, Map<ModelOverrideType, Float> predicates, OfflineICPlayer player, World world, LivingEntity entity, UnaryOperator<String> translateFunction) {
+    public Optional<Function<BlockModel, ValuePairs<BlockModel, Map<String, TextureResource>>>> getItemPostResolveFunction(String modelKey, EquipmentSlot heldSlot, ItemStack itemStack, boolean is1_8, Map<ModelOverrideType, Float> predicates, Player player, World world, LivingEntity entity, UnaryOperator<String> translateFunction) {
         return resolvers.stream()
                 .map(each -> (Function<ValuePairs<BlockModel, Map<String, TextureResource>>, ValuePairs<BlockModel, Map<String, TextureResource>>>) result -> each.getItemPostResolveFunction(result, modelKey, heldSlot, itemStack, is1_8, predicates, player, world, entity, translateFunction))
                 .reduce(Function::andThen)
@@ -87,19 +87,19 @@ public class CustomItemTextureRegistry implements IResourceRegistry {
         return resolvers.stream().map(each -> each.getEnchantmentGlintOverrideTextures(heldSlot, itemStack, translateFunction)).filter(each -> !each.isEmpty()).findFirst().orElseGet(ifEmpty);
     }
 
-    public Optional<TextureResource> getArmorOverrideTextures(String layer, EquipmentSlot heldSlot, ItemStack itemStack, OfflineICPlayer player, World world, LivingEntity entity, UnaryOperator<String> translateFunction) {
+    public Optional<TextureResource> getArmorOverrideTextures(String layer, EquipmentSlot heldSlot, ItemStack itemStack, Player player, World world, LivingEntity entity, UnaryOperator<String> translateFunction) {
         return resolvers.stream().map(each -> each.getArmorOverrideTextures(layer, heldSlot, itemStack, player, world, entity, translateFunction)).filter(Optional::isPresent).findFirst().flatMap(each -> each);
     }
 
     public interface CustomItemTextureResolver {
 
-        ValuePairs<BlockModel, Map<String, TextureResource>> getItemPostResolveFunction(ValuePairs<BlockModel, Map<String, TextureResource>> previousResult, String modelKey, EquipmentSlot heldSlot, ItemStack itemStack, boolean is1_8, Map<ModelOverrideType, Float> predicates, OfflineICPlayer player, World world, LivingEntity entity, UnaryOperator<String> translateFunction);
+        ValuePairs<BlockModel, Map<String, TextureResource>> getItemPostResolveFunction(ValuePairs<BlockModel, Map<String, TextureResource>> previousResult, String modelKey, EquipmentSlot heldSlot, ItemStack itemStack, boolean is1_8, Map<ModelOverrideType, Float> predicates, Player player, World world, LivingEntity entity, UnaryOperator<String> translateFunction);
 
         Optional<TextureResource> getElytraOverrideTextures(EquipmentSlot heldSlot, ItemStack itemStack, UnaryOperator<String> translateFunction);
 
         List<ValuePairs<TextureResource, OpenGLBlending>> getEnchantmentGlintOverrideTextures(EquipmentSlot heldSlot, ItemStack itemStack, UnaryOperator<String> translateFunction);
 
-        Optional<TextureResource> getArmorOverrideTextures(String layer, EquipmentSlot heldSlot, ItemStack itemStack, OfflineICPlayer player, World world, LivingEntity entity, UnaryOperator<String> translateFunction);
+        Optional<TextureResource> getArmorOverrideTextures(String layer, EquipmentSlot heldSlot, ItemStack itemStack, Player player, World world, LivingEntity entity, UnaryOperator<String> translateFunction);
 
     }
 

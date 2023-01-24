@@ -55,16 +55,12 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.EntityEquipment;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.BundleMeta;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.map.MapCursor;
 import org.bukkit.map.MapPalette;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -170,7 +166,7 @@ public class ImageGeneration {
         return Collections.singletonList(new ValuePairs<>(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.MISC_TEXTURE_LOCATION + "enchanted_item_glint"), OpenGLBlending.GLINT));
     }
 
-    public static BufferedImage getAdvancementIcon(ItemStack item, AdvancementType advancementType, boolean completed, OfflineICPlayer player) throws IOException {
+    public static BufferedImage getAdvancementIcon(ItemStack item, AdvancementType advancementType, boolean completed, Player player) throws IOException {
         BufferedImage frame = ImageUtils.resizeImageAbs(getAdvancementFrame(advancementType, completed), 52, 52);
         BufferedImage itemImage = getRawItemImage(item, player);
         Graphics2D g = frame.createGraphics();
@@ -179,19 +175,19 @@ public class ImageGeneration {
         return frame;
     }
 
-    public static BufferedImage getItemStackImage(ItemStack item, OfflineICPlayer player) throws IOException {
+    public static BufferedImage getItemStackImage(ItemStack item, Player player) throws IOException {
         return getItemStackImage(item, player, false);
     }
 
-    public static BufferedImage getItemStackImage(ItemStack item, OfflineICPlayer player, int renderSize) throws IOException {
+    public static BufferedImage getItemStackImage(ItemStack item, Player player, int renderSize) throws IOException {
         return getItemStackImage(item, player, false, renderSize);
     }
 
-    public static BufferedImage getItemStackImage(ItemStack item, OfflineICPlayer player, boolean alternateAir) throws IOException {
+    public static BufferedImage getItemStackImage(ItemStack item, Player player, boolean alternateAir) throws IOException {
         return getItemStackImage(item, player, alternateAir, DEFAULT_ITEM_RENDER_SIZE);
     }
 
-    public static BufferedImage getItemStackImage(ItemStack item, OfflineICPlayer player, boolean alternateAir, int renderSize) throws IOException {
+    public static BufferedImage getItemStackImage(ItemStack item, Player player, boolean alternateAir, int renderSize) throws IOException {
         InteractiveChatDiscordSrvAddon.plugin.imageCounter.incrementAndGet();
         Debug.debug("ImageGeneration creating item stack image " + item);
 
@@ -221,11 +217,11 @@ public class ImageGeneration {
         return background;
     }
 
-    public static BufferedImage getInventoryImage(Inventory inventory, OfflineICPlayer player) throws Exception {
+    public static BufferedImage getInventoryImage(Inventory inventory, Player player) throws Exception {
         return getInventoryImage(inventory, null, player);
     }
 
-    public static BufferedImage getInventoryImage(Inventory inventory, Component title, OfflineICPlayer player) throws Exception {
+    public static BufferedImage getInventoryImage(Inventory inventory, Component title, Player player) throws Exception {
         InteractiveChatDiscordSrvAddon.plugin.imageCounter.incrementAndGet();
         InteractiveChatDiscordSrvAddon.plugin.inventoryImageCounter.incrementAndGet();
         Debug.debug("ImageGeneration creating inventory image of " + player.getName());
@@ -269,14 +265,15 @@ public class ImageGeneration {
         return target;
     }
 
-    public static BufferedImage getPlayerInventoryImage(Inventory inventory, OfflineICPlayer player) throws Exception {
+    public static BufferedImage getPlayerInventoryImage(Inventory inventory, Player player) throws Exception {
         EntityEquipment equipment = player.getEquipment();
-        ItemStack rightHand = player.isRightHanded() ? player.getMainHandItem() : player.getOffHandItem();
-        ItemStack leftHand = player.isRightHanded() ? player.getOffHandItem() : player.getMainHandItem();
+        boolean rightHanded = player.getMainHand() == MainHand.RIGHT;
+        ItemStack rightHand = rightHanded ? player.getInventory().getItemInMainHand() : player.getInventory().getItemInOffHand();
+        ItemStack leftHand = rightHanded ? player.getInventory().getItemInOffHand() : player.getInventory().getItemInMainHand();
         return getPlayerInventoryImage(inventory, rightHand, leftHand, equipment.getHelmet(), equipment.getChestplate(), equipment.getLeggings(), equipment.getBoots(), player);
     }
 
-    public static BufferedImage getPlayerInventoryImage(Inventory inventory, ItemStack puppetRightHand, ItemStack puppetLeftHand, ItemStack puppetHelmet, ItemStack puppetChestplate, ItemStack puppetLeggings, ItemStack puppetBoots, OfflineICPlayer player) throws Exception {
+    public static BufferedImage getPlayerInventoryImage(Inventory inventory, ItemStack puppetRightHand, ItemStack puppetLeftHand, ItemStack puppetHelmet, ItemStack puppetChestplate, ItemStack puppetLeggings, ItemStack puppetBoots, Player player) throws Exception {
         InteractiveChatDiscordSrvAddon.plugin.imageCounter.incrementAndGet();
         InteractiveChatDiscordSrvAddon.plugin.inventoryImageCounter.incrementAndGet();
         Debug.debug("ImageGeneration creating player inventory image of " + player.getName());
@@ -405,28 +402,18 @@ public class ImageGeneration {
         return target;
     }
 
-    private static BufferedImage getFullBodyImage(OfflineICPlayer player, ItemStack rightHand, ItemStack leftHand, ItemStack helmet, ItemStack chestplate, ItemStack leggings, ItemStack boots) throws IOException {
+    private static BufferedImage getFullBodyImage(Player player, ItemStack rightHand, ItemStack leftHand, ItemStack helmet, ItemStack chestplate, ItemStack leggings, ItemStack boots) {
         InteractiveChatDiscordSrvAddon.plugin.imageCounter.incrementAndGet();
         Debug.debug("ImageGeneration creating puppet image of " + player.getName());
-
+        boolean rightHanded = player.getMainHand() == MainHand.RIGHT;
         World world = null;
         LivingEntity livingEntity = null;
-        if (player.isOnline() && player.getPlayer().isLocal()) {
-            livingEntity = player.getPlayer().getLocalPlayer();
-            world = livingEntity.getWorld();
-        }
-
         BufferedImage skin = null;
         boolean slim = false;
         BufferedImage cape;
         try {
             JSONObject json;
-            ICPlayer icPlayer = player.getPlayer();
-            if (icPlayer != null && icPlayer.isLocal()) {
-                json = (JSONObject) new JSONParser().parse(SkinUtils.getSkinJsonFromProfile(((ICPlayer) player).getLocalPlayer()));
-            } else {
-                json = (JSONObject) new JSONParser().parse(new String(Base64.getDecoder().decode(((JSONObject) ((JSONArray) HTTPRequestUtils.getJSONResponse(PLAYER_INFO_URL.replace("%s", player.getUniqueId().toString())).get("properties")).get(0)).get("value").toString())));
-            }
+            json = (JSONObject) new JSONParser().parse(SkinUtils.getSkinJsonFromProfile(((ICPlayer) player).getLocalPlayer()));
             if (json == null) {
                 cape = null;
             } else {
@@ -492,7 +479,6 @@ public class ImageGeneration {
         Map<PlayerModelItemPosition, PlayerModelItem> modelItems = new HashMap<>();
 
         providedTextures.put(ResourceRegistry.SKIN_FULL_TEXTURE_PLACEHOLDER, new GeneratedTextureResource(resourceManager.get(), ModelUtils.convertToModernSkinTexture(skin)));
-
         if (ItemStackUtils.isWearable(leggings)) {
             Material type = leggings.getType();
             BufferedImage leggingsImage = null;
@@ -604,7 +590,7 @@ public class ImageGeneration {
                 case ELYTRA:
                     isArmor = false;
                     chestplateImage = new BufferedImage(150, 150, BufferedImage.TYPE_INT_ARGB);
-                    BufferedImage wing = null;
+                    BufferedImage wing;
                     wing = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getElytraOverrideTextures(EquipmentSlot.CHEST, chestplate, translateFunction.get()).map(TextureResource::getTexture).orElse(cape == null ? resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ENTITY_TEXTURE_LOCATION + "elytra").getTexture() : cape);
                     if (wing.getWidth() % 64 != 0 || wing.getHeight() % 32 != 0) {
                         int w = 0;
@@ -699,7 +685,7 @@ public class ImageGeneration {
 
         if (InteractiveChatDiscordSrvAddon.plugin.renderHandHeldItems) {
             if (rightHand != null && !rightHand.getType().equals(Material.AIR)) {
-                EquipmentSlot slot = player.isRightHanded() ? EquipmentSlot.HAND : EquipmentSlot.valueOf("OFF_HAND");
+                EquipmentSlot slot = rightHanded ? EquipmentSlot.HAND : EquipmentSlot.valueOf("OFF_HAND");
                 ItemStackProcessResult itemProcessResult = ItemRenderUtils.processItemForRendering(resourceManager.get(), player, rightHand, slot, version.get().isOld(), language.get());
                 boolean enchanted = itemProcessResult.requiresEnchantmentGlint();
                 Map<ModelOverrideType, Float> predicate = itemProcessResult.getPredicates();
@@ -712,7 +698,7 @@ public class ImageGeneration {
                 modelItems.put(PlayerModelItemPosition.RIGHT_HAND, new PlayerModelItem(PlayerModelItemPosition.RIGHT_HAND, modelKey, resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getItemPostResolveFunction(modelKey, slot, rightHand, version.get().isOld(), predicate, player, world, livingEntity, translateFunction.get()).orElse(null), predicate, enchanted, itemProvidedTextures, tintIndexData, enchantmentGlintFunction, rawEnchantmentGlintFunction));
             }
             if (leftHand != null && !leftHand.getType().equals(Material.AIR)) {
-                EquipmentSlot slot = player.isRightHanded() ? EquipmentSlot.valueOf("OFF_HAND") : EquipmentSlot.HAND;
+                EquipmentSlot slot = rightHanded ? EquipmentSlot.valueOf("OFF_HAND") : EquipmentSlot.HAND;
                 ItemStackProcessResult itemProcessResult = ItemRenderUtils.processItemForRendering(resourceManager.get(), player, leftHand, slot, version.get().isOld(), language.get());
                 boolean enchanted = itemProcessResult.requiresEnchantmentGlint();
                 Map<ModelOverrideType, Float> predicate = itemProcessResult.getPredicates();
@@ -748,11 +734,11 @@ public class ImageGeneration {
         return image;
     }
 
-    private static BufferedImage getRawItemImage(ItemStack item, OfflineICPlayer player) throws IOException {
+    private static BufferedImage getRawItemImage(ItemStack item, Player player) throws IOException {
         return getRawItemImage(item, player, DEFAULT_ITEM_RENDER_SIZE);
     }
 
-    private static BufferedImage getRawItemImage(ItemStack item, OfflineICPlayer player, int size) throws IOException {
+    private static BufferedImage getRawItemImage(ItemStack item, Player player, int size) {
         InteractiveChatDiscordSrvAddon.plugin.imageCounter.incrementAndGet();
         Debug.debug("ImageGeneration creating raw item stack image " + (item == null ? "null" : ItemNBTUtils.getNMSItemStackJson(item)));
 
@@ -1054,16 +1040,16 @@ public class ImageGeneration {
         return output;
     }
 
-    public static BufferedImage getTabListImage(List<Component> header, List<Component> footer, List<ValueTrios<OfflineICPlayer, Component, Integer>> players, boolean showAvatar, boolean showPing) {
+    public static BufferedImage getTabListImage(List<Component> header, List<Component> footer, List<ValueTrios<Player, Component, Integer>> players, boolean showAvatar, boolean showPing) {
         return getTabListImage(header, footer, players, showAvatar, showPing, TABLIST_PLAYER_DISPLAY_LIMIT);
     }
 
-    public static BufferedImage getTabListImage(List<Component> header, List<Component> footer, List<ValueTrios<OfflineICPlayer, Component, Integer>> players, boolean showAvatar, boolean showPing, int maxPlayerDisplayed) {
+    public static BufferedImage getTabListImage(List<Component> header, List<Component> footer, List<ValueTrios<Player, Component, Integer>> players, boolean showAvatar, boolean showPing, int maxPlayerDisplayed) {
         players = players.subList(0, Math.min(players.size(), maxPlayerDisplayed));
         List<ValueTrios<BufferedImage, Integer, Color>> playerImages = new ArrayList<>(players.size());
         int masterOffsetX = 0;
-        for (ValueTrios<OfflineICPlayer, Component, Integer> trio : players) {
-            OfflineICPlayer player = trio.getFirst();
+        for (ValueTrios<Player, Component, Integer> trio : players) {
+            Player player = trio.getFirst();
             UUID uuid = player.getUniqueId();
             Component name = trio.getSecond();
             int ping = trio.getThird();
@@ -1362,7 +1348,7 @@ public class ImageGeneration {
         }
     }
 
-    public static BufferedImage getBundleContainerInterface(OfflineICPlayer offlineICPlayer, List<ItemStack> items) throws IOException {
+    public static BufferedImage getBundleContainerInterface(Player Player, List<ItemStack> items) throws IOException {
         BufferedImage icons = resourceManager.get().getTextureManager().getTexture(ResourceRegistry.GUI_TEXTURE_LOCATION + "container/bundle").getTexture(256, 256);
         int gridWidth = BundleUtils.getContainerGridSizeX(items.size());
         int gridHeight = BundleUtils.getContainerGridSizeY(items.size());
@@ -1401,7 +1387,7 @@ public class ImageGeneration {
                 i++;
                 if (i < items.size()) {
                     g.drawImage(slot, x, y, null);
-                    BufferedImage itemImage = getRawItemImage(items.get(i), offlineICPlayer);
+                    BufferedImage itemImage = getRawItemImage(items.get(i), Player);
                     g.drawImage(itemImage, x + 2, y + 2, null);
                 } else {
                     g.drawImage(isFull ? fullSlot : slot, x, y, null);
@@ -1445,7 +1431,7 @@ public class ImageGeneration {
                 BufferedImage temp = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
 
                 List<Component> lines = new ArrayList<>();
-                lines.addAll(ComponentStringUtils.applyWordWrap(component, resourceManager.get().getLanguageManager().getTranslateFunction().ofLanguage(InteractiveChatDiscordSrvAddon.plugin.language), BOOK_LINE_LIMIT, new ToIntFunction<CharacterLengthProviderData>() {
+                lines.addAll(ComponentStringUtils.applyWordWrap(component, resourceManager.get().getLanguageManager().getTranslateFunction().ofLanguage(InteractiveChatDiscordSrvAddon.plugin.language), BOOK_LINE_LIMIT, new ToIntFunction<>() {
                     int lastItalicExtraWidth = 0;
 
                     @Override

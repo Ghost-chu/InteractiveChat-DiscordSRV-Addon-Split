@@ -20,7 +20,7 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.resources.mods.chime;
 
-import com.loohp.interactivechat.objectholders.OfflineICPlayer;
+import com.loohp.interactivechat.objectholders.Player;
 import com.loohp.interactivechatdiscordsrvaddon.registry.ResourceRegistry;
 import com.loohp.interactivechatdiscordsrvaddon.resources.CustomItemTextureRegistry;
 import com.loohp.interactivechatdiscordsrvaddon.resources.ResourceLoadingException;
@@ -159,7 +159,7 @@ public class ChimeManager extends ModManager implements IChimeManager {
         return getRawBlockModel(resourceLocation, false);
     }
 
-    public BlockModel resolveBlockModel(String resourceLocation, boolean is1_8, Map<ModelOverrideType, Float> predicates, OfflineICPlayer player, World world, LivingEntity entity, ItemStack itemStack, UnaryOperator<String> translateFunction) {
+    public BlockModel resolveBlockModel(String resourceLocation, boolean is1_8, Map<ModelOverrideType, Float> predicates, Player player, World world, LivingEntity entity, ItemStack itemStack, UnaryOperator<String> translateFunction) {
         BlockModel model = getRawBlockModel(resourceLocation, true);
         if (model == null) {
             return null;
@@ -264,7 +264,7 @@ public class ChimeManager extends ModManager implements IChimeManager {
     }
 
     @Override
-    public TextureResource getArmorOverrideTextures(String layer, ItemStack itemStack, OfflineICPlayer player, World world, LivingEntity entity, UnaryOperator<String> translateFunction) {
+    public TextureResource getArmorOverrideTextures(String layer, ItemStack itemStack, Player player, World world, LivingEntity entity, UnaryOperator<String> translateFunction) {
         for (String overrideLocation : overrideLocations) {
             String resourceKey = "minecraft:" + overrideLocation + "armor/" + layer;
             BlockModel model = getRawBlockModel(resourceKey, true);
