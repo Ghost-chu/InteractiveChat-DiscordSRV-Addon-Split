@@ -53,7 +53,6 @@ import org.json.simple.parser.ParseException;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
@@ -92,7 +91,7 @@ public class ItemRenderUtils {
 
     private static final Random RANDOM = new Random();
 
-    public static ItemStackProcessResult processItemForRendering(ResourceManager manager, OfflinePlayer player, ItemStack item, EquipmentSlot slot, boolean is1_8, String language) throws IOException {
+    public static ItemStackProcessResult processItemForRendering(ResourceManager manager, OfflinePlayer player, ItemStack item, EquipmentSlot slot, boolean is1_8, String language) {
         World world = null;
         LivingEntity livingEntity = null;
         if (player.isOnline()) {
@@ -334,14 +333,13 @@ public class ItemRenderUtils {
                     if (blockStateTag.containsKey("level")) {
                         try {
                             level = (float) Integer.parseInt(tagToString(blockStateTag.get("level"))) / 16F;
-                        } catch (NumberFormatException e) {
+                        } catch (NumberFormatException ignored) {
                         }
                     }
                 }
             }
             predicates.put(ModelOverrideType.LEVEL, level);
-        } else if (item.getItemMeta() instanceof LeatherArmorMeta) {
-            LeatherArmorMeta meta = (LeatherArmorMeta) item.getItemMeta();
+        } else if (item.getItemMeta() instanceof LeatherArmorMeta meta) {
             Color color = new Color(meta.getColor().asRGB());
             if (icMaterial == Material.LEATHER_HORSE_ARMOR) {
                 BufferedImage itemImage = manager.getTextureManager().getTexture(ResourceRegistry.ITEM_TEXTURE_LOCATION + icMaterial.name().toLowerCase()).getTexture(32, 32);
@@ -572,8 +570,7 @@ public class ItemRenderUtils {
                             entry.setValue(new GeneratedTextureResource(manager, overlayImage));
                         }
                     }
-                } else if (item.getItemMeta() instanceof LeatherArmorMeta) {
-                    LeatherArmorMeta meta = (LeatherArmorMeta) item.getItemMeta();
+                } else if (item.getItemMeta() instanceof LeatherArmorMeta meta) {
                     Color color = new Color(meta.getColor().asRGB());
                     if (icMaterial == Material.LEATHER_HORSE_ARMOR) {
                         if (overriddenResource.equalsIgnoreCase(ResourceRegistry.LEATHER_HORSE_ARMOR_PLACEHOLDER)) {

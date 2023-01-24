@@ -28,7 +28,6 @@ import com.loohp.interactivechat.utils.HTTPRequestUtils;
 import com.loohp.interactivechatdiscordsrvaddon.libs.LibraryDownloadManager;
 import com.loohp.interactivechatdiscordsrvaddon.registry.InteractiveChatRegistry;
 import com.loohp.interactivechatdiscordsrvaddon.resources.ResourceDownloadManager;
-import org.json.simple.parser.ParseException;
 import org.simpleyaml.configuration.ConfigurationSection;
 import org.simpleyaml.configuration.file.YamlFile;
 
@@ -240,7 +239,7 @@ public class GUIMain {
         return errors;
     }
 
-    protected static void generateDefaultConfigs(String title, Icon icon) throws IOException {
+    protected static void generateDefaultConfigs(String title, Icon icon) {
         File folder = new File("InteractiveChatDiscordSrvAddon", "generated");
         FileUtils.removeFolderRecursively(folder);
         folder.mkdirs();
@@ -361,7 +360,7 @@ public class GUIMain {
         }
     }
 
-    protected static int getDefaultPackVersion(int fallback) throws IOException, ParseException {
+    protected static int getDefaultPackVersion(int fallback) throws IOException {
         int result = -1;
         File defaultPack = new File("InteractiveChatDiscordSrvAddon/built-in", "Default");
         File defaultPackMeta = new File(defaultPack, "pack.mcmeta");

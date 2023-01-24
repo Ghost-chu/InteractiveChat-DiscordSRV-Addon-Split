@@ -178,7 +178,7 @@ public class CMLMain {
         return errors;
     }
 
-    protected static void generateDefaultConfigs() throws IOException {
+    protected static void generateDefaultConfigs() {
         File folder = new File("InteractiveChatDiscordSrvAddon", "generated");
         FileUtils.removeFolderRecursively(folder);
         folder.mkdirs();
@@ -215,20 +215,14 @@ public class CMLMain {
         new Thread(() -> {
             downloadManager.downloadResources((type, fileName, percentage) -> {
                 switch (type) {
-                    case CLIENT_DOWNLOAD:
+                    case CLIENT_DOWNLOAD -> {
                         if (percentage == 0.0) {
                             System.out.println("Downloading client jar");
                         }
-                        break;
-                    case EXTRACT:
-                        System.out.println("Extracting " + fileName);
-                        break;
-                    case DOWNLOAD:
-                        System.out.println("Downloading " + fileName);
-                        break;
-                    case DONE:
-                        System.out.println("Done!");
-                        break;
+                    }
+                    case EXTRACT -> System.out.println("Extracting " + fileName);
+                    case DOWNLOAD -> System.out.println("Downloading " + fileName);
+                    case DONE -> System.out.println("Done!");
                 }
             });
             libraryDownloadManager.downloadLibraries((downloadResult, jarName, percentage) -> {

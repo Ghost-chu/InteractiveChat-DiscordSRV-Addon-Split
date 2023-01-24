@@ -42,8 +42,7 @@ public class TextureMeta extends TextureResource {
             for (Object obj : framesArray) {
                 if (obj instanceof Number) {
                     frames.add(new TextureAnimationFrames(((Number) obj).intValue(), frametime));
-                } else if (obj instanceof JSONObject) {
-                    JSONObject frameJson = (JSONObject) obj;
+                } else if (obj instanceof JSONObject frameJson) {
                     frames.add(new TextureAnimationFrames(((Number) frameJson.get("index")).intValue(), ((Number) frameJson.get("time")).intValue()));
                 }
             }

@@ -290,7 +290,7 @@ public class MinecraftFontRenderer extends JFrame {
             if (!repaintLock.tryLock(0, TimeUnit.MILLISECONDS)) {
                 return;
             }
-        } catch (InterruptedException e) {
+        } catch (InterruptedException ignored) {
         }
         imagePanel.repaint();
         repaintLock.unlock();
@@ -341,7 +341,7 @@ public class MinecraftFontRenderer extends JFrame {
             if (!resourceLock.tryLock(0, TimeUnit.MILLISECONDS)) {
                 return;
             }
-        } catch (InterruptedException e) {
+        } catch (InterruptedException ignored) {
         }
         reloadResourcesButton.setEnabled(false);
         resourceBar.setValue(0);
@@ -435,7 +435,7 @@ public class MinecraftFontRenderer extends JFrame {
             if (!updateTextImageLock.tryLock(0, TimeUnit.MILLISECONDS)) {
                 return;
             }
-        } catch (InterruptedException e) {
+        } catch (InterruptedException ignored) {
         }
         try {
             String text = textAreaInput.getText();
@@ -581,13 +581,11 @@ public class MinecraftFontRenderer extends JFrame {
         new Thread(() -> {
             downloadManager.downloadLanguages((type, fileName, percentage) -> {
                 switch (type) {
-                    case DOWNLOAD:
+                    case DOWNLOAD -> {
                         label.setText("<html>Downloading Assets:<br>Downloading " + fileName + "<html/>");
                         progressBar.setValue(Math.min(9999, (int) (percentage * 100)));
-                        break;
-                    case DONE:
-                        label.setText("<html>Done!<html/>");
-                        break;
+                    }
+                    case DONE -> label.setText("<html>Done!<html/>");
                 }
             });
             future.complete(null);

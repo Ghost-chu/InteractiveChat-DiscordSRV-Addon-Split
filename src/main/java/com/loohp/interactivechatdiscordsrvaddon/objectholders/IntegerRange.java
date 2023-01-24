@@ -37,12 +37,11 @@ public class IntegerRange {
 
     public IntegerRange(String strValue) {
         switch (strValue.length() - strValue.replace("-", "").length()) {
-            case 0: {
+            case 0 -> {
                 min = Integer.parseInt(strValue);
                 max = min;
-                break;
             }
-            case 1: {
+            case 1 -> {
                 if (strValue.startsWith("-")) {
                     min = Integer.parseInt(strValue);
                     max = min;
@@ -54,9 +53,8 @@ public class IntegerRange {
                     min = Integer.parseInt(split[0]);
                     max = Integer.parseInt(split[1]);
                 }
-                break;
             }
-            case 2: {
+            case 2 -> {
                 if (strValue.startsWith("--")) {
                     min = Integer.MIN_VALUE;
                     max = Integer.parseInt(strValue.substring(1));
@@ -70,9 +68,8 @@ public class IntegerRange {
                 } else {
                     throw new ResourceLoadingException("Could not parse range");
                 }
-                break;
             }
-            case 3: {
+            case 3 -> {
                 if (!strValue.contains("---") && strValue.startsWith("-")) {
                     String[] split = strValue.split("--");
                     if (split.length != 2 || split[0].isEmpty() || split[1].isEmpty()) {
@@ -84,10 +81,8 @@ public class IntegerRange {
                 } else {
                     throw new ResourceLoadingException("Could not parse range");
                 }
-                break;
             }
-            default:
-                throw new ResourceLoadingException("Could not parse range");
+            default -> throw new ResourceLoadingException("Could not parse range");
         }
     }
 

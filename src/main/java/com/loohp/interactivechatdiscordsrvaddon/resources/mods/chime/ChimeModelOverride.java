@@ -221,29 +221,21 @@ public class ChimeModelOverride extends ModelOverride {
                 }
                 boolean mainhand = Objects.equals(player.getEquipment().getItemInMainHand(), itemStack);
                 boolean offhand = Objects.equals(player.getEquipment().getItemInOffHand(), itemStack);
-                switch (value) {
-                    case MAIN:
-                        return mainhand;
-                    case OFF:
-                        return offhand;
-                    case EITHER:
-                        return mainhand || offhand;
-                    case NEITHER:
-                        return !mainhand && !offhand;
-                }
+                return switch (value) {
+                    case MAIN -> mainhand;
+                    case OFF -> offhand;
+                    case EITHER -> mainhand || offhand;
+                    case NEITHER -> !mainhand && !offhand;
+                };
             } else {
                 boolean mainhand = Objects.equals(livingEntity.getEquipment().getItemInMainHand(), itemStack);
                 boolean offhand = Objects.equals(livingEntity.getEquipment().getItemInOffHand(), itemStack);
-                switch (value) {
-                    case MAIN:
-                        return mainhand;
-                    case OFF:
-                        return offhand;
-                    case EITHER:
-                        return mainhand || offhand;
-                    case NEITHER:
-                        return !mainhand && !offhand;
-                }
+                return switch (value) {
+                    case MAIN -> mainhand;
+                    case OFF -> offhand;
+                    case EITHER -> mainhand || offhand;
+                    case NEITHER -> !mainhand && !offhand;
+                };
             }
             return false;
         }),
@@ -253,25 +245,33 @@ public class ChimeModelOverride extends ModelOverride {
                     return false;
                 }
                 switch (value) {
-                    case HEAD:
+                    case HEAD -> {
                         return Objects.equals(player.getEquipment().getHelmet(), itemStack);
-                    case CHEST:
+                    }
+                    case CHEST -> {
                         return Objects.equals(player.getEquipment().getChestplate(), itemStack);
-                    case LEGS:
+                    }
+                    case LEGS -> {
                         return Objects.equals(player.getEquipment().getLeggings(), itemStack);
-                    case FEET:
+                    }
+                    case FEET -> {
                         return Objects.equals(player.getEquipment().getBoots(), itemStack);
+                    }
                 }
             } else {
                 switch (value) {
-                    case HEAD:
+                    case HEAD -> {
                         return Objects.equals(livingEntity.getEquipment().getHelmet(), itemStack);
-                    case CHEST:
+                    }
+                    case CHEST -> {
                         return Objects.equals(livingEntity.getEquipment().getChestplate(), itemStack);
-                    case LEGS:
+                    }
+                    case LEGS -> {
                         return Objects.equals(livingEntity.getEquipment().getLeggings(), itemStack);
-                    case FEET:
+                    }
+                    case FEET -> {
                         return Objects.equals(livingEntity.getEquipment().getBoots(), itemStack);
+                    }
                 }
             }
             return false;
@@ -281,15 +281,11 @@ public class ChimeModelOverride extends ModelOverride {
                 return false;
             }
             RayTraceResult result = livingEntity.rayTraceBlocks(5.0, FluidCollisionMode.NEVER);
-            switch (value) {
-                case BLOCK:
-                    return result.getHitBlock() != null;
-                case ENTITY:
-                    return result.getHitEntity() != null;
-                case MISS:
-                    return result.getHitEntity() == null && result.getHitBlock() == null;
-            }
-            return false;
+            return switch (value) {
+                case BLOCK -> result.getHitBlock() != null;
+                case ENTITY -> result.getHitEntity() != null;
+                case MISS -> result.getHitEntity() == null && result.getHitBlock() == null;
+            };
         }),
         ENTITY_TARGET_BLOCK_ID("entity/target_block/id", String.class, (value, player, world, livingEntity, itemStack, translateFunction) -> {
             if (livingEntity == null) {
@@ -414,7 +410,7 @@ public class ChimeModelOverride extends ModelOverride {
     @FunctionalInterface
     public interface ChimeOverridePredicate<T> {
 
-        boolean test(T t, OfflineICPlayer player, World world, LivingEntity entity, ItemStack itemStack, UnaryOperator<String> translateFunction) throws Throwable;
+        boolean test(T t, OfflineICPlayer player, World world, LivingEntity entity, ItemStack itemStack, UnaryOperator<String> translateFunction);
 
     }
 

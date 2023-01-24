@@ -61,9 +61,9 @@ import java.util.regex.Pattern;
 public class OptifineManager extends ModManager implements IOptifineManager {
 
     public static final String MOD_NAME = "Optifine";
-    public static final List<String> ASSETS_FOLDERS = Collections.unmodifiableList(Arrays.asList("optifine", "mcpatcher"));
+    public static final List<String> ASSETS_FOLDERS = List.of("optifine", "mcpatcher");
     public static final CITGlobalProperties DEFAULT_CIT_GLOBAL_PROPERTIES = new CITGlobalProperties(true, Integer.MAX_VALUE, EnchantmentVisibilityMethod.AVERAGE, 0.5);
-    public static final List<String> ASSET_EXTENSIONS = Collections.unmodifiableList(Arrays.asList("png", "json"));
+    public static final List<String> ASSET_EXTENSIONS = List.of("png", "json");
     private static final BufferedImage BLANK_ENCHANTMENT = new BufferedImage(512, 512, BufferedImage.TYPE_INT_ARGB);
 
     private final Map<String, ValuePairs<ResourcePackFile, ?>> assets;
@@ -315,7 +315,7 @@ public class OptifineManager extends ModManager implements IOptifineManager {
                 Map<Enchantment, Integer> stackEnchantments = itemStack.getEnchantments();
                 float intensity;
                 switch (getCITGlobalProperties().getMethod()) {
-                    case AVERAGE: {
+                    case AVERAGE -> {
                         Enchantment enchantment = null;
                         for (Enchantment enchantmentMatch : enchantmentProperties.getEnchantments().keySet()) {
                             if (stackEnchantments.containsKey(enchantmentMatch)) {
@@ -332,9 +332,8 @@ public class OptifineManager extends ModManager implements IOptifineManager {
                             }
                             intensity = (float) stackEnchantments.get(enchantment) / sum;
                         }
-                        break;
                     }
-                    case LAYERED: {
+                    case LAYERED -> {
                         Enchantment enchantment = null;
                         for (Enchantment enchantmentMatch : enchantmentProperties.getEnchantments().keySet()) {
                             if (stackEnchantments.containsKey(enchantmentMatch)) {
@@ -353,11 +352,9 @@ public class OptifineManager extends ModManager implements IOptifineManager {
                             }
                             intensity = (float) stackEnchantments.get(enchantment) / max;
                         }
-                        break;
                     }
-                    default: {
+                    default -> {
                         intensity = 1F;
-                        break;
                     }
                 }
                 if (intensity == 0F) {

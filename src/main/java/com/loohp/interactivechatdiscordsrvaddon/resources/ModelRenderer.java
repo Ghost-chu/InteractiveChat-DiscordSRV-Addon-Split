@@ -414,24 +414,12 @@ public class ModelRenderer implements AutoCloseable {
                             Face face = hexahedron.getByDirectionOrder().get(i);
                             if (ModelUtils.shouldTriggerCullface(face, cullface)) {
                                 switch (cullface) {
-                                    case UP:
-                                        face.setCullface(hexahedron.getDownFace());
-                                        break;
-                                    case DOWN:
-                                        face.setCullface(hexahedron.getUpFace());
-                                        break;
-                                    case NORTH:
-                                        face.setCullface(hexahedron.getSouthFace());
-                                        break;
-                                    case EAST:
-                                        face.setCullface(hexahedron.getWestFace());
-                                        break;
-                                    case SOUTH:
-                                        face.setCullface(hexahedron.getNorthFace());
-                                        break;
-                                    case WEST:
-                                        face.setCullface(hexahedron.getEastFace());
-                                        break;
+                                    case UP -> face.setCullface(hexahedron.getDownFace());
+                                    case DOWN -> face.setCullface(hexahedron.getUpFace());
+                                    case NORTH -> face.setCullface(hexahedron.getSouthFace());
+                                    case EAST -> face.setCullface(hexahedron.getWestFace());
+                                    case SOUTH -> face.setCullface(hexahedron.getNorthFace());
+                                    case WEST -> face.setCullface(hexahedron.getEastFace());
                                 }
                             }
                         }
@@ -485,49 +473,48 @@ public class ModelRenderer implements AutoCloseable {
                                 double x2;
                                 double y2;
                                 switch (side) {
-                                    case DOWN:
+                                    case DOWN -> {
                                         points = hexahedron.getDownFace().getPoints();
                                         x1 = points[2].z;
                                         y1 = points[2].x;
                                         x2 = points[0].z;
                                         y2 = points[0].x;
-                                        break;
-                                    case EAST:
+                                    }
+                                    case EAST -> {
                                         points = hexahedron.getEastFace().getPoints();
                                         x1 = points[2].z;
                                         y1 = points[2].y;
                                         x2 = points[0].z;
                                         y2 = points[0].y;
-                                        break;
-                                    case NORTH:
+                                    }
+                                    case NORTH -> {
                                         points = hexahedron.getNorthFace().getPoints();
                                         x1 = points[2].x;
                                         y1 = points[2].y;
                                         x2 = points[0].x;
                                         y2 = points[0].y;
-                                        break;
-                                    case SOUTH:
+                                    }
+                                    case SOUTH -> {
                                         points = hexahedron.getSouthFace().getPoints();
                                         x1 = points[0].x;
                                         y1 = points[2].y;
                                         x2 = points[2].x;
                                         y2 = points[0].y;
-                                        break;
-                                    case UP:
+                                    }
+                                    case UP -> {
                                         points = hexahedron.getUpFace().getPoints();
                                         x1 = points[0].x;
                                         y1 = points[0].z;
                                         x2 = points[2].x;
                                         y2 = points[2].z;
-                                        break;
-                                    case WEST:
-                                    default:
+                                    }
+                                    case WEST, default -> {
                                         points = hexahedron.getWestFace().getPoints();
                                         x1 = points[0].z;
                                         y1 = points[2].y;
                                         x2 = points[2].z;
                                         y2 = points[0].y;
-                                        break;
+                                    }
                                 }
                                 uv = new TextureUV(x1, y1, x2, y2);
                             }
@@ -593,16 +580,9 @@ public class ModelRenderer implements AutoCloseable {
                         }
                     }
                     switch (rotation.getAxis()) {
-                        case X:
-                            hexahedron.rotate(rotation.getAngle(), 0, 0, false);
-                            break;
-                        case Y:
-                            hexahedron.rotate(0, rotation.getAngle(), 0, false);
-                            break;
-                        case Z:
-                        default:
-                            hexahedron.rotate(0, 0, rotation.getAngle(), false);
-                            break;
+                        case X -> hexahedron.rotate(rotation.getAngle(), 0, 0, false);
+                        case Y -> hexahedron.rotate(0, rotation.getAngle(), 0, false);
+                        case Z, default -> hexahedron.rotate(0, 0, rotation.getAngle(), false);
                     }
                     hexahedron.translate(rotation.getOrigin().getX(), rotation.getOrigin().getY(), rotation.getOrigin().getZ());
                 }
@@ -615,7 +595,7 @@ public class ModelRenderer implements AutoCloseable {
             if (task == null) {
                 try {
                     TimeUnit.MILLISECONDS.sleep(1);
-                } catch (InterruptedException e) {
+                } catch (InterruptedException ignored) {
                 }
             } else {
                 try {

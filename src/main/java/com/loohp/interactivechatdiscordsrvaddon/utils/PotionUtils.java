@@ -106,7 +106,6 @@ public class PotionUtils {
         }
     }
 
-    @SuppressWarnings("deprecation")
     public static List<PotionEffect> getBasePotionEffect(ItemStack potion) throws Exception {
         List<PotionEffect> effects = new ArrayList<>();
         if (!NBTEditor.contains(potion, "Potion")) {
@@ -127,7 +126,7 @@ public class PotionUtils {
         return effects;
     }
 
-    public static ChatColor getPotionEffectChatColor(PotionEffectType type) throws Exception {
+    public static ChatColor getPotionEffectChatColor(PotionEffectType type) {
         return ChatColor.of("#" + String.format("%08x", type.getColor().asRGB()).substring(2));
     }
 

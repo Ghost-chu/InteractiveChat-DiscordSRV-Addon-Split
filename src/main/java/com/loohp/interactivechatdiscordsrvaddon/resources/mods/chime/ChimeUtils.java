@@ -145,9 +145,8 @@ public class ChimeUtils {
         } else if (element instanceof JSONArray) {
             return tag instanceof ListTag<?> && matchesJsonArray((JSONArray) element, (ListTag<?>) tag);
         } else {
-            if (tag instanceof NumberTag<?>) {
-                NumberTag<?> number = (NumberTag<?>) tag;
-                boolean isInt = tag instanceof ByteTag || tag instanceof ShortTag || tag instanceof IntTag || tag instanceof LongTag;
+            if (tag instanceof NumberTag<?> number) {
+                boolean isInt = tag instanceof LongTag;
                 if (element instanceof Boolean) {
                     return isInt && (boolean) element == (number.asInt() == 1);
                 } else if (element instanceof Number) {
@@ -198,7 +197,7 @@ public class ChimeUtils {
                 }
             }
             return Range.singleton(parseNumber(clazz, s));
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         return null;
     }
@@ -241,7 +240,7 @@ public class ChimeUtils {
                     i += modulo;
                 }
                 return value.contains((float) i);
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
             return value.contains(-1f);
         }

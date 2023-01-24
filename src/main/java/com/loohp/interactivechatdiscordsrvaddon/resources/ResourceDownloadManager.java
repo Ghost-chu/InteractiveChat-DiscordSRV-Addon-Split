@@ -231,7 +231,7 @@ public class ResourceDownloadManager {
                     String value = extras.get(key).toString();
                     try {
                         dataHandler.accept(value, HTTPRequestUtils.download(key));
-                    } catch (Exception e) {
+                    } catch (Exception ignored) {
                     }
                 }
             }

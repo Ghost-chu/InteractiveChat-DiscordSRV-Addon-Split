@@ -124,13 +124,13 @@ public class EnchantmentProperties extends CITProperties {
         public static OpenGLBlending fromString(String input) {
             String[] sections = input.split(" ");
             switch (sections.length) {
-                case 1: {
+                case 1 -> {
                     return PRESETS.get(sections[0].toLowerCase());
                 }
-                case 2: {
+                case 2 -> {
                     return of(OpenGLBlendMode.fromOpenGL(sections[0]), OpenGLBlendMode.fromOpenGL(sections[1]));
                 }
-                case 4: {
+                case 4 -> {
                     return of(OpenGLBlendMode.fromOpenGL(sections[0]), OpenGLBlendMode.fromOpenGL(sections[1]), OpenGLBlendMode.fromOpenGL(sections[2]), OpenGLBlendMode.fromOpenGL(sections[3]));
                 }
             }

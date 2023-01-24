@@ -221,7 +221,7 @@ public class InteractiveChatDiscordSrvAddon extends JavaPlugin implements Listen
                 String value = (String) ((JSONObject) ((JSONObject) json.get("textures")).get("SKIN")).get("url");
                 BufferedImage skin = ImageUtils.downloadImage(value);
                 resourceManager.getResourceRegistry(ICacheManager.IDENTIFIER, ICacheManager.class).putCache(uuid + value + ImageGeneration.PLAYER_SKIN_CACHE_KEY, skin);
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
         } else {
             try {
@@ -229,7 +229,7 @@ public class InteractiveChatDiscordSrvAddon extends JavaPlugin implements Listen
                 String value = SkinUtils.getSkinURLFromUUID(uuid);
                 BufferedImage skin = ImageUtils.downloadImage(value);
                 resourceManager.getResourceRegistry(ICacheManager.IDENTIFIER, ICacheManager.class).putCache(uuid + "null" + ImageGeneration.PLAYER_SKIN_CACHE_KEY, skin);
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
         }
     }
@@ -351,28 +351,26 @@ public class InteractiveChatDiscordSrvAddon extends JavaPlugin implements Listen
                         result.getError().printStackTrace();
                     }
                     switch (result.getType()) {
-                        case SUCCESS_NO_CHANGES:
+                        case SUCCESS_NO_CHANGES -> {
                             sendMessage(ChatColor.GREEN + "[ICDiscordSrvAddon] Server resource pack found with verification hash: No changes", senders);
                             resourceList.add(serverResourcePack.getName());
-                            break;
-                        case SUCCESS_WITH_HASH:
+                        }
+                        case SUCCESS_WITH_HASH -> {
                             sendMessage(ChatColor.GREEN + "[ICDiscordSrvAddon] Server resource pack found with verification hash: Hash changed, downloaded", senders);
                             resourceList.add(serverResourcePack.getName());
-                            break;
-                        case SUCCESS_NO_HASH:
+                        }
+                        case SUCCESS_NO_HASH -> {
                             sendMessage(ChatColor.GREEN + "[ICDiscordSrvAddon] Server resource pack found without verification hash: Downloaded", senders);
                             resourceList.add(serverResourcePack.getName());
-                            break;
-                        case FAILURE_WRONG_HASH:
+                        }
+                        case FAILURE_WRONG_HASH -> {
                             sendMessage(ChatColor.RED + "[ICDiscordSrvAddon] Server resource pack had wrong hash (expected " + result.getExpectedHash() + ", found " + result.getPackHash() + ")", senders);
                             sendMessage(ChatColor.RED + "[ICDiscordSrvAddon] Server resource pack will not be applied: Hash check failure", senders);
-                            break;
-                        case FAILURE_DOWNLOAD:
-                            sendMessage(ChatColor.RED + "[ICDiscordSrvAddon] Failed to download server resource pack", senders);
-                            break;
-                        case NO_PACK:
-                            Bukkit.getConsoleSender().sendMessage(ChatColor.GRAY + "[ICDiscordSrvAddon] No server resource pack found");
-                            break;
+                        }
+                        case FAILURE_DOWNLOAD ->
+                                sendMessage(ChatColor.RED + "[ICDiscordSrvAddon] Failed to download server resource pack", senders);
+                        case NO_PACK ->
+                                Bukkit.getConsoleSender().sendMessage(ChatColor.GRAY + "[ICDiscordSrvAddon] No server resource pack found");
                     }
                 }
 

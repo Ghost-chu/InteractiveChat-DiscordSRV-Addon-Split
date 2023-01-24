@@ -479,7 +479,7 @@ public class ImageGeneration {
                         skin = (BufferedImage) cache.getObject();
                     }
                     skin = ImageUtils.copyImage(skin);
-                } catch (Throwable e1) {
+                } catch (Throwable ignored) {
                 }
             }
         } catch (Exception e) {
@@ -507,36 +507,30 @@ public class ImageGeneration {
             if (type != null) {
                 BufferedImage leggingsImage = null;
                 switch (type) {
-                    case LEATHER_LEGGINGS:
+                    case LEATHER_LEGGINGS -> {
                         leggingsImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("leather_layer_2", EquipmentSlot.LEGS, leggings, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "leather_layer_2").getTexture());
                         LeatherArmorMeta meta = (LeatherArmorMeta) leggings.getItemMeta();
                         Color color = new Color(meta.getColor().asRGB());
                         BufferedImage armorOverlay = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("leather_layer_2_overlay", EquipmentSlot.LEGS, leggings, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "leather_layer_2_overlay").getTexture());
                         BufferedImage colorOverlay = ImageUtils.changeColorTo(ImageUtils.copyImage(leggingsImage), color);
                         leggingsImage = ImageUtils.multiply(leggingsImage, colorOverlay);
-
                         Graphics2D g2 = leggingsImage.createGraphics();
                         g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
                         g2.drawImage(armorOverlay, 0, 0, null);
                         g2.dispose();
-                        break;
-                    case CHAINMAIL_LEGGINGS:
-                        leggingsImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("chainmail_layer_2", EquipmentSlot.LEGS, leggings, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "chainmail_layer_2").getTexture());
-                        break;
-                    case GOLDEN_LEGGINGS:
-                        leggingsImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("gold_layer_2", EquipmentSlot.LEGS, leggings, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "gold_layer_2").getTexture());
-                        break;
-                    case IRON_LEGGINGS:
-                        leggingsImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("iron_layer_2", EquipmentSlot.LEGS, leggings, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "iron_layer_2").getTexture());
-                        break;
-                    case DIAMOND_LEGGINGS:
-                        leggingsImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("diamond_layer_2", EquipmentSlot.LEGS, leggings, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "diamond_layer_2").getTexture());
-                        break;
-                    case NETHERITE_LEGGINGS:
-                        leggingsImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("netherite_layer_2", EquipmentSlot.LEGS, leggings, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "netherite_layer_2").getTexture());
-                        break;
-                    default:
-                        break;
+                    }
+                    case CHAINMAIL_LEGGINGS ->
+                            leggingsImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("chainmail_layer_2", EquipmentSlot.LEGS, leggings, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "chainmail_layer_2").getTexture());
+                    case GOLDEN_LEGGINGS ->
+                            leggingsImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("gold_layer_2", EquipmentSlot.LEGS, leggings, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "gold_layer_2").getTexture());
+                    case IRON_LEGGINGS ->
+                            leggingsImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("iron_layer_2", EquipmentSlot.LEGS, leggings, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "iron_layer_2").getTexture());
+                    case DIAMOND_LEGGINGS ->
+                            leggingsImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("diamond_layer_2", EquipmentSlot.LEGS, leggings, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "diamond_layer_2").getTexture());
+                    case NETHERITE_LEGGINGS ->
+                            leggingsImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("netherite_layer_2", EquipmentSlot.LEGS, leggings, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "netherite_layer_2").getTexture());
+                    default -> {
+                    }
                 }
                 if (leggingsImage != null) {
                     if (leggings.getEnchantments().size() > 0) {
@@ -553,37 +547,30 @@ public class ImageGeneration {
             if (type != null) {
                 BufferedImage bootsImage = null;
                 switch (type) {
-                    case LEATHER_BOOTS:
+                    case LEATHER_BOOTS -> {
                         bootsImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("leather_layer_1", EquipmentSlot.FEET, boots, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "leather_layer_1").getTexture());
                         LeatherArmorMeta meta = (LeatherArmorMeta) boots.getItemMeta();
                         Color color = new Color(meta.getColor().asRGB());
                         BufferedImage armorOverlay = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("leather_layer_1_overlay", EquipmentSlot.FEET, boots, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "leather_layer_1_overlay").getTexture());
                         BufferedImage colorOverlay = ImageUtils.changeColorTo(ImageUtils.copyImage(bootsImage), color);
-
                         bootsImage = ImageUtils.multiply(bootsImage, colorOverlay);
-
                         Graphics2D g2 = bootsImage.createGraphics();
                         g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
                         g2.drawImage(armorOverlay, 0, 0, null);
                         g2.dispose();
-                        break;
-                    case CHAINMAIL_BOOTS:
-                        bootsImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("chainmail_layer_1", EquipmentSlot.FEET, boots, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "chainmail_layer_1").getTexture());
-                        break;
-                    case GOLDEN_BOOTS:
-                        bootsImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("gold_layer_1", EquipmentSlot.FEET, boots, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "gold_layer_1").getTexture());
-                        break;
-                    case IRON_BOOTS:
-                        bootsImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("iron_layer_1", EquipmentSlot.FEET, boots, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "iron_layer_1").getTexture());
-                        break;
-                    case DIAMOND_BOOTS:
-                        bootsImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("diamond_layer_1", EquipmentSlot.FEET, boots, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "diamond_layer_1").getTexture());
-                        break;
-                    case NETHERITE_BOOTS:
-                        bootsImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("netherite_layer_1", EquipmentSlot.FEET, boots, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "netherite_layer_1").getTexture());
-                        break;
-                    default:
-                        break;
+                    }
+                    case CHAINMAIL_BOOTS ->
+                            bootsImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("chainmail_layer_1", EquipmentSlot.FEET, boots, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "chainmail_layer_1").getTexture());
+                    case GOLDEN_BOOTS ->
+                            bootsImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("gold_layer_1", EquipmentSlot.FEET, boots, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "gold_layer_1").getTexture());
+                    case IRON_BOOTS ->
+                            bootsImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("iron_layer_1", EquipmentSlot.FEET, boots, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "iron_layer_1").getTexture());
+                    case DIAMOND_BOOTS ->
+                            bootsImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("diamond_layer_1", EquipmentSlot.FEET, boots, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "diamond_layer_1").getTexture());
+                    case NETHERITE_BOOTS ->
+                            bootsImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("netherite_layer_1", EquipmentSlot.FEET, boots, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "netherite_layer_1").getTexture());
+                    default -> {
+                    }
                 }
                 if (bootsImage != null) {
                     if (boots.getEnchantments().size() > 0) {
@@ -683,39 +670,31 @@ public class ImageGeneration {
                 BufferedImage helmetImage = null;
                 boolean isArmor = true;
                 switch (type) {
-                    case LEATHER_HELMET:
+                    case LEATHER_HELMET -> {
                         helmetImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("leather_layer_1", EquipmentSlot.HEAD, helmet, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "leather_layer_1").getTexture());
                         LeatherArmorMeta meta = (LeatherArmorMeta) helmet.getItemMeta();
                         Color color = new Color(meta.getColor().asRGB());
                         BufferedImage armorOverlay = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("leather_layer_1_overlay", EquipmentSlot.HEAD, helmet, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "leather_layer_1_overlay").getTexture());
                         BufferedImage colorOverlay = ImageUtils.changeColorTo(ImageUtils.copyImage(helmetImage), color);
-
                         helmetImage = ImageUtils.multiply(helmetImage, colorOverlay);
-
                         Graphics2D g2 = helmetImage.createGraphics();
                         g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
                         g2.drawImage(armorOverlay, 0, 0, null);
                         g2.dispose();
-                        break;
-                    case CHAINMAIL_HELMET:
-                        helmetImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("chainmail_layer_1", EquipmentSlot.HEAD, helmet, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "chainmail_layer_1").getTexture());
-                        break;
-                    case GOLDEN_HELMET:
-                        helmetImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("gold_layer_1", EquipmentSlot.HEAD, helmet, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "gold_layer_1").getTexture());
-                        break;
-                    case IRON_HELMET:
-                        helmetImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("iron_layer_1", EquipmentSlot.HEAD, helmet, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "iron_layer_1").getTexture());
-                        break;
-                    case DIAMOND_HELMET:
-                        helmetImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("diamond_layer_1", EquipmentSlot.HEAD, helmet, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "diamond_layer_1").getTexture());
-                        break;
-                    case NETHERITE_HELMET:
-                        helmetImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("netherite_layer_1", EquipmentSlot.HEAD, helmet, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "netherite_layer_1").getTexture());
-                        break;
-                    case TURTLE_HELMET:
-                        helmetImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("turtle_layer_1", EquipmentSlot.HEAD, helmet, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "turtle_layer_1").getTexture());
-                        break;
-                    default:
+                    }
+                    case CHAINMAIL_HELMET ->
+                            helmetImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("chainmail_layer_1", EquipmentSlot.HEAD, helmet, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "chainmail_layer_1").getTexture());
+                    case GOLDEN_HELMET ->
+                            helmetImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("gold_layer_1", EquipmentSlot.HEAD, helmet, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "gold_layer_1").getTexture());
+                    case IRON_HELMET ->
+                            helmetImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("iron_layer_1", EquipmentSlot.HEAD, helmet, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "iron_layer_1").getTexture());
+                    case DIAMOND_HELMET ->
+                            helmetImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("diamond_layer_1", EquipmentSlot.HEAD, helmet, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "diamond_layer_1").getTexture());
+                    case NETHERITE_HELMET ->
+                            helmetImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("netherite_layer_1", EquipmentSlot.HEAD, helmet, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "netherite_layer_1").getTexture());
+                    case TURTLE_HELMET ->
+                            helmetImage = resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getArmorOverrideTextures("turtle_layer_1", EquipmentSlot.HEAD, helmet, player, world, livingEntity, translateFunction.get()).map(TextureResource::getTexture).orElse(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ARMOR_TEXTURE_LOCATION + "turtle_layer_1").getTexture());
+                    default -> {
                         isArmor = false;
                         ItemStackProcessResult itemProcessResult = ItemRenderUtils.processItemForRendering(resourceManager.get(), player, helmet, EquipmentSlot.HEAD, version.get().isOld(), language.get());
                         boolean enchanted = itemProcessResult.requiresEnchantmentGlint();
@@ -727,7 +706,7 @@ public class ImageGeneration {
                         UnaryOperator<BufferedImage> enchantmentGlintFunction = img -> getEnchantedImage(enchantmentGlintResource, img);
                         Function<BufferedImage, RawEnchantmentGlintData> rawEnchantmentGlintFunction = img -> new RawEnchantmentGlintData(enchantmentGlintResource.stream().map(each -> getRawEnchantedImage(each.getFirst(), img)).collect(Collectors.toList()), enchantmentGlintResource.stream().map(ValuePairs::getSecond).collect(Collectors.toList()));
                         modelItems.put(PlayerModelItemPosition.HELMET, new PlayerModelItem(PlayerModelItemPosition.HELMET, modelKey, resourceManager.get().getResourceRegistry(CustomItemTextureRegistry.IDENTIFIER, CustomItemTextureRegistry.class).getItemPostResolveFunction(modelKey, EquipmentSlot.HEAD, helmet, version.get().isOld(), predicate, player, world, livingEntity, translateFunction.get()).orElse(null), predicate, enchanted, itemProvidedTextures, tintIndexData, enchantmentGlintFunction, rawEnchantmentGlintFunction));
-                        break;
+                    }
                 }
                 if (isArmor) {
                     if (helmet.getEnchantments().size() > 0) {
@@ -1395,15 +1374,11 @@ public class ImageGeneration {
             BufferedImage icons = resourceManager.get().getTextureManager().getTexture(ResourceRegistry.GUI_TEXTURE_LOCATION + "advancements/widgets").getTexture();
             int scale = icons.getWidth() / 256;
             int offsetY = completed ? 0 : 26 * scale;
-            switch (advancementType) {
-                case CHALLENGE:
-                    return icons.getSubimage(26 * scale, 128 * scale + offsetY, 26 * scale, 26 * scale);
-                case GOAL:
-                    return icons.getSubimage(52 * scale, 128 * scale + offsetY, 26 * scale, 26 * scale);
-                case TASK:
-                default:
-                    return icons.getSubimage(0, 128 * scale + offsetY, 26 * scale, 26 * scale);
-            }
+            return switch (advancementType) {
+                case CHALLENGE -> icons.getSubimage(26 * scale, 128 * scale + offsetY, 26 * scale, 26 * scale);
+                case GOAL -> icons.getSubimage(52 * scale, 128 * scale + offsetY, 26 * scale, 26 * scale);
+                case TASK, default -> icons.getSubimage(0, 128 * scale + offsetY, 26 * scale, 26 * scale);
+            };
         }
     }
 

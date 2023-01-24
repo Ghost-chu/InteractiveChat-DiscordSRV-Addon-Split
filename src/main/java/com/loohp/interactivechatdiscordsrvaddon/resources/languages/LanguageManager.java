@@ -93,7 +93,7 @@ public class LanguageManager extends AbstractManager implements ILanguageManager
                         try {
                             String key = (String) obj;
                             mapping.put(key, (String) json.get(key));
-                        } catch (Exception e) {
+                        } catch (Exception ignored) {
                         }
                     }
                     translations.put(file.getName().substring(0, file.getName().lastIndexOf(".")), mapping);

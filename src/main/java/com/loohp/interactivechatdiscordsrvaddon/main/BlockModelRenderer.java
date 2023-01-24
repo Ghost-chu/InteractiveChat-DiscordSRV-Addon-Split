@@ -248,8 +248,7 @@ public class BlockModelRenderer extends JFrame {
                 while (itr.hasNext()) {
                     Entry<JComponent, ValueTrios<Supplier<String>, JButton, JFileChooser>> entry = itr.next();
                     JComponent component = entry.getKey();
-                    if (component instanceof JTextField) {
-                        JTextField textField = (JTextField) component;
+                    if (component instanceof JTextField textField) {
                         if (textField.getText().trim().isEmpty()) {
                             itr.remove();
                             builtInProvidedTexturesPanel.remove(textField);
@@ -297,7 +296,7 @@ public class BlockModelRenderer extends JFrame {
             public void keyPressed(KeyEvent e) {
                 int code = e.getKeyCode();
                 switch (code) {
-                    case KeyEvent.VK_UP:
+                    case KeyEvent.VK_UP -> {
                         if (historyIndex + 1 < keyHistory.size()) {
                             if (historyIndex == -1 && !keyHistory.isEmpty()) {
                                 currentHistoryKey = textFieldResourceKey.getText();
@@ -312,8 +311,8 @@ public class BlockModelRenderer extends JFrame {
                             }
                             tabString = null;
                         }
-                        break;
-                    case KeyEvent.VK_DOWN:
+                    }
+                    case KeyEvent.VK_DOWN -> {
                         if (historyIndex > 0) {
                             textFieldResourceKey.setText(keyHistory.get(--historyIndex));
                             tabString = null;
@@ -323,8 +322,8 @@ public class BlockModelRenderer extends JFrame {
                             historyIndex--;
                             tabString = null;
                         }
-                        break;
-                    case KeyEvent.VK_TAB:
+                    }
+                    case KeyEvent.VK_TAB -> {
                         if (resourceManager != null) {
                             String text = textFieldResourceKey.getText().substring(0, tabPosition);
                             if (!text.equalsIgnoreCase(tabString)) {
@@ -349,19 +348,18 @@ public class BlockModelRenderer extends JFrame {
                                 }
                             }
                         }
-                        break;
-                    case KeyEvent.VK_LEFT:
-                    case KeyEvent.VK_RIGHT:
+                    }
+                    case KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT -> {
                         tabString = null;
                         SwingUtilities.invokeLater(() -> tabPosition = textFieldResourceKey.getCaretPosition());
-                        break;
-                    default:
+                    }
+                    default -> {
                         if (tabString != null && !tabOptions.isEmpty()) {
                             textFieldResourceKey.setCaretPosition(textFieldResourceKey.getText().length());
                         }
                         tabString = null;
                         SwingUtilities.invokeLater(() -> tabPosition = textFieldResourceKey.getCaretPosition());
-                        break;
+                    }
                 }
             }
         });
@@ -491,7 +489,7 @@ public class BlockModelRenderer extends JFrame {
             if (!lock.tryLock(0, TimeUnit.MILLISECONDS)) {
                 return;
             }
-        } catch (InterruptedException e) {
+        } catch (InterruptedException ignored) {
         }
         renderModelButton.setEnabled(false);
         reloadResourcesButton.setEnabled(false);
@@ -570,7 +568,7 @@ public class BlockModelRenderer extends JFrame {
             if (!lock.tryLock(0, TimeUnit.MILLISECONDS)) {
                 return;
             }
-        } catch (InterruptedException e) {
+        } catch (InterruptedException ignored) {
         }
         renderModelButton.setEnabled(false);
         reloadResourcesButton.setEnabled(false);

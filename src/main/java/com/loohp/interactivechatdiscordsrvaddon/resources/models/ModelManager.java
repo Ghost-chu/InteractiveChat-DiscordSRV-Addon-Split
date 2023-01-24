@@ -51,7 +51,7 @@ public class ModelManager extends AbstractManager implements IModelManager {
     public static final String ITEM_BASE = "builtin/generated";
     public static final String ITEM_BASE_LAYER = "layer";
 
-    public static JSONObject specialReadProvider(ResourcePackFile file) throws IOException, ParseException {
+    public static JSONObject specialReadProvider(ResourcePackFile file) throws IOException {
         try (InputStreamReader reader = new InputStreamReader(new BOMInputStream(file.getInputStream()), StandardCharsets.UTF_8)) {
             return (JSONObject) new JSONParser().parse(reader);
         } catch (ParseException e) {

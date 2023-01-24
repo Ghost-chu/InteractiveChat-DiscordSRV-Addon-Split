@@ -61,7 +61,7 @@ public class Main {
                         reader.close();
                     }
                     zip.close();
-                } catch (IOException e) {
+                } catch (IOException ignored) {
                 }
             }
             if (found) {

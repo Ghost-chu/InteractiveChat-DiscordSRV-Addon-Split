@@ -116,7 +116,7 @@ public class Commands implements CommandExecutor, TabCompleter {
                     } else {
                         sender.sendMessage(ChatColor.YELLOW + "Resource reloading in progress, please wait!");
                     }
-                } catch (IllegalStateException | InterruptedException e) {
+                } catch (IllegalStateException | InterruptedException ignored) {
                 }
             } else {
                 sender.sendMessage(InteractiveChat.noPermissionMessage);
@@ -176,7 +176,7 @@ public class Commands implements CommandExecutor, TabCompleter {
         }
 
         switch (args.length) {
-            case 0:
+            case 0 -> {
                 if (sender.hasPermission("interactivechatdiscordsrv.reloadconfig")) {
                     tab.add("reloadconfig");
                 }
@@ -187,7 +187,8 @@ public class Commands implements CommandExecutor, TabCompleter {
                     tab.add("status");
                 }
                 return tab;
-            case 1:
+            }
+            case 1 -> {
                 if (sender.hasPermission("interactivechatdiscordsrv.reloadconfig")) {
                     if ("reloadconfig".startsWith(args[0].toLowerCase())) {
                         tab.add("reloadconfig");
@@ -204,7 +205,8 @@ public class Commands implements CommandExecutor, TabCompleter {
                     }
                 }
                 return tab;
-            case 2:
+            }
+            case 2 -> {
                 if (sender.hasPermission("interactivechatdiscordsrv.reloadtexture")) {
                     if ("reloadtexture".equalsIgnoreCase(args[0])) {
                         if ("--redownload".startsWith(args[1].toLowerCase())) {
@@ -216,8 +218,10 @@ public class Commands implements CommandExecutor, TabCompleter {
                     }
                 }
                 return tab;
-            default:
+            }
+            default -> {
                 return tab;
+            }
         }
     }
 

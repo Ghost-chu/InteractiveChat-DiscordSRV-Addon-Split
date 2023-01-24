@@ -145,17 +145,12 @@ public class TranslationKeyUtils {
     }
 
     public static String getServerResourcePackType(ResourcePackType type) {
-        switch (type) {
-            case BUILT_IN:
-                return "pack.source.builtin";
-            case WORLD:
-                return "pack.source.world";
-            case LOCAL:
-                return "pack.source.local";
-            case SERVER:
-                return "pack.source.server";
-        }
-        return "";
+        return switch (type) {
+            case BUILT_IN -> "pack.source.builtin";
+            case WORLD -> "pack.source.world";
+            case LOCAL -> "pack.source.local";
+            case SERVER -> "pack.source.server";
+        };
     }
 
     public static String getWorldSpecificResources() {
@@ -303,22 +298,15 @@ public class TranslationKeyUtils {
     }
 
     public static String getModifierSlotKey(EquipmentSlot slot) {
-        switch (slot) {
-            case HEAD:
-                return "item.modifiers.head";
-            case CHEST:
-                return "item.modifiers.chest";
-            case LEGS:
-                return "item.modifiers.legs";
-            case FEET:
-                return "item.modifiers.feet";
-            case HAND:
-                return "item.modifiers.mainhand";
-            case OFF_HAND:
-                return "item.modifiers.offhand";
-            default:
-                return "item.modifiers." + slot.toString().toLowerCase();
-        }
+        return switch (slot) {
+            case HEAD -> "item.modifiers.head";
+            case CHEST -> "item.modifiers.chest";
+            case LEGS -> "item.modifiers.legs";
+            case FEET -> "item.modifiers.feet";
+            case HAND -> "item.modifiers.mainhand";
+            case OFF_HAND -> "item.modifiers.offhand";
+            default -> "item.modifiers." + slot.toString().toLowerCase();
+        };
     }
 
     public static String getCanDestroy() {
@@ -334,17 +322,12 @@ public class TranslationKeyUtils {
     }
 
     public static String getBookGeneration(Generation generation) {
-        switch (generation) {
-            case COPY_OF_ORIGINAL:
-                return "book.generation.1";
-            case COPY_OF_COPY:
-                return "book.generation.2";
-            case TATTERED:
-                return "book.generation.3";
-            case ORIGINAL:
-            default:
-                return "book.generation.0";
-        }
+        return switch (generation) {
+            case COPY_OF_ORIGINAL -> "book.generation.1";
+            case COPY_OF_COPY -> "book.generation.2";
+            case TATTERED -> "book.generation.3";
+            case ORIGINAL, default -> "book.generation.0";
+        };
     }
 
     public static String getBookPageIndicator() {
@@ -364,20 +347,14 @@ public class TranslationKeyUtils {
     }
 
     public static String getFireworkType(FireworkEffect.Type type) {
-        switch (type) {
-            case BALL:
-                return "item.minecraft.firework_star.shape.small_ball";
-            case BALL_LARGE:
-                return "item.minecraft.firework_star.shape.large_ball";
-            case STAR:
-                return "item.minecraft.firework_star.shape.star";
-            case CREEPER:
-                return "item.minecraft.firework_star.shape.creeper";
-            case BURST:
-                return "item.minecraft.firework_star.shape.burst";
-            default:
-                return "item.minecraft.firework_star.shape";
-        }
+        return switch (type) {
+            case BALL -> "item.minecraft.firework_star.shape.small_ball";
+            case BALL_LARGE -> "item.minecraft.firework_star.shape.large_ball";
+            case STAR -> "item.minecraft.firework_star.shape.star";
+            case CREEPER -> "item.minecraft.firework_star.shape.creeper";
+            case BURST -> "item.minecraft.firework_star.shape.burst";
+            default -> "item.minecraft.firework_star.shape";
+        };
     }
 
     public static String getFireworkTrail() {

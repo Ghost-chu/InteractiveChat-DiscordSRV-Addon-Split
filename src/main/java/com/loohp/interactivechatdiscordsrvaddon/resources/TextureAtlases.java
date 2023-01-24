@@ -22,6 +22,9 @@ package com.loohp.interactivechatdiscordsrvaddon.resources;
 
 import com.loohp.interactivechatdiscordsrvaddon.graphics.ImageUtils;
 import org.apache.commons.io.input.BOMInputStream;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.awt.image.BufferedImage;
 import java.io.InputStreamReader;
@@ -33,10 +36,7 @@ import java.util.stream.Collectors;
 
 public class TextureAtlases {
 
-    public static final List<TextureAtlasSource> DEFAULT_BLOCK_ATLASES = Collections.unmodifiableList(Arrays.asList(
-            new TextureAtlasDirectorySource("block", "block/"),
-            new TextureAtlasDirectorySource("item", "item/")
-    ));
+    public static final List<TextureAtlasSource> DEFAULT_BLOCK_ATLASES = List.of(new TextureAtlasDirectorySource("block", "block/"), new TextureAtlasDirectorySource("item", "item/"));
 
     public static final TextureAtlases EMPTY_ATLAS = new TextureAtlases(Collections.emptyMap());
 

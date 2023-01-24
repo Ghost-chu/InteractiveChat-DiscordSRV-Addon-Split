@@ -34,17 +34,17 @@ public class CacheObject<T> {
             long timeCreated = inputStream.readLong();
             byte type = inputStream.readByte();
             switch (type) {
-                case 0: {
+                case 0 -> {
                     byte[] dataArray = new byte[data.length - 9];
                     inputStream.readFully(dataArray);
                     return new CacheObject<>(timeCreated, new String(dataArray, StandardCharsets.UTF_8));
                 }
-                case 1: {
+                case 1 -> {
                     byte[] dataArray = new byte[data.length - 9];
                     inputStream.readFully(dataArray);
                     return new CacheObject<>(timeCreated, ImageUtils.fromArray(dataArray));
                 }
-                case 2: {
+                case 2 -> {
                     byte[] dataArray = new byte[data.length - 10];
                     inputStream.readFully(dataArray);
                     if (inputStream.readBoolean()) {
@@ -53,21 +53,21 @@ public class CacheObject<T> {
                         return new CacheObject<>(timeCreated, new RenderResult(new String(dataArray, StandardCharsets.UTF_8)));
                     }
                 }
-                case 3: {
+                case 3 -> {
                     byte[] dataArray = new byte[data.length - 9];
                     inputStream.readFully(dataArray);
                     try (ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(dataArray))) {
                         return new CacheObject<>(timeCreated, objectInputStream.readObject());
                     }
                 }
-                case 4: {
+                case 4 -> {
                     int length = inputStream.readInt();
                     byte[] name = new byte[length];
                     inputStream.readFully(name);
                     Class<?> clazz = Class.forName(new String(name, StandardCharsets.UTF_8));
                     return new CacheObject<>(timeCreated, clazz.getConstructor(InputStream.class).newInstance(inputStream));
                 }
-                default: {
+                default -> {
                     throw new IllegalArgumentException("Illegal class type " + type);
                 }
             }
@@ -100,9 +100,8 @@ public class CacheObject<T> {
             } else if (object instanceof BufferedImage) {
                 dataOutputStream.writeByte(1);
                 dataOutputStream.write(ImageUtils.toArray((BufferedImage) object));
-            } else if (object instanceof RenderResult) {
+            } else if (object instanceof RenderResult renderResult) {
                 dataOutputStream.writeByte(2);
-                RenderResult renderResult = (RenderResult) object;
                 if (renderResult.isSuccessful()) {
                     dataOutputStream.writeBoolean(true);
                     dataOutputStream.write(ImageUtils.toArray(renderResult.getImage()));

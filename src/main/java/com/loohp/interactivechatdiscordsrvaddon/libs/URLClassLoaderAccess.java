@@ -56,9 +56,10 @@ public abstract class URLClassLoaderAccess {
     }
 
     private static void throwError(Throwable cause) throws UnsupportedOperationException {
-        throw new UnsupportedOperationException("InteractiveChatDiscordSRVAddon is unable to inject into the plugin URLClassLoader.\n" +
-                "You may be able to fix this problem by adding the following command-line argument " +
-                "directly after the 'java' command in your start script: \n'--add-opens java.base/java.lang=ALL-UNNAMED'", cause);
+        throw new UnsupportedOperationException("""
+                InteractiveChatDiscordSRVAddon is unable to inject into the plugin URLClassLoader.
+                You may be able to fix this problem by adding the following command-line argument directly after the 'java' command in your start script:\s
+                '--add-opens java.base/java.lang=ALL-UNNAMED'""", cause);
     }
 
     private final URLClassLoader classLoader;

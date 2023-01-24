@@ -53,11 +53,10 @@ public class ComponentStringUtils {
         for (Component each : child) {
             Key font = each.font();
             List<TextDecoration> decorations = each.decorations().entrySet().stream().filter(entry -> entry.getValue().equals(TextDecoration.State.TRUE)).map(Map.Entry::getKey).collect(Collectors.toList());
-            if (each instanceof TextComponent) {
-                TextComponent textComponent = (TextComponent) each;
+            if (each instanceof TextComponent textComponent) {
                 String content = textComponent.content();
                 String[] parts = content.split("\\R", -1);
-                List<TextComponent> split = Arrays.stream(parts).map(textComponent::content).collect(Collectors.toList());
+                List<TextComponent> split = Arrays.stream(parts).map(textComponent::content).toList();
                 int j = 0;
                 for (TextComponent part : split) {
                     j++;
@@ -127,8 +126,7 @@ public class ComponentStringUtils {
                         x = 0;
                     }
                 }
-            } else if (each instanceof TranslatableComponent) {
-                TranslatableComponent translatableComponent = (TranslatableComponent) each;
+            } else if (each instanceof TranslatableComponent translatableComponent) {
                 Component textComponent = convertSingleTranslatable(translatableComponent, translateFunction);
                 String content = PlainTextComponentSerializer.plainText().serialize(textComponent);
                 int length = 0;
@@ -184,23 +182,17 @@ public class ComponentStringUtils {
         List<Component> children = new ArrayList<>(component.children());
         for (int i = 0; i < children.size(); i++) {
             Component current = children.get(i);
-            if (current instanceof TranslatableComponent) {
-                TranslatableComponent translatable = (TranslatableComponent) current;
+            if (current instanceof TranslatableComponent translatable) {
                 current = convertSingleTranslatable(translatable, translateFunction);
-            } else if (current instanceof KeybindComponent) {
-                KeybindComponent keybinding = (KeybindComponent) current;
+            } else if (current instanceof KeybindComponent keybinding) {
                 current = convertSingleTranslatable(Component.translatable(keybinding.keybind()), translateFunction);
-            } else if (current instanceof ScoreComponent) {
-                ScoreComponent score = (ScoreComponent) current;
+            } else if (current instanceof ScoreComponent score) {
                 current = Component.text("{" + score.name() + ": " + score.objective() + "}");
-            } else if (current instanceof BlockNBTComponent) {
-                BlockNBTComponent nbt = (BlockNBTComponent) current;
+            } else if (current instanceof BlockNBTComponent nbt) {
                 current = Component.text(nbt.nbtPath() + "@[" + nbt.pos().asString() + "]");
-            } else if (current instanceof EntityNBTComponent) {
-                EntityNBTComponent nbt = (EntityNBTComponent) current;
+            } else if (current instanceof EntityNBTComponent nbt) {
                 current = Component.text(nbt.nbtPath() + "@[" + nbt.selector() + "]");
-            } else if (current instanceof StorageNBTComponent) {
-                StorageNBTComponent nbt = (StorageNBTComponent) current;
+            } else if (current instanceof StorageNBTComponent nbt) {
                 current = Component.text(nbt.nbtPath() + "@[" + nbt.storage().asString() + "]");
             }
             children.set(i, current);
@@ -426,8 +418,7 @@ public class ComponentStringUtils {
                     return itemstack;
                 }
             }
-            if (child instanceof TranslatableComponent) {
-                TranslatableComponent trans = (TranslatableComponent) child;
+            if (child instanceof TranslatableComponent trans) {
                 List<Component> withs = new ArrayList<>(trans.args());
                 for (Component with : withs) {
                     ItemStack itemstack = extractItemStack(with);

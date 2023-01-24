@@ -32,15 +32,10 @@ public class ResourcePackInfoUtils {
     }
 
     public static Component resolveName(Component name, ResourcePackType type) {
-        switch (type) {
-            case BUILT_IN:
-            case LOCAL:
-                return name;
-            case WORLD:
-            case SERVER:
-                return Component.translatable(TranslationKeyUtils.getWorldSpecificResources());
-        }
-        return name;
+        return switch (type) {
+            case BUILT_IN, LOCAL -> name;
+            case WORLD, SERVER -> Component.translatable(TranslationKeyUtils.getWorldSpecificResources());
+        };
     }
 
     public static Component resolveDescription(ResourcePackInfo info) {
@@ -50,11 +45,8 @@ public class ResourcePackInfoUtils {
     public static Component resolveDescription(Component component, ResourcePackType type) {
         String space = PlainTextComponentSerializer.plainText().serialize(component).isEmpty() ? "" : " ";
         switch (type) {
-            case BUILT_IN:
-            case WORLD:
-            case SERVER:
-                component = component.append(Component.empty().append(Component.text(space + "(").append(Component.translatable(TranslationKeyUtils.getServerResourcePackType(type))).append(Component.text(")"))).color(NamedTextColor.GRAY));
-                break;
+            case BUILT_IN, WORLD, SERVER ->
+                    component = component.append(Component.empty().append(Component.text(space + "(").append(Component.translatable(TranslationKeyUtils.getServerResourcePackType(type))).append(Component.text(")"))).color(NamedTextColor.GRAY));
         }
         return component;
     }

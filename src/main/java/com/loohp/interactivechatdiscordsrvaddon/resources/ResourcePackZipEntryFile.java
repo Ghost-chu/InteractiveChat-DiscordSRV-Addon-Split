@@ -203,7 +203,7 @@ public class ResourcePackZipEntryFile implements ResourcePackFile {
     public void close() {
         try {
             zipRoot.close();
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
     }
 

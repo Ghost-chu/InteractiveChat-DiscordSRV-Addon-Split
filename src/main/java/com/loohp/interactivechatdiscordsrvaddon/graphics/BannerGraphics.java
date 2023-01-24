@@ -58,15 +58,13 @@ public class BannerGraphics {
         }
 
         List<Pattern> patterns;
-        if (!(item.getItemMeta() instanceof BannerMeta)) {
-            if (!(item.getItemMeta() instanceof BlockStateMeta)) {
+        if (!(item.getItemMeta() instanceof BannerMeta meta)) {
+            if (!(item.getItemMeta() instanceof BlockStateMeta bmeta)) {
                 return new BannerAssetResult(baseImage, patternsImage);
             }
-            BlockStateMeta bmeta = (BlockStateMeta) item.getItemMeta();
             Banner bannerBlockMeta = (Banner) bmeta.getBlockState();
             patterns = bannerBlockMeta.getPatterns();
         } else {
-            BannerMeta meta = (BannerMeta) item.getItemMeta();
             patterns = meta.getPatterns();
         }
 
@@ -97,11 +95,10 @@ public class BannerGraphics {
 
         List<Pattern> patterns;
         Color baseColor;
-        if (!(item.getItemMeta() instanceof BannerMeta)) {
-            if (!(item.getItemMeta() instanceof BlockStateMeta)) {
+        if (!(item.getItemMeta() instanceof BannerMeta meta)) {
+            if (!(item.getItemMeta() instanceof BlockStateMeta bmeta)) {
                 return getDefaultShieldAssets();
             }
-            BlockStateMeta bmeta = (BlockStateMeta) item.getItemMeta();
             if (!bmeta.hasBlockState()) {
                 return getDefaultShieldAssets();
             }
@@ -109,7 +106,6 @@ public class BannerGraphics {
             patterns = bannerBlockMeta.getPatterns();
             baseColor = new Color(bannerBlockMeta.getBaseColor().getColor().asRGB());
         } else {
-            BannerMeta meta = (BannerMeta) item.getItemMeta();
             patterns = meta.getPatterns();
             baseColor = new Color(meta.getBaseColor().getColor().asRGB());
         }

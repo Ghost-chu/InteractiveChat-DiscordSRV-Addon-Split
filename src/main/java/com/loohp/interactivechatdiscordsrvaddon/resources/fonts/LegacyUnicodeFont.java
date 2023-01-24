@@ -126,7 +126,7 @@ public class LegacyUnicodeFont extends MinecraftFont {
         decorations = sortDecorations(decorations);
         Color awtColor = new Color(color.value());
         Optional<FontTextureResource> optCharImage = charImages.get(character.codePointAt(0));
-        if (!optCharImage.isPresent()) {
+        if (optCharImage.isEmpty()) {
             optCharImage = missingCharacter;
         }
         if (optCharImage.isPresent()) {
@@ -218,7 +218,7 @@ public class LegacyUnicodeFont extends MinecraftFont {
     public Optional<BufferedImage> getCharacterImage(String character, float fontSize, TextColor color) {
         Color awtColor = new Color(color.value());
         Optional<FontTextureResource> optCharImage = charImages.get(character.codePointAt(0));
-        if (!optCharImage.isPresent()) {
+        if (optCharImage.isEmpty()) {
             optCharImage = missingCharacter;
         }
         if (optCharImage.isPresent()) {
