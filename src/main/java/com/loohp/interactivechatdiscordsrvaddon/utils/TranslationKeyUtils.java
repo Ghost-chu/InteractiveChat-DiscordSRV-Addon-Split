@@ -21,27 +21,21 @@
 package com.loohp.interactivechatdiscordsrvaddon.utils;
 
 import com.loohp.interactivechat.InteractiveChat;
-import com.loohp.interactivechat.libs.io.github.bananapuncher714.nbteditor.NBTEditor;
-import com.loohp.interactivechat.libs.org.apache.commons.text.WordUtils;
-import com.loohp.interactivechat.objectholders.ICMaterial;
 import com.loohp.interactivechat.utils.MCVersion;
 import com.loohp.interactivechat.utils.NMSUtils;
 import com.loohp.interactivechatdiscordsrvaddon.resources.ResourcePackType;
 import com.loohp.interactivechatdiscordsrvaddon.wrappers.PatternTypeWrapper;
-import org.bukkit.Color;
-import org.bukkit.DyeColor;
-import org.bukkit.FireworkEffect;
-import org.bukkit.NamespacedKey;
+import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.TropicalFish;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta.Generation;
+import org.bukkit.inventory.meta.TropicalFishBucketMeta;
 import org.bukkit.potion.PotionEffectType;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -126,38 +120,8 @@ public class TranslationKeyUtils {
         return "block.minecraft.spawner.desc2";
     }
 
-    @SuppressWarnings("deprecation")
     public static String getEntityTypeName(EntityType type) {
-        if (InteractiveChat.version.isLegacy()) {
-            int typeId = type.getTypeId();
-            if (typeId < 0) {
-                return "";
-            }
-            try {
-                String str = getEntityKeyMethod.invoke(null, typeId).toString();
-                if (str == null) {
-                    return "";
-                } else {
-                    return "entity." + str + ".name";
-                }
-            } catch (NullPointerException ignore) {
-                //do nothing
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-            return "";
-        } else {
-            String path = "";
-            if (InteractiveChat.version.equals(MCVersion.V1_13) || InteractiveChat.version.equals(MCVersion.V1_13_1)) {
-                path = "entity.minecraft." + type.name().toLowerCase();
-                if (type.name().equalsIgnoreCase("PIG_ZOMBIE")) {
-                    path = "entity.minecraft.zombie_pigman";
-                }
-            } else {
-                path = "entity." + type.getKey().getNamespace() + "." + type.getKey().getKey();
-            }
-            return path;
-        }
+        return "entity." + type.getKey().getNamespace() + "." + type.getKey().getKey();
     }
 
     public static String getResourcePackVanillaName() {
@@ -169,19 +133,11 @@ public class TranslationKeyUtils {
     }
 
     public static String getOldIncompatiblePack() {
-        if (InteractiveChat.version.isLegacy()) {
-            return "resourcePack.incompatible.old";
-        } else {
-            return "pack.incompatible.old";
-        }
+        return "pack.incompatible.old";
     }
 
     public static String getNewIncompatiblePack() {
-        if (InteractiveChat.version.isLegacy()) {
-            return "resourcePack.incompatible.new";
-        } else {
-            return "pack.incompatible.new";
-        }
+        return "pack.incompatible.new";
     }
 
     public static String getServerResourcePack() {
@@ -189,38 +145,21 @@ public class TranslationKeyUtils {
     }
 
     public static String getServerResourcePackType(ResourcePackType type) {
-        if (InteractiveChat.version.isLegacy()) {
-            switch (type) {
-                case BUILT_IN:
-                    return "built-in";
-                case WORLD:
-                    return "world";
-                case LOCAL:
-                    return "local";
-                case SERVER:
-                    return "server";
-            }
-        } else {
-            switch (type) {
-                case BUILT_IN:
-                    return "pack.source.builtin";
-                case WORLD:
-                    return "pack.source.world";
-                case LOCAL:
-                    return "pack.source.local";
-                case SERVER:
-                    return "pack.source.server";
-            }
+        switch (type) {
+            case BUILT_IN:
+                return "pack.source.builtin";
+            case WORLD:
+                return "pack.source.world";
+            case LOCAL:
+                return "pack.source.local";
+            case SERVER:
+                return "pack.source.server";
         }
         return "";
     }
 
     public static String getWorldSpecificResources() {
-        if (InteractiveChat.version.isLegacy()) {
-            return "addServer.resourcePack";
-        } else {
-            return "resourcePack.server.name";
-        }
+        return "resourcePack.server.name";
     }
 
     public static String getFilledMapId() {
@@ -239,49 +178,9 @@ public class TranslationKeyUtils {
         return "effect.none";
     }
 
-    @SuppressWarnings("deprecation")
     public static String getEffect(PotionEffectType type) {
-        if (InteractiveChat.version.isNewerOrEqualTo(MCVersion.V1_18)) {
-            NamespacedKey namespacedKey = type.getKey();
-            return "effect." + namespacedKey.getNamespace() + "." + namespacedKey.getKey();
-        } else if (!InteractiveChat.version.isLegacy()) {
-            try {
-                int id = type.getId();
-                Object nmsMobEffectListObject = getEffectFromIdMethod.invoke(null, id);
-                if (nmsMobEffectListObject != null) {
-                    return getEffectKeyMethod.invoke(nmsMobEffectListObject).toString();
-                } else {
-                    return "";
-                }
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                e.printStackTrace();
-                return "";
-            }
-        } else {
-            try {
-                int id = type.getId();
-                Object nmsMobEffectListObject;
-                if (InteractiveChat.version.isOlderOrEqualTo(MCVersion.V1_8_4)) {
-                    Object nmsMobEffectListArray = nmsMobEffectByIdField.get(null);
-                    if (Array.getLength(nmsMobEffectListArray) > id) {
-                        nmsMobEffectListObject = Array.get(nmsMobEffectListArray, id);
-                    } else {
-                        return "";
-                    }
-                } else {
-                    nmsMobEffectListObject = getEffectFromIdMethod.invoke(null, id);
-                }
-                if (nmsMobEffectListObject != null) {
-                    String str = getEffectKeyMethod.invoke(nmsMobEffectListObject).toString();
-                    return "effect." + str.substring(str.indexOf(".") + 1);
-                } else {
-                    return "";
-                }
-            } catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
-                return "";
-            }
-        }
+        NamespacedKey namespacedKey = type.getKey();
+        return "effect." + namespacedKey.getNamespace() + "." + namespacedKey.getKey();
     }
 
     public static String getEffectLevel(int level) {
@@ -301,22 +200,8 @@ public class TranslationKeyUtils {
     }
 
     public static String getEnchantment(Enchantment enchantment) {
-        if (!InteractiveChat.version.isLegacy()) {
-            NamespacedKey namespacedKey = enchantment.getKey();
-            return "enchantment." + namespacedKey.getNamespace() + "." + namespacedKey.getKey();
-        } else {
-            try {
-                Object nmsEnchantmentObject = getEnchantmentByIdMethod.invoke(null, bukkitEnchantmentGetIdMethod.invoke(enchantment));
-                if (nmsEnchantmentObject != null) {
-                    return getEnchantmentKeyMethod.invoke(nmsEnchantmentObject).toString();
-                } else {
-                    return "";
-                }
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                e.printStackTrace();
-                return "";
-            }
-        }
+        NamespacedKey namespacedKey = enchantment.getKey();
+        return "enchantment." + namespacedKey.getNamespace() + "." + namespacedKey.getKey();
     }
 
     public static String getEnchantmentLevel(int level) {
@@ -348,11 +233,7 @@ public class TranslationKeyUtils {
     }
 
     public static String getRocketFlightDuration() {
-        if (InteractiveChat.version.isLegacy()) {
-            return "item.fireworks.flight";
-        } else {
-            return "item.minecraft.firework_rocket.flight";
-        }
+        return "item.minecraft.firework_rocket.flight";
     }
 
     public static String getLevelTranslation(int level) {
@@ -364,25 +245,8 @@ public class TranslationKeyUtils {
     }
 
     public static String getMusicDiscName(ItemStack disc) {
-        if (InteractiveChat.version.isLegacy()) {
-            try {
-                Object nmsItemStackObject = asNMSCopyMethod.invoke(null, disc);
-                Object nmsItemObject = nmsGetItemMethod.invoke(nmsItemStackObject);
-                Object nmsItemRecordObject = nmsItemRecordClass.cast(nmsItemObject);
-                nmsItemRecordTranslationKeyField.setAccessible(true);
-                if (InteractiveChat.version.isOld()) {
-                    return "item.record." + nmsItemRecordTranslationKeyField.get(nmsItemRecordObject).toString() + ".desc";
-                } else {
-                    return nmsItemRecordTranslationKeyField.get(nmsItemRecordObject).toString();
-                }
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                e.printStackTrace();
-                return "";
-            }
-        } else {
-            NamespacedKey namespacedKey = disc.getType().getKey();
-            return "item." + namespacedKey.getNamespace() + "." + namespacedKey.getKey() + ".desc";
-        }
+        NamespacedKey namespacedKey = disc.getType().getKey();
+        return "item." + namespacedKey.getNamespace() + "." + namespacedKey.getKey() + ".desc";
     }
 
     public static String getDiscFragmentName(ItemStack fragment) {
@@ -390,38 +254,38 @@ public class TranslationKeyUtils {
         return "item." + namespacedKey.getNamespace() + "." + namespacedKey.getKey() + ".desc";
     }
 
-    public static String getBannerPatternItemName(ICMaterial material) {
+    public static String getBannerPatternItemName(Material material) {
         return "item.minecraft." + material.name().toLowerCase() + ".desc";
     }
 
     public static List<String> getTropicalFishBucketName(ItemStack bucket) {
         List<String> list = new ArrayList<>();
-        if (!InteractiveChat.version.isLegacy() && NBTEditor.contains(bucket, "BucketVariantTag")) {
-            int variance = NBTEditor.getInt(bucket, "BucketVariantTag");
-            int predefinedType = FishUtils.getPredefinedType(variance);
-            if (predefinedType >= 0) {
-                list.add("entity.minecraft.tropical_fish.predefined." + predefinedType);
-            } else {
-                DyeColor baseColor = FishUtils.getTropicalFishBaseColor(variance);
-                DyeColor patternColor = FishUtils.getTropicalFishPatternColor(variance);
-                list.add("entity.minecraft.tropical_fish.type." + FishUtils.getTropicalFishTypeName(variance));
-                list.add("color.minecraft." + baseColor.toString().toLowerCase());
-                if (!baseColor.equals(patternColor)) {
-                    list.add("color.minecraft." + patternColor.toString().toLowerCase());
-                }
+        if (!(bucket instanceof TropicalFishBucketMeta fishBucketMeta)) {
+            return list;
+        }
+        if (!fishBucketMeta.hasVariant()) {
+            return list;
+        }
+        TropicalFish.Pattern pattern = fishBucketMeta.getPattern();
+        DyeColor bodyColor = fishBucketMeta.getBodyColor();
+        DyeColor patternColor = fishBucketMeta.getPatternColor();
+        int variance = FishUtils.calculateTropicalFishVariant(pattern, bodyColor, patternColor);
+        int predefinedType = FishUtils.getPredefinedType(variance);
+        if (predefinedType >= 0) {
+            list.add("entity.minecraft.tropical_fish.predefined." + predefinedType);
+        } else {
+            DyeColor baseColor = FishUtils.getTropicalFishBaseColor(variance);
+            list.add("entity.minecraft.tropical_fish.type." + FishUtils.getTropicalFishTypeName(variance));
+            list.add("color.minecraft." + baseColor.toString().toLowerCase());
+            if (!baseColor.equals(patternColor)) {
+                list.add("color.minecraft." + patternColor.toString().toLowerCase());
             }
         }
         return list;
     }
 
     public static String getBannerPatternName(PatternTypeWrapper type, DyeColor color) {
-        if (InteractiveChat.version.isLegacy()) {
-            String colorName = WordUtils.capitalizeFully(color.name().toLowerCase().replace("_", " ")).replace(" ", "");
-            colorName = colorName.substring(0, 1).toLowerCase() + colorName.substring(1);
-            return "item.banner." + type.getAssetName() + "." + colorName;
-        } else {
-            return "block.minecraft.banner." + type.getAssetName() + "." + color.name().toLowerCase();
-        }
+        return "block.minecraft.banner." + type.getAssetName() + "." + color.name().toLowerCase();
     }
 
     public static String getAttributeKey(String attributeName) {
@@ -500,79 +364,40 @@ public class TranslationKeyUtils {
     }
 
     public static String getFireworkType(FireworkEffect.Type type) {
-        if (InteractiveChat.version.isLegacy()) {
-            switch (type) {
-                case BALL:
-                    return "item.fireworksCharge.type.0";
-                case BALL_LARGE:
-                    return "item.fireworksCharge.type.1";
-                case STAR:
-                    return "item.fireworksCharge.type.2";
-                case CREEPER:
-                    return "item.fireworksCharge.type.3";
-                case BURST:
-                    return "item.fireworksCharge.type.4";
-                default:
-                    return "item.fireworksCharge.type";
-            }
-        } else {
-            switch (type) {
-                case BALL:
-                    return "item.minecraft.firework_star.shape.small_ball";
-                case BALL_LARGE:
-                    return "item.minecraft.firework_star.shape.large_ball";
-                case STAR:
-                    return "item.minecraft.firework_star.shape.star";
-                case CREEPER:
-                    return "item.minecraft.firework_star.shape.creeper";
-                case BURST:
-                    return "item.minecraft.firework_star.shape.burst";
-                default:
-                    return "item.minecraft.firework_star.shape";
-            }
+        switch (type) {
+            case BALL:
+                return "item.minecraft.firework_star.shape.small_ball";
+            case BALL_LARGE:
+                return "item.minecraft.firework_star.shape.large_ball";
+            case STAR:
+                return "item.minecraft.firework_star.shape.star";
+            case CREEPER:
+                return "item.minecraft.firework_star.shape.creeper";
+            case BURST:
+                return "item.minecraft.firework_star.shape.burst";
+            default:
+                return "item.minecraft.firework_star.shape";
         }
     }
 
     public static String getFireworkTrail() {
-        if (InteractiveChat.version.isLegacy()) {
-            return "item.fireworksCharge.trail";
-        } else {
-            return "item.minecraft.firework_star.trail";
-        }
+        return "item.minecraft.firework_star.trail";
     }
 
     public static String getFireworkFlicker() {
-        if (InteractiveChat.version.isLegacy()) {
-            return "item.fireworksCharge.flicker";
-        } else {
-            return "item.minecraft.firework_star.flicker";
-        }
+        return "item.minecraft.firework_star.flicker";
     }
 
     public static String getFireworkFade() {
-        if (InteractiveChat.version.isLegacy()) {
-            return "item.fireworksCharge.fadeTo";
-        } else {
-            return "item.minecraft.firework_star.fade_to";
-        }
+        return "item.minecraft.firework_star.fade_to";
     }
 
     public static String getFireworkColor(Color color) {
         DyeColor dyeColor = DyeColor.getByFireworkColor(color);
-        if (InteractiveChat.version.isLegacy()) {
-            if (dyeColor == null) {
-                return "item.fireworksCharge.customColor";
-            } else {
-                String colorName = WordUtils.capitalizeFully(dyeColor.name().toLowerCase().replace("_", " ")).replace(" ", "");
-                colorName = colorName.substring(0, 1).toLowerCase() + colorName.substring(1);
-                return "item.fireworksCharge." + colorName;
-            }
+        if (dyeColor == null) {
+            return "item.minecraft.firework_star.custom_color";
         } else {
-            if (dyeColor == null) {
-                return "item.minecraft.firework_star.custom_color";
-            } else {
-                return "item.minecraft.firework_star." + dyeColor.name().toLowerCase();
-            }
+            return "item.minecraft.firework_star." + dyeColor.name().toLowerCase();
         }
     }
 
