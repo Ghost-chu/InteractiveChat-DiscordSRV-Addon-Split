@@ -75,72 +75,72 @@
                         <configuration>
                             <shadedArtifactAttached>false</shadedArtifactAttached>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <relocations>
-                                <relocation>
-                                    <pattern>okhttp3</pattern>
-                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.okhttp3</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>com.madgag.gif</pattern>
-                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.com.madgag.gif</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>com.loohp.blockmodelrenderer</pattern>
-                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.com.loohp.blockmodelrenderer</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>me.lucko.jarrelocator</pattern>
-                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.me.lucko.jarrelocator</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>com.ibm.icu</pattern>
-                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.com.ibm.icu</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>darwin.</pattern>
-                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.darwin.</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>kotlin.</pattern>
-                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.kotlin.</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>linux.</pattern>
-                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.linux.</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>win32.</pattern>
-                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.win32.</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>net.jpountz</pattern>
-                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.net.jpountz</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>org.checkerframework</pattern>
-                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.org.checkerframework</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>org.eclipse</pattern>
-                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.org.eclipse</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>org.json</pattern>
-                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.org.json</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>org.mapdb</pattern>
-                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.org.mapdb</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>com.intellij</pattern>
-                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.com.intellij</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>org.objectweb</pattern>
-                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.org.objectweb</shadedPattern>
-                                </relocation>
-                            </relocations>
+                            <!--                            <relocations>-->
+                            <!--                                <relocation>-->
+                            <!--                                    <pattern>okhttp3</pattern>-->
+                            <!--                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.okhttp3</shadedPattern>-->
+                            <!--                                </relocation>-->
+                            <!--                                <relocation>-->
+                            <!--                                    <pattern>com.madgag.gif</pattern>-->
+                            <!--                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.com.madgag.gif</shadedPattern>-->
+                            <!--                                </relocation>-->
+                            <!--                                <relocation>-->
+                            <!--                                    <pattern>com.loohp.blockmodelrenderer</pattern>-->
+                            <!--                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.com.loohp.blockmodelrenderer</shadedPattern>-->
+                            <!--                                </relocation>-->
+                            <!--                                <relocation>-->
+                            <!--                                    <pattern>me.lucko.jarrelocator</pattern>-->
+                            <!--                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.me.lucko.jarrelocator</shadedPattern>-->
+                            <!--                                </relocation>-->
+                            <!--                                <relocation>-->
+                            <!--                                    <pattern>com.ibm.icu</pattern>-->
+                            <!--                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.com.ibm.icu</shadedPattern>-->
+                            <!--                                </relocation>-->
+                            <!--                                <relocation>-->
+                            <!--                                    <pattern>darwin.</pattern>-->
+                            <!--                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.darwin.</shadedPattern>-->
+                            <!--                                </relocation>-->
+                            <!--                                <relocation>-->
+                            <!--                                    <pattern>kotlin.</pattern>-->
+                            <!--                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.kotlin.</shadedPattern>-->
+                            <!--                                </relocation>-->
+                            <!--                                <relocation>-->
+                            <!--                                    <pattern>linux.</pattern>-->
+                            <!--                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.linux.</shadedPattern>-->
+                            <!--                                </relocation>-->
+                            <!--                                <relocation>-->
+                            <!--                                    <pattern>win32.</pattern>-->
+                            <!--                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.win32.</shadedPattern>-->
+                            <!--                                </relocation>-->
+                            <!--                                <relocation>-->
+                            <!--                                    <pattern>net.jpountz</pattern>-->
+                            <!--                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.net.jpountz</shadedPattern>-->
+                            <!--                                </relocation>-->
+                            <!--                                <relocation>-->
+                            <!--                                    <pattern>org.checkerframework</pattern>-->
+                            <!--                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.org.checkerframework</shadedPattern>-->
+                            <!--                                </relocation>-->
+                            <!--                                <relocation>-->
+                            <!--                                    <pattern>org.eclipse</pattern>-->
+                            <!--                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.org.eclipse</shadedPattern>-->
+                            <!--                                </relocation>-->
+                            <!--                                <relocation>-->
+                            <!--                                    <pattern>org.json</pattern>-->
+                            <!--                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.org.json</shadedPattern>-->
+                            <!--                                </relocation>-->
+                            <!--                                <relocation>-->
+                            <!--                                    <pattern>org.mapdb</pattern>-->
+                            <!--                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.org.mapdb</shadedPattern>-->
+                            <!--                                </relocation>-->
+                            <!--                                <relocation>-->
+                            <!--                                    <pattern>com.intellij</pattern>-->
+                            <!--                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.com.intellij</shadedPattern>-->
+                            <!--                                </relocation>-->
+                            <!--                                <relocation>-->
+                            <!--                                    <pattern>org.objectweb</pattern>-->
+                            <!--                                    <shadedPattern>com.loohp.interactivechatdiscordsrvaddon.libs.org.objectweb</shadedPattern>-->
+                            <!--                                </relocation>-->
+                            <!--                            </relocations>-->
                         </configuration>
                     </execution>
                 </executions>
