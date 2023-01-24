@@ -20,13 +20,13 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.resources.languages;
 
-import com.loohp.interactivechat.libs.org.apache.commons.io.input.BOMInputStream;
-import com.loohp.interactivechat.libs.org.json.simple.JSONObject;
-import com.loohp.interactivechat.libs.org.json.simple.parser.JSONParser;
 import com.loohp.interactivechatdiscordsrvaddon.resources.AbstractManager;
 import com.loohp.interactivechatdiscordsrvaddon.resources.ResourceLoadingException;
 import com.loohp.interactivechatdiscordsrvaddon.resources.ResourceManager;
 import com.loohp.interactivechatdiscordsrvaddon.resources.ResourcePackFile;
+import org.apache.commons.io.input.BOMInputStream;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

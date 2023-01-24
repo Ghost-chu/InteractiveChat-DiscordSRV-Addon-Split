@@ -22,12 +22,6 @@ package com.loohp.interactivechatdiscordsrvaddon.resources.mods.chime;
 
 import com.google.common.collect.BoundType;
 import com.google.common.collect.Range;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.Component;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.ComponentIteratorType;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.TextComponent;
-import com.loohp.interactivechat.libs.net.querz.nbt.tag.*;
-import com.loohp.interactivechat.libs.org.json.simple.JSONArray;
-import com.loohp.interactivechat.libs.org.json.simple.JSONObject;
 import com.loohp.interactivechat.utils.InteractiveChatComponentSerializer;
 import com.loohp.interactivechat.utils.ItemNBTUtils;
 import com.loohp.interactivechat.utils.NBTParsingUtils;
@@ -36,6 +30,10 @@ import com.loohp.interactivechatdiscordsrvaddon.resources.mods.chime.ChimeModelO
 import com.loohp.interactivechatdiscordsrvaddon.resources.mods.chime.ChimePredicateEnums.ItemInHand;
 import com.loohp.interactivechatdiscordsrvaddon.resources.mods.chime.ChimePredicateEnums.TargetType;
 import com.loohp.interactivechatdiscordsrvaddon.utils.ComponentStringUtils;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.ComponentIteratorType;
+import net.kyori.adventure.text.TextComponent;
+import net.querz.nbt.tag.*;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 

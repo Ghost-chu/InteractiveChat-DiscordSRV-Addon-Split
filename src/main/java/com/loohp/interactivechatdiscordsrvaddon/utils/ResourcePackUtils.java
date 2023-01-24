@@ -26,7 +26,6 @@ import com.loohp.interactivechat.utils.NMSUtils;
 import org.bukkit.Bukkit;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class ResourcePackUtils {
@@ -67,35 +66,11 @@ public class ResourcePackUtils {
     }
 
     public static String getServerResourcePack() {
-        if (InteractiveChat.version.isNewerOrEqualTo(MCVersion.V1_19)) {
-            return Bukkit.getResourcePack();
-        } else {
-            try {
-                Object craftServerObject = craftServerClass.cast(Bukkit.getServer());
-                Object nmsMinecraftServerObject = craftServerGetServerMethod.invoke(craftServerObject);
-                Object resourcePackStringObject = nmsGetResourcePackMethod.invoke(nmsMinecraftServerObject);
-                return resourcePackStringObject == null ? "" : resourcePackStringObject.toString();
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-            return "";
-        }
+        return Bukkit.getResourcePack();
     }
 
     public static String getServerResourcePackHash() {
-        if (InteractiveChat.version.isNewerOrEqualTo(MCVersion.V1_19)) {
-            return Bukkit.getResourcePackHash();
-        } else {
-            try {
-                Object craftServerObject = craftServerClass.cast(Bukkit.getServer());
-                Object nmsMinecraftServerObject = craftServerGetServerMethod.invoke(craftServerObject);
-                Object resourcePackStringObject = nmsGetResourcePackHashMethod.invoke(nmsMinecraftServerObject);
-                return resourcePackStringObject == null ? "" : resourcePackStringObject.toString();
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-            return "";
-        }
+        return Bukkit.getResourcePackHash();
     }
 
     public static int getServerResourcePackVersion() {

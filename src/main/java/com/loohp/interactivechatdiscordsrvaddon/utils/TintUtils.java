@@ -20,11 +20,11 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.utils;
 
-import com.loohp.interactivechat.objectholders.ICMaterial;
 import com.loohp.interactivechatdiscordsrvaddon.graphics.ImageUtils;
 import it.unimi.dsi.fastutil.ints.IntArraySet;
 import it.unimi.dsi.fastutil.ints.IntSet;
 import it.unimi.dsi.fastutil.ints.IntSets;
+import org.bukkit.Material;
 
 import java.awt.image.BufferedImage;
 import java.util.Collections;
@@ -166,7 +166,7 @@ public class TintUtils {
         return TINT_DATA.getOrDefault(material.toUpperCase(), TintIndexData.EMPTY_INSTANCE);
     }
 
-    public static TintIndexData getTintData(ICMaterial material) {
+    public static TintIndexData getTintData(Material material) {
         return TINT_DATA.getOrDefault(material.name(), TintIndexData.EMPTY_INSTANCE);
     }
 
@@ -174,7 +174,7 @@ public class TintUtils {
         return SPAWN_EGG_TINT_DATA.get(spawnEgg.toUpperCase());
     }
 
-    public static SpawnEggTintData getSpawnEggTint(ICMaterial spawnEgg) {
+    public static SpawnEggTintData getSpawnEggTint(Material spawnEgg) {
         return SPAWN_EGG_TINT_DATA.get(spawnEgg.name());
     }
 

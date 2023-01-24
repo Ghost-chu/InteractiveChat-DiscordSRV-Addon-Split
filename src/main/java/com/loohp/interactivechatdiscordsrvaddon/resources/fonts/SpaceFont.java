@@ -20,14 +20,14 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.resources.fonts;
 
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.format.TextColor;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.format.TextDecoration;
 import com.loohp.interactivechatdiscordsrvaddon.graphics.ImageUtils;
 import com.loohp.interactivechatdiscordsrvaddon.resources.ResourceManager;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
 import it.unimi.dsi.fastutil.ints.Int2IntMaps;
 import it.unimi.dsi.fastutil.ints.IntSet;
 import it.unimi.dsi.fastutil.ints.IntSets;
+import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

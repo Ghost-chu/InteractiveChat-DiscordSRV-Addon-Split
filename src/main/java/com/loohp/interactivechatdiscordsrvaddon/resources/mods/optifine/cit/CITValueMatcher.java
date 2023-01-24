@@ -20,8 +20,8 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.resources.mods.optifine.cit;
 
-import com.loohp.interactivechat.libs.net.querz.nbt.tag.*;
 import com.loohp.interactivechat.utils.NBTParsingUtils;
+import net.querz.nbt.tag.*;
 
 import java.util.regex.Pattern;
 

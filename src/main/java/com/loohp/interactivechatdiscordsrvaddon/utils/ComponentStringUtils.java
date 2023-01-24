@@ -20,20 +20,15 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.utils;
 
-import com.loohp.interactivechat.libs.com.cryptomorin.xseries.XMaterial;
-import com.loohp.interactivechat.libs.net.kyori.adventure.key.Key;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.*;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.event.HoverEvent;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.event.HoverEvent.ShowItem;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.format.TextDecoration;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.format.TextDecoration.State;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
-import com.loohp.interactivechat.libs.org.apache.commons.lang3.RandomStringUtils;
-import com.loohp.interactivechat.objectholders.LegacyIdKey;
-import com.loohp.interactivechat.utils.*;
 import com.loohp.interactivechatdiscordsrvaddon.resources.fonts.FontProvider;
 import it.unimi.dsi.fastutil.ints.IntList;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.text.*;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.md_5.bungee.api.ChatColor;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 
@@ -57,7 +52,7 @@ public class ComponentStringUtils {
         boolean nullCurrentLine = true;
         for (Component each : child) {
             Key font = each.font();
-            List<TextDecoration> decorations = each.decorations().entrySet().stream().filter(entry -> entry.getValue().equals(State.TRUE)).map(Map.Entry::getKey).collect(Collectors.toList());
+            List<TextDecoration> decorations = each.decorations().entrySet().stream().filter(entry -> entry.getValue().equals(TextDecoration.State.TRUE)).map(Map.Entry::getKey).collect(Collectors.toList());
             if (each instanceof TextComponent) {
                 TextComponent textComponent = (TextComponent) each;
                 String content = textComponent.content();
@@ -390,7 +385,7 @@ public class ComponentStringUtils {
             Component child = children.get(i);
             HoverEvent<?> hoverEvent = child.hoverEvent();
             if (hoverEvent != null && hoverEvent.action().equals(HoverEvent.Action.SHOW_ITEM)) {
-                ShowItem showItem = (ShowItem) hoverEvent.value();
+                HoverEvent.ShowItem showItem = (HoverEvent.ShowItem) hoverEvent.value();
                 Key key = showItem.item();
                 int count = showItem.count();
                 ItemStack itemstack = null;

@@ -20,9 +20,6 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.resources.mods.chime;
 
-import com.loohp.interactivechat.libs.org.apache.commons.io.input.BOMInputStream;
-import com.loohp.interactivechat.libs.org.json.simple.JSONObject;
-import com.loohp.interactivechat.libs.org.json.simple.parser.JSONParser;
 import com.loohp.interactivechat.objectholders.OfflineICPlayer;
 import com.loohp.interactivechatdiscordsrvaddon.registry.ResourceRegistry;
 import com.loohp.interactivechatdiscordsrvaddon.resources.CustomItemTextureRegistry;
@@ -37,6 +34,7 @@ import com.loohp.interactivechatdiscordsrvaddon.resources.models.ModelOverride.M
 import com.loohp.interactivechatdiscordsrvaddon.resources.mods.ModManager;
 import com.loohp.interactivechatdiscordsrvaddon.resources.textures.TextureResource;
 import com.loohp.interactivechatdiscordsrvaddon.utils.TriFunction;
+import org.apache.commons.io.input.BOMInputStream;
 import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;

@@ -22,8 +22,6 @@ package com.loohp.interactivechatdiscordsrvaddon.graphics;
 
 import com.loohp.blockmodelrenderer.blending.BlendingModes;
 import com.loohp.blockmodelrenderer.utils.MathUtils;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.Component;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import com.loohp.interactivechat.utils.ChatColorUtils;
 import com.loohp.interactivechat.utils.ComponentFlattening;
 import com.loohp.interactivechat.utils.ComponentModernizing;
@@ -36,6 +34,8 @@ import com.loohp.interactivechatdiscordsrvaddon.resources.languages.LanguageMeta
 import com.loohp.interactivechatdiscordsrvaddon.utils.ComponentStringUtils;
 import com.loohp.interactivechatdiscordsrvaddon.utils.I18nUtils;
 import it.unimi.dsi.fastutil.chars.CharObjectPair;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

@@ -24,8 +24,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
 import com.loohp.interactivechat.InteractiveChat;
-import com.loohp.interactivechat.libs.org.json.simple.JSONObject;
-import com.loohp.interactivechat.libs.org.json.simple.parser.JSONParser;
 import com.loohp.interactivechat.utils.FileUtils;
 import com.loohp.interactivechat.utils.HTTPRequestUtils;
 import com.loohp.interactivechat.utils.HashUtils;
@@ -36,6 +34,8 @@ import com.loohp.interactivechatdiscordsrvaddon.utils.ResourcePackUtils;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

@@ -20,11 +20,11 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.resources.fonts;
 
-import com.loohp.interactivechat.libs.org.apache.commons.text.StringEscapeUtils;
 import com.loohp.interactivechatdiscordsrvaddon.resources.ResourceLoadingException;
 import com.loohp.interactivechatdiscordsrvaddon.resources.ResourceManager;
 import it.unimi.dsi.fastutil.ints.*;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap.Entry;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;

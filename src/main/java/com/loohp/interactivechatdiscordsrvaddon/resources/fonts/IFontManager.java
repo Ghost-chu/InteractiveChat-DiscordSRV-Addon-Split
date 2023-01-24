@@ -20,9 +20,9 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.resources.fonts;
 
-import com.loohp.interactivechat.libs.net.kyori.adventure.key.Key;
 import com.loohp.interactivechatdiscordsrvaddon.resources.IAbstractManager;
 import com.loohp.interactivechatdiscordsrvaddon.resources.textures.TextureResource;
+import net.kyori.adventure.key.Key;
 
 public interface IFontManager extends IAbstractManager {
 

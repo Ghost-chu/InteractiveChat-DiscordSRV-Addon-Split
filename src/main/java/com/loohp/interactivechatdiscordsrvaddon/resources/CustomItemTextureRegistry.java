@@ -21,12 +21,12 @@
 package com.loohp.interactivechatdiscordsrvaddon.resources;
 
 import com.loohp.interactivechat.objectholders.OfflineICPlayer;
-import com.loohp.interactivechat.objectholders.ValuePairs;
 import com.loohp.interactivechatdiscordsrvaddon.resources.ResourceManager.ResourceRegistrySupplier;
 import com.loohp.interactivechatdiscordsrvaddon.resources.models.BlockModel;
 import com.loohp.interactivechatdiscordsrvaddon.resources.models.ModelOverride.ModelOverrideType;
 import com.loohp.interactivechatdiscordsrvaddon.resources.mods.optifine.cit.EnchantmentProperties.OpenGLBlending;
 import com.loohp.interactivechatdiscordsrvaddon.resources.textures.TextureResource;
+import com.loohp.interactivechatdiscordsrvaddon.utils.ValuePairs;
 import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.EquipmentSlot;

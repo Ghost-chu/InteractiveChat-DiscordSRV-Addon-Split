@@ -20,13 +20,14 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.resources.models;
 
-import com.loohp.interactivechat.libs.org.json.simple.JSONArray;
-import com.loohp.interactivechat.libs.org.json.simple.JSONObject;
+
 import com.loohp.interactivechatdiscordsrvaddon.registry.ResourceRegistry;
 import com.loohp.interactivechatdiscordsrvaddon.resources.models.ModelDisplay.ModelDisplayPosition;
 import com.loohp.interactivechatdiscordsrvaddon.resources.models.ModelElement.ModelElementRotation;
 import com.loohp.interactivechatdiscordsrvaddon.resources.models.ModelFace.ModelFaceSide;
 import com.loohp.interactivechatdiscordsrvaddon.resources.models.ModelOverride.ModelOverrideType;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import java.util.*;
 import java.util.Map.Entry;

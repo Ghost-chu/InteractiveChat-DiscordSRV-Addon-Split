@@ -23,10 +23,9 @@ package com.loohp.interactivechatdiscordsrvaddon.utils;
 import com.ibm.icu.text.ArabicShaping;
 import com.ibm.icu.text.Bidi;
 import com.ibm.icu.text.BidiRun;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.Component;
-import com.loohp.interactivechat.objectholders.ValuePairs;
 import com.loohp.interactivechatdiscordsrvaddon.objectholders.CharacterData;
 import it.unimi.dsi.fastutil.chars.CharObjectPair;
+import me.clip.placeholderapi.libs.kyori.adventure.text.Component;
 
 import java.util.ArrayList;
 import java.util.List;

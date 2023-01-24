@@ -20,10 +20,6 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.resources.mods.optifine;
 
-import com.loohp.interactivechat.libs.org.apache.commons.io.input.BOMInputStream;
-import com.loohp.interactivechat.libs.org.json.simple.JSONObject;
-import com.loohp.interactivechat.libs.org.json.simple.parser.JSONParser;
-import com.loohp.interactivechat.objectholders.ValuePairs;
 import com.loohp.interactivechatdiscordsrvaddon.graphics.ImageUtils;
 import com.loohp.interactivechatdiscordsrvaddon.registry.ResourceRegistry;
 import com.loohp.interactivechatdiscordsrvaddon.resources.*;
@@ -39,12 +35,16 @@ import com.loohp.interactivechatdiscordsrvaddon.resources.textures.GeneratedText
 import com.loohp.interactivechatdiscordsrvaddon.resources.textures.TextureManager;
 import com.loohp.interactivechatdiscordsrvaddon.resources.textures.TextureMeta;
 import com.loohp.interactivechatdiscordsrvaddon.resources.textures.TextureResource;
+import com.loohp.interactivechatdiscordsrvaddon.utils.ValuePairs;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
+import org.apache.commons.io.input.BOMInputStream;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

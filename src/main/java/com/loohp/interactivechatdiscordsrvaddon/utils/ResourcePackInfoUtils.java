@@ -20,11 +20,10 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.utils;
 
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.Component;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.format.NamedTextColor;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import com.loohp.interactivechatdiscordsrvaddon.resources.ResourcePackInfo;
 import com.loohp.interactivechatdiscordsrvaddon.resources.ResourcePackType;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 
 public class ResourcePackInfoUtils {
 

@@ -20,8 +20,8 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.resources;
 
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.Component;
 import com.loohp.interactivechatdiscordsrvaddon.resources.languages.LanguageMeta;
+import net.kyori.adventure.text.Component;
 
 import java.awt.image.BufferedImage;
 import java.util.Collections;

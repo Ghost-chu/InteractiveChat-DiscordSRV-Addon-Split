@@ -20,17 +20,8 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.utils;
 
+import com.cryptomorin.xseries.XMaterial;
 import com.loohp.interactivechat.InteractiveChat;
-import com.loohp.interactivechat.libs.com.cryptomorin.xseries.XMaterial;
-import com.loohp.interactivechat.libs.io.github.bananapuncher714.nbteditor.NBTEditor;
-import com.loohp.interactivechat.libs.net.querz.nbt.tag.*;
-import com.loohp.interactivechat.libs.org.json.simple.JSONObject;
-import com.loohp.interactivechat.libs.org.json.simple.parser.JSONParser;
-import com.loohp.interactivechat.libs.org.json.simple.parser.ParseException;
-import com.loohp.interactivechat.objectholders.ICMaterial;
-import com.loohp.interactivechat.objectholders.ICPlayer;
-import com.loohp.interactivechat.objectholders.OfflineICPlayer;
-import com.loohp.interactivechat.objectholders.ValuePairs;
 import com.loohp.interactivechat.utils.*;
 import com.loohp.interactivechatdiscordsrvaddon.graphics.BannerGraphics;
 import com.loohp.interactivechatdiscordsrvaddon.graphics.BannerGraphics.BannerAssetResult;
@@ -47,19 +38,20 @@ import com.loohp.interactivechatdiscordsrvaddon.resources.textures.GeneratedText
 import com.loohp.interactivechatdiscordsrvaddon.resources.textures.TextureResource;
 import com.loohp.interactivechatdiscordsrvaddon.utils.TintUtils.SpawnEggTintData;
 import com.loohp.interactivechatdiscordsrvaddon.utils.TintUtils.TintIndexData;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
+import io.github.bananapuncher714.nbteditor.NBTEditor;
+import net.querz.nbt.tag.*;
+import org.bukkit.*;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.MainHand;
 import org.bukkit.inventory.meta.*;
-import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionType;
 import org.bukkit.util.Vector;
+import org.json.simple.parser.ParseException;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -100,24 +92,24 @@ public class ItemRenderUtils {
 
     private static final Random RANDOM = new Random();
 
-    public static ItemStackProcessResult processItemForRendering(ResourceManager manager, OfflineICPlayer player, ItemStack item, EquipmentSlot slot, boolean is1_8, String language) throws IOException {
+    public static ItemStackProcessResult processItemForRendering(ResourceManager manager, OfflinePlayer player, ItemStack item, EquipmentSlot slot, boolean is1_8, String language) throws IOException {
         World world = null;
         LivingEntity livingEntity = null;
-        if (player.isOnline() && player.getPlayer().isLocal()) {
-            livingEntity = player.getPlayer().getLocalPlayer();
+        if (player.isOnline()) {
+            livingEntity = player.getPlayer().getPlayer();
             world = livingEntity.getWorld();
         }
 
         boolean requiresEnchantmentGlint = false;
-        ICMaterial icMaterial = ICMaterial.from(item);
+        Material icMaterial = item.getType();
         String directLocation = null;
-        if (icMaterial.isMaterial(XMaterial.DEBUG_STICK)) {
+        if (icMaterial == Material.DEBUG_STICK) {
             requiresEnchantmentGlint = true;
-        } else if (icMaterial.isMaterial(XMaterial.ENCHANTED_GOLDEN_APPLE)) {
+        } else if (icMaterial == Material.ENCHANTED_GOLDEN_APPLE) {
             requiresEnchantmentGlint = true;
-        } else if (icMaterial.isMaterial(XMaterial.WRITTEN_BOOK)) {
+        } else if (icMaterial == Material.WRITTEN_BOOK) {
             requiresEnchantmentGlint = true;
-        } else if (icMaterial.isMaterial(XMaterial.ENCHANTED_BOOK)) {
+        } else if (icMaterial == Material.ENCHANTED_BOOK) {
             requiresEnchantmentGlint = true;
         } else if (item.getEnchantments().size() > 0) {
             requiresEnchantmentGlint = true;
@@ -130,43 +122,46 @@ public class ItemRenderUtils {
         TintIndexData tintIndexData = TintUtils.getTintData(icMaterial);
         Map<ModelOverrideType, Float> predicates = new EnumMap<>(ModelOverrideType.class);
         Map<String, TextureResource> providedTextures = new HashMap<>();
-
-        if (!player.isRightHanded()) {
+        boolean rightHanded = true;
+        if (player.isOnline()) {
+            rightHanded = player.getPlayer().getMainHand() == MainHand.RIGHT;
+        }
+        if (!rightHanded) {
             predicates.put(ModelOverrideType.LEFTHANDED, 1F);
         }
-        if (NBTEditor.contains(item, "CustomModelData")) {
-            int customModelData = NBTEditor.getInt(item, "CustomModelData");
+        if (item.getItemMeta().hasCustomModelData()) {
+            int customModelData = item.getItemMeta().getCustomModelData();
             predicates.put(ModelOverrideType.CUSTOM_MODEL_DATA, (float) customModelData);
         }
         if (item.getType().getMaxDurability() > 0) {
             int maxDur = item.getType().getMaxDurability();
-            int damage = InteractiveChat.version.isLegacy() ? item.getDurability() : ((Damageable) item.getItemMeta()).getDamage();
+            int damage = ((Damageable) item.getItemMeta()).getDamage();
             predicates.put(ModelOverrideType.DAMAGE, (float) damage / (float) maxDur);
             predicates.put(ModelOverrideType.DAMAGED, isUnbreakable(item) || (damage <= 0) ? 0F : 1F);
         }
 
-        if (icMaterial.isMaterial(XMaterial.CHEST) || icMaterial.isMaterial(XMaterial.TRAPPED_CHEST)) {
+        if (icMaterial == Material.CHEST || icMaterial == Material.TRAPPED_CHEST) {
             LocalDate time = LocalDate.now();
             Month month = time.getMonth();
             int day = time.getDayOfMonth();
             if (month.equals(Month.DECEMBER) && (day == 24 || day == 25 || day == 26)) {
                 directLocation = ResourceRegistry.BUILTIN_ENTITY_MODEL_LOCATION + "christmas_chest";
             }
-        } else if (icMaterial.isOneOf(Collections.singletonList("CONTAINS:banner")) && !icMaterial.isOneOf(Collections.singletonList("CONTAINS:banner_pattern"))) {
+        } else if (Tag.BANNERS.isTagged(icMaterial)) {
             BannerAssetResult bannerAsset = BannerGraphics.generateBannerAssets(item);
             providedTextures.put(ResourceRegistry.BANNER_BASE_TEXTURE_PLACEHOLDER, new GeneratedTextureResource(manager, bannerAsset.getBase()));
             providedTextures.put(ResourceRegistry.BANNER_PATTERNS_TEXTURE_PLACEHOLDER, new GeneratedTextureResource(manager, bannerAsset.getPatterns()));
-        } else if (icMaterial.isMaterial(XMaterial.SHIELD)) {
+        } else if (icMaterial == Material.SHIELD) {
             BannerAssetResult shieldAsset = BannerGraphics.generateShieldAssets(item);
             providedTextures.put(ResourceRegistry.SHIELD_BASE_TEXTURE_PLACEHOLDER, new GeneratedTextureResource(manager, shieldAsset.getBase()));
             providedTextures.put(ResourceRegistry.SHIELD_PATTERNS_TEXTURE_PLACEHOLDER, new GeneratedTextureResource(manager, shieldAsset.getPatterns()));
             predicates.put(ModelOverrideType.BLOCKING, 0F);
-            ICPlayer icplayer = player.getPlayer();
-            if (icplayer != null && icplayer.isLocal()) {
-                int cooldown = icplayer.getLocalPlayer().getCooldown(item.getType());
+            Player icplayer = player.getPlayer();
+            if (icplayer != null && icplayer.isOnline()) {
+                int cooldown = icplayer.getPlayer().getCooldown(item.getType());
                 predicates.put(ModelOverrideType.COOLDOWN, (float) cooldown / (float) ResourceRegistry.SHIELD_COOLDOWN);
             }
-        } else if (icMaterial.isMaterial(XMaterial.PLAYER_HEAD)) {
+        } else if (icMaterial == Material.PLAYER_HEAD) {
             BufferedImage skinImage = manager.getTextureManager().getTexture(ResourceRegistry.DEFAULT_WIDE_SKIN_LOCATION).getTexture();
             if (item.hasItemMeta()) {
                 Tag<?> skullOwnerTag = ((CompoundTag) NBTParsingUtils.fromSNBT(ItemNBTUtils.getNMSItemStackJson(item))).getCompoundTag("tag").get("SkullOwner");
@@ -226,29 +221,29 @@ public class ItemRenderUtils {
                 }
             }
             providedTextures.put(ResourceRegistry.SKIN_TEXTURE_PLACEHOLDER, new GeneratedTextureResource(manager, ModelUtils.convertToModernSkinTexture(skinImage)));
-        } else if (icMaterial.isMaterial(XMaterial.ELYTRA)) {
-            int durability = item.getType().getMaxDurability() - (InteractiveChat.version.isLegacy() ? item.getDurability() : ((Damageable) item.getItemMeta()).getDamage());
+        } else if (icMaterial == Material.ELYTRA) {
+            int durability = item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage();
             if (durability <= 1) {
                 predicates.put(ModelOverrideType.BROKEN, 1F);
             }
-        } else if (icMaterial.isMaterial(XMaterial.CROSSBOW)) {
+        } else if (icMaterial == Material.CROSSBOW) {
             CrossbowMeta meta = (CrossbowMeta) item.getItemMeta();
             List<ItemStack> charged = meta.getChargedProjectiles();
             if (!charged.isEmpty()) {
                 predicates.put(ModelOverrideType.CHARGED, 1F);
                 ItemStack charge = charged.get(0);
-                ICMaterial chargeType = ICMaterial.from(charge);
-                if (chargeType.isMaterial(XMaterial.FIREWORK_ROCKET)) {
+                Material chargeType = charge.getType();
+                if (chargeType == Material.FIREWORK_ROCKET) {
                     predicates.put(ModelOverrideType.FIREWORK, 1F);
                 }
             }
-        } else if (icMaterial.isMaterial(XMaterial.CLOCK)) {
+        } else if (icMaterial == Material.CLOCK) {
             long time;
-            ICPlayer onlinePlayer = player.getPlayer();
-            if (onlinePlayer != null && onlinePlayer.isLocal()) {
-                Player bukkitPlayer = onlinePlayer.getLocalPlayer();
+            Player onlinePlayer = player.getPlayer();
+            if (onlinePlayer != null && onlinePlayer.isOnline()) {
+                Player bukkitPlayer = onlinePlayer.getPlayer();
                 if (WorldUtils.isNatural(bukkitPlayer.getWorld())) {
-                    time = (onlinePlayer.getLocalPlayer().getPlayerTime() % 24000) - 6000;
+                    time = (onlinePlayer.getPlayerTime() % 24000) - 6000;
                 } else {
                     time = RANDOM.nextInt(24000) - 6000;
                 }
@@ -260,7 +255,7 @@ public class ItemRenderUtils {
             }
             double timePhase = (double) time / 24000;
             predicates.put(ModelOverrideType.TIME, (float) (timePhase - 0.0078125));
-        } else if (icMaterial.isMaterial(XMaterial.COMPASS)) {
+        } else if (icMaterial == Material.COMPASS) {
             ItemStack compass = item;
 
             if (CompassUtils.isLodestoneCompass(compass)) {
@@ -271,63 +266,44 @@ public class ItemRenderUtils {
             }
 
             double angle;
-            ICPlayer icplayer = player.getPlayer();
-            if (icplayer != null && icplayer.isLocal()) {
-                Player bukkitPlayer = icplayer.getLocalPlayer();
-                if (InteractiveChat.version.isNewerOrEqualTo(MCVersion.V1_16)) {
-                    CompassMeta meta = (CompassMeta) compass.getItemMeta();
-                    Location target;
-                    if (meta.hasLodestone()) {
-                        Location lodestone = meta.getLodestone();
-                        target = new Location(lodestone.getWorld(), lodestone.getBlockX() + 0.5, lodestone.getBlockY(), lodestone.getBlockZ() + 0.5, lodestone.getYaw(), lodestone.getPitch());
-                    } else if (WorldUtils.isNatural(bukkitPlayer.getWorld())) {
-                        Location spawn = bukkitPlayer.getCompassTarget();
-                        target = new Location(spawn.getWorld(), spawn.getBlockX() + 0.5, spawn.getBlockY(), spawn.getBlockZ() + 0.5, spawn.getYaw(), spawn.getPitch());
-                    } else {
-                        target = null;
-                    }
-                    if (target != null && target.getWorld().equals(bukkitPlayer.getWorld())) {
-                        Location playerLocation = bukkitPlayer.getEyeLocation();
-                        playerLocation.setPitch(0);
-                        Vector looking = playerLocation.getDirection();
-                        Vector pointing = target.toVector().subtract(playerLocation.toVector());
-                        pointing.setY(0);
-                        double degree = VectorUtils.getBearing(looking, pointing);
-                        if (degree < 0) {
-                            degree += 360;
-                        }
-                        angle = degree / 360;
-                    } else {
-                        angle = RANDOM.nextDouble();
-                    }
+            Player icplayer = player.getPlayer();
+            if (icplayer != null && icplayer.isOnline()) {
+                Player bukkitPlayer = icplayer.getPlayer();
+                CompassMeta meta = (CompassMeta) compass.getItemMeta();
+                Location target;
+                if (meta.hasLodestone()) {
+                    Location lodestone = meta.getLodestone();
+                    target = new Location(lodestone.getWorld(), lodestone.getBlockX() + 0.5, lodestone.getBlockY(), lodestone.getBlockZ() + 0.5, lodestone.getYaw(), lodestone.getPitch());
+                } else if (WorldUtils.isNatural(bukkitPlayer.getWorld())) {
+                    Location spawn = bukkitPlayer.getCompassTarget();
+                    target = new Location(spawn.getWorld(), spawn.getBlockX() + 0.5, spawn.getBlockY(), spawn.getBlockZ() + 0.5, spawn.getYaw(), spawn.getPitch());
                 } else {
-                    if (WorldUtils.isNatural(bukkitPlayer.getWorld())) {
-                        Location spawn = bukkitPlayer.getCompassTarget();
-                        Location target = new Location(spawn.getWorld(), spawn.getBlockX() + 0.5, spawn.getBlockY(), spawn.getBlockZ() + 0.5, spawn.getYaw(), spawn.getPitch());
-                        Location playerLocation = bukkitPlayer.getEyeLocation();
-                        playerLocation.setPitch(0);
-                        Vector looking = playerLocation.getDirection();
-                        Vector pointing = target.toVector().subtract(playerLocation.toVector());
-                        pointing.setY(0);
-                        double degree = VectorUtils.getBearing(looking, pointing);
-                        if (degree < 0) {
-                            degree += 360;
-                        }
-                        angle = degree / 360;
-                    } else {
-                        angle = RANDOM.nextDouble();
+                    target = null;
+                }
+                if (target != null && target.getWorld().equals(bukkitPlayer.getWorld())) {
+                    Location playerLocation = bukkitPlayer.getEyeLocation();
+                    playerLocation.setPitch(0);
+                    Vector looking = playerLocation.getDirection();
+                    Vector pointing = target.toVector().subtract(playerLocation.toVector());
+                    pointing.setY(0);
+                    double degree = VectorUtils.getBearing(looking, pointing);
+                    if (degree < 0) {
+                        degree += 360;
                     }
+                    angle = degree / 360;
+                } else {
+                    angle = RANDOM.nextDouble();
                 }
             } else {
                 angle = 0;
             }
 
             predicates.put(ModelOverrideType.ANGLE, (float) (angle - 0.015625));
-        } else if (icMaterial.isMaterial(XMaterial.RECOVERY_COMPASS)) {
+        } else if (icMaterial == Material.RECOVERY_COMPASS) {
             double angle;
-            ICPlayer icplayer = player.getPlayer();
-            if (icplayer != null && icplayer.isLocal()) {
-                Player bukkitPlayer = icplayer.getLocalPlayer();
+            Player icplayer = player.getPlayer();
+            if (icplayer != null && icplayer.isOnline()) {
+                Player bukkitPlayer = icplayer.getPlayer();
                 Location target = bukkitPlayer.getLastDeathLocation();
                 if (target != null && target.getWorld().equals(bukkitPlayer.getWorld())) {
                     Location playerLocation = bukkitPlayer.getEyeLocation();
@@ -348,7 +324,7 @@ public class ItemRenderUtils {
             }
 
             predicates.put(ModelOverrideType.ANGLE, (float) (angle - 0.015625));
-        } else if (icMaterial.isMaterial(XMaterial.LIGHT)) {
+        } else if (icMaterial == Material.LIGHT) {
             float level = 1F;
             CompoundTag itemTag = (CompoundTag) NBTParsingUtils.fromSNBT(ItemNBTUtils.getNMSItemStackJson(item));
             if (itemTag != null && itemTag.containsKey("tag")) {
@@ -367,7 +343,7 @@ public class ItemRenderUtils {
         } else if (item.getItemMeta() instanceof LeatherArmorMeta) {
             LeatherArmorMeta meta = (LeatherArmorMeta) item.getItemMeta();
             Color color = new Color(meta.getColor().asRGB());
-            if (icMaterial.isMaterial(XMaterial.LEATHER_HORSE_ARMOR)) {
+            if (icMaterial == Material.LEATHER_HORSE_ARMOR) {
                 BufferedImage itemImage = manager.getTextureManager().getTexture(ResourceRegistry.ITEM_TEXTURE_LOCATION + icMaterial.name().toLowerCase()).getTexture(32, 32);
                 BufferedImage colorOverlay = ImageUtils.changeColorTo(ImageUtils.copyImage(itemImage), color);
                 itemImage = ImageUtils.multiply(itemImage, colorOverlay);
@@ -387,9 +363,9 @@ public class ItemRenderUtils {
                 }
             }
         } else if (item.getItemMeta() instanceof PotionMeta) {
-            if (icMaterial.isMaterial(XMaterial.TIPPED_ARROW)) {
+            if (icMaterial == Material.TIPPED_ARROW) {
                 PotionMeta meta = (PotionMeta) item.getItemMeta();
-                PotionType potiontype = InteractiveChat.version.isOld() ? Potion.fromItemStack(item).getType() : meta.getBasePotionData().getType();
+                PotionType potiontype = meta.getBasePotionData().getType();
                 BufferedImage tippedArrowHead = manager.getTextureManager().getTexture(ResourceRegistry.ITEM_TEXTURE_LOCATION + "tipped_arrow_head").getTexture(32, 32);
 
                 int color;
@@ -409,7 +385,7 @@ public class ItemRenderUtils {
                 providedTextures.put(ResourceRegistry.TIPPED_ARROW_HEAD_PLACEHOLDER, new GeneratedTextureResource(manager, tippedArrowHead));
             } else {
                 PotionMeta meta = (PotionMeta) item.getItemMeta();
-                PotionType potiontype = InteractiveChat.version.isOld() ? Potion.fromItemStack(item).getType() : meta.getBasePotionData().getType();
+                PotionType potiontype = meta.getBasePotionData().getType();
                 BufferedImage potionOverlay = manager.getTextureManager().getTexture(ResourceRegistry.ITEM_TEXTURE_LOCATION + "potion_overlay").getTexture(32, 32);
 
                 int color;
@@ -446,7 +422,7 @@ public class ItemRenderUtils {
                 providedTextures.put(ResourceRegistry.SPAWN_EGG_PLACEHOLDER, new GeneratedTextureResource(manager, baseImage));
                 providedTextures.put(ResourceRegistry.SPAWN_EGG_OVERLAY_PLACEHOLDER, new GeneratedTextureResource(manager, overlayImage));
             }
-        } else if (icMaterial.isMaterial(XMaterial.FIREWORK_STAR)) {
+        } else if (icMaterial == Material.FIREWORK_STAR) {
             int overlayColor;
 
             int[] is;
@@ -472,42 +448,32 @@ public class ItemRenderUtils {
             fireworkStarOverlay = ImageUtils.multiply(fireworkStarOverlay, tint);
 
             providedTextures.put(ResourceRegistry.FIREWORK_STAR_OVERLAY_LOCATION, new GeneratedTextureResource(manager, fireworkStarOverlay));
-        } else if (InteractiveChat.version.isLegacy() && icMaterial.isOneOf(Collections.singletonList("CONTAINS:bed"))) {
-            String colorName = icMaterial.name().replace("_BED", "").toLowerCase();
-            BufferedImage bedTexture = manager.getTextureManager().getTexture(ResourceRegistry.ENTITY_TEXTURE_LOCATION + "bed/" + colorName).getTexture();
-            providedTextures.put(ResourceRegistry.LEGACY_BED_TEXTURE_PLACEHOLDER, new GeneratedTextureResource(manager, bedTexture));
-        } else if (InteractiveChat.version.isNewerOrEqualTo(MCVersion.V1_9) && icMaterial.isMaterial(XMaterial.ENDER_PEARL)) {
-            ICPlayer icplayer = player.getPlayer();
-            if (icplayer != null && icplayer.isLocal()) {
-                int cooldown = icplayer.getLocalPlayer().getCooldown(item.getType());
+        } else if (icMaterial == Material.ENDER_PEARL) {
+            Player icplayer = player.getPlayer();
+            if (icplayer != null && icplayer.isOnline()) {
+                int cooldown = icplayer.getPlayer().getCooldown(item.getType());
                 predicates.put(ModelOverrideType.COOLDOWN, (float) cooldown / (float) ResourceRegistry.ENDER_PEARL_COOLDOWN);
             }
-        } else if (icMaterial.isMaterial(XMaterial.CHORUS_FRUIT)) {
-            ICPlayer icplayer = player.getPlayer();
-            if (icplayer != null && icplayer.isLocal()) {
-                int cooldown = icplayer.getLocalPlayer().getCooldown(item.getType());
+        } else if (icMaterial == Material.CHORUS_FRUIT) {
+            Player icplayer = player.getPlayer();
+            if (icplayer != null && icplayer.isOnline()) {
+                int cooldown = icplayer.getPlayer().getCooldown(item.getType());
                 predicates.put(ModelOverrideType.COOLDOWN, (float) cooldown / (float) ResourceRegistry.CHORUS_FRUIT_COOLDOWN);
             }
-        } else if (icMaterial.isMaterial(XMaterial.FISHING_ROD)) {
+        } else if (icMaterial == Material.FISHING_ROD) {
             predicates.put(ModelOverrideType.CAST, 0F);
-            ICPlayer icplayer = player.getPlayer();
-            if (icplayer != null && icplayer.isLocal()) {
-                Player bukkitPlayer = icplayer.getLocalPlayer();
+            Player icplayer = player.getPlayer();
+            if (icplayer != null && icplayer.isOnline()) {
+                Player bukkitPlayer = icplayer.getPlayer();
                 if (FishUtils.getPlayerFishingHook(bukkitPlayer) != null) {
                     ItemStack mainHandItem = bukkitPlayer.getEquipment().getItemInHand();
-                    if (InteractiveChat.version.isOld()) {
-                        if (mainHandItem.equals(item)) {
-                            predicates.put(ModelOverrideType.CAST, 1F);
-                        }
-                    } else {
-                        ItemStack offHandItem = bukkitPlayer.getEquipment().getItemInOffHand();
-                        if (mainHandItem != null && mainHandItem.equals(item) || offHandItem != null && offHandItem.equals(item) && !XMaterial.matchXMaterial(mainHandItem).equals(XMaterial.FISHING_ROD)) {
-                            predicates.put(ModelOverrideType.CAST, 1F);
-                        }
+                    ItemStack offHandItem = bukkitPlayer.getEquipment().getItemInOffHand();
+                    if (mainHandItem != null && mainHandItem.equals(item) || offHandItem != null && offHandItem.equals(item) && !XMaterial.matchXMaterial(mainHandItem).equals(XMaterial.FISHING_ROD)) {
+                        predicates.put(ModelOverrideType.CAST, 1F);
                     }
                 }
             }
-        } else if (icMaterial.isMaterial(XMaterial.BUNDLE)) {
+        } else if (icMaterial == Material.BUNDLE) {
             float fullness = BundleUtils.getFullnessPercentage(((BundleMeta) item.getItemMeta()).getItems());
             predicates.put(ModelOverrideType.FILLED, fullness);
         } else if (FilledMapUtils.isFilledMap(item)) {
@@ -543,10 +509,10 @@ public class ItemRenderUtils {
                     overriddenResource = namespace + ":" + overriddenResource;
                 }
                 if (item.getItemMeta() instanceof PotionMeta) {
-                    if (icMaterial.isMaterial(XMaterial.TIPPED_ARROW)) {
+                    if (icMaterial == Material.TIPPED_ARROW) {
                         if (overriddenResource.equalsIgnoreCase(ResourceRegistry.TIPPED_ARROW_HEAD_PLACEHOLDER)) {
                             PotionMeta meta = (PotionMeta) item.getItemMeta();
-                            PotionType potiontype = InteractiveChat.version.isOld() ? Potion.fromItemStack(item).getType() : meta.getBasePotionData().getType();
+                            PotionType potiontype = meta.getBasePotionData().getType();
                             BufferedImage tippedArrowHead = manager.getTextureManager().getTexture(ResourceRegistry.ITEM_TEXTURE_LOCATION + "tipped_arrow_head").getTexture(32, 32);
 
                             int color;
@@ -568,7 +534,7 @@ public class ItemRenderUtils {
                     } else {
                         if (overriddenResource.equalsIgnoreCase(ResourceRegistry.POTION_OVERLAY_PLACEHOLDER)) {
                             PotionMeta meta = (PotionMeta) item.getItemMeta();
-                            PotionType potiontype = InteractiveChat.version.isOld() ? Potion.fromItemStack(item).getType() : meta.getBasePotionData().getType();
+                            PotionType potiontype = meta.getBasePotionData().getType();
                             BufferedImage potionOverlay = entry.getValue().getTexture(32, 32);
 
                             int color;
@@ -609,7 +575,7 @@ public class ItemRenderUtils {
                 } else if (item.getItemMeta() instanceof LeatherArmorMeta) {
                     LeatherArmorMeta meta = (LeatherArmorMeta) item.getItemMeta();
                     Color color = new Color(meta.getColor().asRGB());
-                    if (icMaterial.isMaterial(XMaterial.LEATHER_HORSE_ARMOR)) {
+                    if (icMaterial == Material.LEATHER_HORSE_ARMOR) {
                         if (overriddenResource.equalsIgnoreCase(ResourceRegistry.LEATHER_HORSE_ARMOR_PLACEHOLDER)) {
                             BufferedImage itemImage = entry.getValue().getTexture(32, 32);
                             BufferedImage colorOverlay = ImageUtils.changeColorTo(ImageUtils.copyImage(itemImage), color);
@@ -633,14 +599,6 @@ public class ItemRenderUtils {
         return new ItemStackProcessResult(requiresEnchantmentGlint, predicates, providedTextures, tintIndexData, modelKey, postResolveFunction, enchantmentGlintFunction, rawEnchantmentGlintFunction);
     }
 
-    private static String tagToString(Tag<?> tag) {
-        if (tag instanceof StringTag) {
-            return ((StringTag) tag).getValue();
-        } else {
-            return tag.valueToString();
-        }
-    }
-
     public static boolean isUnbreakable(ItemStack item) {
         if (item.hasItemMeta()) {
             ItemMeta meta = item.getItemMeta();
@@ -649,6 +607,14 @@ public class ItemRenderUtils {
             }
         }
         return false;
+    }
+
+    private static String tagToString(Tag<?> tag) {
+        if (tag instanceof StringTag) {
+            return ((StringTag) tag).getValue();
+        } else {
+            return tag.valueToString();
+        }
     }
 
     public static class ItemStackProcessResult {

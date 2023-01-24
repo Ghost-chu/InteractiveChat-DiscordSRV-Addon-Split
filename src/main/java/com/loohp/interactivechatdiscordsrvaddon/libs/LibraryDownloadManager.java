@@ -20,7 +20,7 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.libs;
 
-import com.loohp.interactivechat.libs.org.json.simple.JSONObject;
+
 import com.loohp.interactivechat.utils.HTTPRequestUtils;
 import com.loohp.interactivechatdiscordsrvaddon.utils.TriConsumer;
 

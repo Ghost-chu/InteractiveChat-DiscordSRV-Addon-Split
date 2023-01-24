@@ -20,11 +20,8 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.resources;
 
-import com.loohp.interactivechat.libs.org.apache.commons.io.input.BOMInputStream;
-import com.loohp.interactivechat.libs.org.json.simple.JSONArray;
-import com.loohp.interactivechat.libs.org.json.simple.JSONObject;
-import com.loohp.interactivechat.libs.org.json.simple.parser.JSONParser;
 import com.loohp.interactivechatdiscordsrvaddon.graphics.ImageUtils;
+import org.apache.commons.io.input.BOMInputStream;
 
 import java.awt.image.BufferedImage;
 import java.io.InputStreamReader;

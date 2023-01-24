@@ -20,7 +20,7 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.utils;
 
-import com.loohp.interactivechat.libs.io.github.bananapuncher714.nbteditor.NBTEditor;
+import io.github.bananapuncher714.nbteditor.NBTEditor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BundleMeta;

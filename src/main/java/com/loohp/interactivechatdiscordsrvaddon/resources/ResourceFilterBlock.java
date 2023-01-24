@@ -20,8 +20,6 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.resources;
 
-import com.loohp.interactivechat.libs.org.json.simple.JSONArray;
-import com.loohp.interactivechat.libs.org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;

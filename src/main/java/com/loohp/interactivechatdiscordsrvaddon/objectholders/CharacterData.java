@@ -20,19 +20,19 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.objectholders;
 
-import com.loohp.interactivechat.libs.net.kyori.adventure.key.Key;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.Component;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.TextComponent;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.format.NamedTextColor;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.format.TextColor;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.format.TextDecoration;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.format.TextDecoration.State;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
-import com.loohp.interactivechat.objectholders.ValuePairs;
 import com.loohp.interactivechat.utils.ComponentCompacting;
 import com.loohp.interactivechat.utils.ComponentFlattening;
+import com.loohp.interactivechatdiscordsrvaddon.utils.ValuePairs;
 import it.unimi.dsi.fastutil.chars.CharObjectImmutablePair;
 import it.unimi.dsi.fastutil.chars.CharObjectPair;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.format.TextDecoration.State;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

@@ -20,7 +20,6 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.resources.mods.optifine;
 
-import com.loohp.interactivechat.objectholders.ValuePairs;
 import com.loohp.interactivechatdiscordsrvaddon.resources.ResourcePackFile;
 import com.loohp.interactivechatdiscordsrvaddon.resources.models.BlockModel;
 import com.loohp.interactivechatdiscordsrvaddon.resources.models.IModelManager;
@@ -30,6 +29,7 @@ import com.loohp.interactivechatdiscordsrvaddon.resources.mods.optifine.cit.CITP
 import com.loohp.interactivechatdiscordsrvaddon.resources.mods.optifine.cit.EnchantmentProperties.OpenGLBlending;
 import com.loohp.interactivechatdiscordsrvaddon.resources.textures.ITextureManager;
 import com.loohp.interactivechatdiscordsrvaddon.resources.textures.TextureResource;
+import com.loohp.interactivechatdiscordsrvaddon.utils.ValuePairs;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 

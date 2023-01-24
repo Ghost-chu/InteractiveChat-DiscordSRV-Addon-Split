@@ -29,8 +29,8 @@ public class ResourceRegistry {
         try {
             Class.forName("org.bukkit.plugin.java.JavaPlugin");
             resourcePackVersion = com.loohp.interactivechatdiscordsrvaddon.utils.ResourcePackUtils.getServerResourcePackVersion();
-            itemTextureLocation = com.loohp.interactivechat.InteractiveChat.version.isLegacy() ? "minecraft:items/" : "minecraft:item/";
-            blockTextureLocation = com.loohp.interactivechat.InteractiveChat.version.isLegacy() ? "minecraft:blocks/" : "minecraft:block/";
+            itemTextureLocation = "minecraft:item/";
+            blockTextureLocation = "minecraft:block/";
         } catch (ClassNotFoundException | NoClassDefFoundError e) {
             resourcePackVersion = 12;
             itemTextureLocation = "minecraft:item/";

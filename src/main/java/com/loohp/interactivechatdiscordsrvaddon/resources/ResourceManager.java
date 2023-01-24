@@ -21,14 +21,6 @@
 package com.loohp.interactivechatdiscordsrvaddon.resources;
 
 import com.google.gson.GsonBuilder;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.Component;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.format.NamedTextColor;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import com.loohp.interactivechat.libs.org.apache.commons.io.input.BOMInputStream;
-import com.loohp.interactivechat.libs.org.json.simple.JSONArray;
-import com.loohp.interactivechat.libs.org.json.simple.JSONObject;
-import com.loohp.interactivechat.libs.org.json.simple.parser.JSONParser;
-import com.loohp.interactivechat.utils.InteractiveChatComponentSerializer;
 import com.loohp.interactivechatdiscordsrvaddon.registry.ResourceRegistry;
 import com.loohp.interactivechatdiscordsrvaddon.resources.fonts.FontManager;
 import com.loohp.interactivechatdiscordsrvaddon.resources.languages.LanguageManager;
@@ -36,6 +28,8 @@ import com.loohp.interactivechatdiscordsrvaddon.resources.languages.LanguageMeta
 import com.loohp.interactivechatdiscordsrvaddon.resources.models.ModelManager;
 import com.loohp.interactivechatdiscordsrvaddon.resources.mods.ModManager;
 import com.loohp.interactivechatdiscordsrvaddon.resources.textures.TextureManager;
+import net.kyori.adventure.text.Component;
+import org.apache.commons.io.input.BOMInputStream;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

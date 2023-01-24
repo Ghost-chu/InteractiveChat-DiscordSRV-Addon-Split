@@ -24,7 +24,6 @@ import com.loohp.interactivechat.InteractiveChat;
 import com.loohp.interactivechat.api.events.ICPlayerJoinEvent;
 import com.loohp.interactivechat.api.events.OfflineICPlayerCreationEvent;
 import com.loohp.interactivechat.api.events.OfflineICPlayerUpdateEvent;
-import com.loohp.interactivechat.libs.org.json.simple.JSONObject;
 import com.loohp.interactivechat.objectholders.ConcurrentCacheHashMap;
 import com.loohp.interactivechat.objectholders.OfflineICPlayer;
 import com.loohp.interactivechat.utils.HTTPRequestUtils;
@@ -34,6 +33,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.json.simple.JSONObject;
 
 import java.awt.image.BufferedImage;
 import java.util.HashMap;

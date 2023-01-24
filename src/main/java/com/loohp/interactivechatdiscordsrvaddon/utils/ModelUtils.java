@@ -23,13 +23,11 @@ package com.loohp.interactivechatdiscordsrvaddon.utils;
 import com.loohp.blockmodelrenderer.render.Face;
 import com.loohp.blockmodelrenderer.render.Point3D;
 import com.loohp.blockmodelrenderer.utils.MathUtils;
-import com.loohp.interactivechat.InteractiveChat;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.Component;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
-import com.loohp.interactivechat.objectholders.ICMaterial;
-import com.loohp.interactivechat.utils.ChatColorUtils;
 import com.loohp.interactivechatdiscordsrvaddon.graphics.ImageUtils;
 import com.loohp.interactivechatdiscordsrvaddon.resources.models.ModelFace.ModelFaceSide;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import org.bukkit.Material;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -251,13 +249,7 @@ public class ModelUtils {
         LEGACY_MODEL_NAME.put("ZOMBIE_VILLAGER_SPAWN_EGG", "spawn_egg");
     }
 
-    public static String getItemModelKey(ICMaterial icMaterial) {
-        if (InteractiveChat.version.isLegacy()) {
-            String legacyKey = LEGACY_MODEL_NAME.get(icMaterial.name());
-            if (legacyKey != null) {
-                return legacyKey.toLowerCase();
-            }
-        }
+    public static String getItemModelKey(Material icMaterial) {
         return icMaterial.name().toLowerCase();
     }
 
@@ -303,11 +295,11 @@ public class ModelUtils {
     }
 
     public static boolean isRenderedUpsideDown(Component component) {
-        return isRenderedUpsideDown(ChatColorUtils.stripColor(PlainTextComponentSerializer.plainText().serialize(component)));
+        return isRenderedUpsideDown(PlainTextComponentSerializer.plainText().serialize(component));
     }
 
     public static boolean isRenderedUpsideDown(Component component, boolean hasCape) {
-        return isRenderedUpsideDown(ChatColorUtils.stripColor(PlainTextComponentSerializer.plainText().serialize(component)), hasCape);
+        return isRenderedUpsideDown(PlainTextComponentSerializer.plainText().serialize(component), hasCape);
     }
 
     public static boolean isRenderedUpsideDown(String name) {

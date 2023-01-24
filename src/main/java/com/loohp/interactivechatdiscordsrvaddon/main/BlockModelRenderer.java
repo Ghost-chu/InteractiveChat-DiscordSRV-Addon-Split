@@ -23,8 +23,6 @@ package com.loohp.interactivechatdiscordsrvaddon.main;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
-import com.loohp.interactivechat.libs.org.simpleyaml.configuration.file.YamlFile;
 import com.loohp.interactivechat.objectholders.ValueTrios;
 import com.loohp.interactivechatdiscordsrvaddon.graphics.ImageUtils;
 import com.loohp.interactivechatdiscordsrvaddon.registry.ResourceRegistry;
@@ -40,6 +38,8 @@ import com.loohp.interactivechatdiscordsrvaddon.utils.ResourcePackInfoUtils;
 import com.loohp.interactivechatdiscordsrvaddon.utils.TintUtils;
 import com.loohp.interactivechatdiscordsrvaddon.utils.TintUtils.SpawnEggTintData;
 import com.loohp.interactivechatdiscordsrvaddon.utils.TintUtils.TintIndexData;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import org.simpleyaml.configuration.file.YamlFile;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

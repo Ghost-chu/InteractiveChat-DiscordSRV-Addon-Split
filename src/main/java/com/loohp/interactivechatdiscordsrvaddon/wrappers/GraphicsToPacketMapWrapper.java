@@ -28,7 +28,7 @@
 //import com.comphenix.protocol.wrappers.EnumWrappers.ItemSlot;
 //import com.comphenix.protocol.wrappers.Pair;
 //import com.loohp.interactivechat.InteractiveChat;
-//import com.loohp.interactivechat.libs.com.cryptomorin.xseries.XMaterial;
+//import com.cryptomorin.xseries.XMaterial;
 //import com.loohp.interactivechat.utils.MCVersion;
 //import com.loohp.interactivechat.utils.NMSUtils;
 //import com.loohp.interactivechatdiscordsrvaddon.InteractiveChatDiscordSrvAddon;

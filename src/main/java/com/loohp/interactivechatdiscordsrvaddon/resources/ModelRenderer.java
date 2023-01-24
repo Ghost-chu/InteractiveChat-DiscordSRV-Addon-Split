@@ -27,7 +27,6 @@ import com.loohp.blockmodelrenderer.render.Model;
 import com.loohp.blockmodelrenderer.render.Point3D;
 import com.loohp.blockmodelrenderer.utils.ColorUtils;
 import com.loohp.interactivechat.InteractiveChat;
-import com.loohp.interactivechat.objectholders.ValuePairs;
 import com.loohp.interactivechat.utils.CustomArrayUtils;
 import com.loohp.interactivechatdiscordsrvaddon.InteractiveChatDiscordSrvAddon;
 import com.loohp.interactivechatdiscordsrvaddon.graphics.BlendingUtils;
@@ -42,6 +41,7 @@ import com.loohp.interactivechatdiscordsrvaddon.resources.mods.optifine.cit.Ench
 import com.loohp.interactivechatdiscordsrvaddon.resources.textures.*;
 import com.loohp.interactivechatdiscordsrvaddon.utils.ModelUtils;
 import com.loohp.interactivechatdiscordsrvaddon.utils.TintUtils.TintIndexData;
+import com.loohp.interactivechatdiscordsrvaddon.utils.ValuePairs;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;

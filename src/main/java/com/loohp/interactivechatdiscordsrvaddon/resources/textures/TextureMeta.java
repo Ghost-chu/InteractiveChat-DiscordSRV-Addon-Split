@@ -20,8 +20,7 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.resources.textures;
 
-import com.loohp.interactivechat.libs.org.json.simple.JSONArray;
-import com.loohp.interactivechat.libs.org.json.simple.JSONObject;
+
 import com.loohp.interactivechatdiscordsrvaddon.resources.ResourcePackFile;
 import com.loohp.interactivechatdiscordsrvaddon.resources.textures.TextureAnimation.TextureAnimationFrames;
 

@@ -20,18 +20,10 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.graphics;
 
+import com.cryptomorin.xseries.XMaterial;
 import com.loohp.blockmodelrenderer.blending.BlendingModes;
 import com.loohp.blockmodelrenderer.utils.ColorUtils;
 import com.loohp.interactivechat.InteractiveChat;
-import com.loohp.interactivechat.libs.com.cryptomorin.xseries.XMaterial;
-import com.loohp.interactivechat.libs.io.github.bananapuncher714.nbteditor.NBTEditor;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.Component;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.format.NamedTextColor;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.format.TextColor;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import com.loohp.interactivechat.libs.org.json.simple.JSONArray;
-import com.loohp.interactivechat.libs.org.json.simple.JSONObject;
-import com.loohp.interactivechat.libs.org.json.simple.parser.JSONParser;
 import com.loohp.interactivechat.objectholders.*;
 import com.loohp.interactivechat.utils.*;
 import com.loohp.interactivechatdiscordsrvaddon.InteractiveChatDiscordSrvAddon;
@@ -58,6 +50,10 @@ import com.loohp.interactivechatdiscordsrvaddon.utils.ComponentStringUtils.Chara
 import com.loohp.interactivechatdiscordsrvaddon.utils.ItemRenderUtils.ItemStackProcessResult;
 import com.loohp.interactivechatdiscordsrvaddon.utils.TintUtils.TintIndexData;
 import com.loohp.interactivechatdiscordsrvaddon.wrappers.ItemMapWrapper;
+import io.github.bananapuncher714.nbteditor.NBTEditor;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -72,6 +68,9 @@ import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.map.MapCursor;
 import org.bukkit.map.MapPalette;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -393,8 +392,6 @@ public class ImageGeneration {
         }
         i++;
 
-        //offhand
-        if (!version.get().isOld()) {
             ItemStack offhand = inventory.getItem(i);
             if (offhand == null || offhand.getType().equals(Material.AIR)) {
                 g.drawImage(resourceManager.get().getTextureManager().getTexture(ResourceRegistry.ITEM_TEXTURE_LOCATION + "empty_armor_slot_shield").getTexture(32, 32), 162, 126, 32, 32, null);
@@ -403,7 +400,6 @@ public class ImageGeneration {
                 if (itemImage != null) {
                     g.drawImage(itemImage, 162, 126, null);
                 }
-            }
         }
 
         //puppet

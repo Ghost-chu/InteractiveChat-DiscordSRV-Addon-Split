@@ -20,12 +20,10 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.resources.textures;
 
-import com.loohp.interactivechat.libs.org.apache.commons.io.input.BOMInputStream;
-import com.loohp.interactivechat.libs.org.json.simple.JSONObject;
-import com.loohp.interactivechat.libs.org.json.simple.parser.JSONParser;
 import com.loohp.interactivechatdiscordsrvaddon.registry.ResourceRegistry;
 import com.loohp.interactivechatdiscordsrvaddon.resources.*;
 import com.loohp.interactivechatdiscordsrvaddon.utils.TintUtils;
+import org.apache.commons.io.input.BOMInputStream;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

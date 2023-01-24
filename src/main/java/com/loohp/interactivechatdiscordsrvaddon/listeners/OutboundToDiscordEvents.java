@@ -22,9 +22,9 @@
 //
 //import com.loohp.interactivechat.InteractiveChat;
 //import com.loohp.interactivechat.api.InteractiveChatAPI;
-//import com.loohp.interactivechat.libs.net.kyori.adventure.text.Component;
-//import com.loohp.interactivechat.libs.net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-//import com.loohp.interactivechat.libs.net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+//import net.kyori.adventure.text.Component;
+//import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+//import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 //import com.loohp.interactivechat.objectholders.*;
 //import com.loohp.interactivechat.utils.*;
 //import com.loohp.interactivechatdiscordsrvaddon.InteractiveChatDiscordSrvAddon;

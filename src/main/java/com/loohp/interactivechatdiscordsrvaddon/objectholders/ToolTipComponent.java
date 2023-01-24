@@ -20,7 +20,7 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.objectholders;
 
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.Component;
 
 import java.awt.image.BufferedImage;
 import java.util.Collections;

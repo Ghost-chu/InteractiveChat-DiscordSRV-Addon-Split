@@ -20,10 +20,7 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.resources.fonts;
 
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.format.TextColor;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.format.TextDecoration;
-import com.loohp.interactivechat.libs.org.json.simple.JSONArray;
-import com.loohp.interactivechat.libs.org.json.simple.JSONObject;
+
 import com.loohp.interactivechatdiscordsrvaddon.resources.ResourceLoadingException;
 import com.loohp.interactivechatdiscordsrvaddon.resources.ResourceManager;
 import com.loohp.interactivechatdiscordsrvaddon.resources.fonts.LegacyUnicodeFont.GlyphSize;
@@ -31,6 +28,10 @@ import it.unimi.dsi.fastutil.ints.Int2IntMap;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.ints.IntSet;
+import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -55,6 +56,14 @@ public abstract class MinecraftFont {
         DECORATIONS_ORDER.add(TextDecoration.ITALIC);
         DECORATIONS_ORDER.add(TextDecoration.STRIKETHROUGH);
         DECORATIONS_ORDER.add(TextDecoration.UNDERLINED);
+    }
+
+    protected ResourceManager manager;
+    protected FontProvider provider;
+
+    public MinecraftFont(ResourceManager manager, FontProvider provider) {
+        this.manager = manager;
+        this.provider = provider;
     }
 
     public static List<TextDecoration> sortDecorations(List<TextDecoration> decorations) {
@@ -114,14 +123,6 @@ public abstract class MinecraftFont {
             default:
                 throw new ResourceLoadingException("Unknown font type \"" + typeStr + "\"");
         }
-    }
-
-    protected ResourceManager manager;
-    protected FontProvider provider;
-
-    public MinecraftFont(ResourceManager manager, FontProvider provider) {
-        this.manager = manager;
-        this.provider = provider;
     }
 
     public ResourceManager getManager() {

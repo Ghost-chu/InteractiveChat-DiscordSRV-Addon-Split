@@ -21,19 +21,6 @@
 package com.loohp.interactivechatdiscordsrvaddon;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import com.loohp.interactivechat.InteractiveChat;
-import com.loohp.interactivechat.api.events.InteractiveChatConfigReloadEvent;
-import com.loohp.interactivechat.config.Config;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.Component;
-import com.loohp.interactivechat.libs.org.json.simple.JSONObject;
-import com.loohp.interactivechat.libs.org.json.simple.parser.JSONParser;
-import com.loohp.interactivechat.objectholders.ICPlayer;
-import com.loohp.interactivechat.objectholders.ICPlayerFactory;
-import com.loohp.interactivechat.objectholders.PlaceholderCooldownManager;
-import com.loohp.interactivechat.registry.Registry;
-import com.loohp.interactivechat.utils.LanguageUtils;
-import com.loohp.interactivechat.utils.MCVersion;
-import com.loohp.interactivechat.utils.SkinUtils;
 import com.loohp.interactivechatdiscordsrvaddon.AssetsDownloader.ServerResourcePackDownloadResult;
 import com.loohp.interactivechatdiscordsrvaddon.debug.Debug;
 import com.loohp.interactivechatdiscordsrvaddon.graphics.ImageGeneration;
@@ -56,6 +43,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

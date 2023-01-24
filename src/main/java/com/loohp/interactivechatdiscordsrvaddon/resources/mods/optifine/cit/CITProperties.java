@@ -21,8 +21,6 @@
 package com.loohp.interactivechatdiscordsrvaddon.resources.mods.optifine.cit;
 
 import com.loohp.interactivechat.InteractiveChat;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.Component;
-import com.loohp.interactivechat.libs.net.querz.nbt.tag.*;
 import com.loohp.interactivechat.objectholders.ICMaterial;
 import com.loohp.interactivechat.utils.InteractiveChatComponentSerializer;
 import com.loohp.interactivechat.utils.ItemNBTUtils;
@@ -33,6 +31,8 @@ import com.loohp.interactivechatdiscordsrvaddon.resources.ResourceLoadingExcepti
 import com.loohp.interactivechatdiscordsrvaddon.resources.ResourcePackFile;
 import com.loohp.interactivechatdiscordsrvaddon.resources.mods.optifine.OptifineUtils;
 import com.loohp.interactivechatdiscordsrvaddon.resources.mods.optifine.cit.EnchantmentProperties.OpenGLBlending;
+import net.kyori.adventure.text.Component;
+import net.querz.nbt.tag.*;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.EquipmentSlot;

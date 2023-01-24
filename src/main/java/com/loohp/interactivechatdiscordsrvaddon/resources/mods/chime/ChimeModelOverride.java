@@ -21,9 +21,6 @@
 package com.loohp.interactivechatdiscordsrvaddon.resources.mods.chime;
 
 import com.google.common.collect.Range;
-import com.loohp.interactivechat.libs.io.github.bananapuncher714.nbteditor.NBTEditor;
-import com.loohp.interactivechat.libs.net.querz.nbt.tag.CompoundTag;
-import com.loohp.interactivechat.libs.org.json.simple.JSONObject;
 import com.loohp.interactivechat.objectholders.OfflineICPlayer;
 import com.loohp.interactivechat.utils.ItemNBTUtils;
 import com.loohp.interactivechat.utils.NBTParsingUtils;
@@ -34,6 +31,8 @@ import com.loohp.interactivechatdiscordsrvaddon.resources.mods.chime.ChimePredic
 import com.loohp.interactivechatdiscordsrvaddon.resources.mods.chime.ChimeUtils.HashPredicate;
 import com.loohp.interactivechatdiscordsrvaddon.utils.WorldUtils;
 import com.loohp.interactivechatdiscordsrvaddon.wrappers.DimensionManagerWrapper;
+import io.github.bananapuncher714.nbteditor.NBTEditor;
+import net.querz.nbt.tag.CompoundTag;
 import org.bukkit.*;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;

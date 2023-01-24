@@ -20,10 +20,10 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.resources.mods.optifine;
 
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.Component;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.ComponentIteratorType;
-import com.loohp.interactivechat.libs.net.kyori.adventure.text.TextComponent;
 import com.loohp.interactivechatdiscordsrvaddon.utils.ComponentStringUtils;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.ComponentIteratorType;
+import net.kyori.adventure.text.TextComponent;
 
 import java.util.function.UnaryOperator;
 

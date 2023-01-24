@@ -20,8 +20,7 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.resources.mods.chime;
 
-import com.loohp.interactivechat.libs.org.json.simple.JSONArray;
-import com.loohp.interactivechat.libs.org.json.simple.JSONObject;
+
 import com.loohp.interactivechatdiscordsrvaddon.resources.models.*;
 import com.loohp.interactivechatdiscordsrvaddon.resources.models.ModelDisplay.ModelDisplayPosition;
 import com.loohp.interactivechatdiscordsrvaddon.resources.models.ModelElement.ModelElementRotation;

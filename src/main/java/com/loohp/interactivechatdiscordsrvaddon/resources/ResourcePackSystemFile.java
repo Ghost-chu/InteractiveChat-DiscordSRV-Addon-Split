@@ -20,7 +20,8 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.resources;
 
-import com.loohp.interactivechat.libs.org.apache.commons.io.FileUtils;
+
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
