@@ -20,11 +20,11 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.graphics;
 
-import com.loohp.interactivechat.objectholders.ICMaterial;
 import com.loohp.interactivechatdiscordsrvaddon.InteractiveChatDiscordSrvAddon;
 import com.loohp.interactivechatdiscordsrvaddon.registry.ResourceRegistry;
 import com.loohp.interactivechatdiscordsrvaddon.wrappers.PatternTypeWrapper;
 import org.bukkit.DyeColor;
+import org.bukkit.Material;
 import org.bukkit.block.Banner;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.inventory.ItemStack;
@@ -41,7 +41,7 @@ public class BannerGraphics {
         BufferedImage baseImage = InteractiveChatDiscordSrvAddon.plugin.getResourceManager().getTextureManager().getTexture(ResourceRegistry.ENTITY_TEXTURE_LOCATION + "banner_base").getTexture(64, 64);
         BufferedImage patternsImage = new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB);
 
-        ICMaterial icMaterial = ICMaterial.from(item);
+        Material icMaterial = item.getType();
         String colorName = icMaterial.name().replace("_BANNER", "");
         Color baseColor = new Color(DyeColor.valueOf(colorName.toUpperCase()).getColor().asRGB());
 

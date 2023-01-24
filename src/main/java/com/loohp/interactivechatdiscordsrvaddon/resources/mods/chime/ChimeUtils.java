@@ -36,6 +36,8 @@ import net.kyori.adventure.text.TextComponent;
 import net.querz.nbt.tag.*;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import java.io.IOException;
 import java.util.EnumMap;

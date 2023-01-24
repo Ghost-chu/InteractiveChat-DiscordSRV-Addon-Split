@@ -20,9 +20,9 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.resources.mods.optifine.cit;
 
-import com.loohp.interactivechat.objectholders.ICMaterial;
 import com.loohp.interactivechatdiscordsrvaddon.objectholders.IntegerRange;
 import com.loohp.interactivechatdiscordsrvaddon.objectholders.PercentageOrIntegerRange;
+import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.EquipmentSlot;
 
@@ -43,7 +43,7 @@ public class EnchantmentProperties extends CITProperties {
 
     private final String texture;
 
-    public EnchantmentProperties(int weight, Set<ICMaterial> items, IntegerRange stackSize, PercentageOrIntegerRange damage, int damageMask, EquipmentSlot hand, Map<Enchantment, IntegerRange> enchantments, Map<String, CITValueMatcher> nbtMatch, int layer, double speed, double rotation, double duration, OpenGLBlending blend, String texture) {
+    public EnchantmentProperties(int weight, Set<Material> items, IntegerRange stackSize, PercentageOrIntegerRange damage, int damageMask, EquipmentSlot hand, Map<Enchantment, IntegerRange> enchantments, Map<String, CITValueMatcher> nbtMatch, int layer, double speed, double rotation, double duration, OpenGLBlending blend, String texture) {
         super(weight, items, stackSize, damage, damageMask, hand, enchantments, nbtMatch);
         this.layer = layer;
         this.speed = speed;

@@ -20,20 +20,23 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.listeners;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import com.loohp.interactivechat.InteractiveChat;
 import com.loohp.interactivechat.api.events.ICPlayerJoinEvent;
 import com.loohp.interactivechat.api.events.OfflineICPlayerCreationEvent;
 import com.loohp.interactivechat.api.events.OfflineICPlayerUpdateEvent;
-import com.loohp.interactivechat.objectholders.ConcurrentCacheHashMap;
-import com.loohp.interactivechat.objectholders.OfflineICPlayer;
-import com.loohp.interactivechat.utils.HTTPRequestUtils;
 import com.loohp.interactivechatdiscordsrvaddon.InteractiveChatDiscordSrvAddon;
 import com.loohp.interactivechatdiscordsrvaddon.graphics.ImageUtils;
+import kong.unirest.HttpResponse;
+import kong.unirest.JsonNode;
+import kong.unirest.Unirest;
+import kong.unirest.json.JSONObject;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.json.simple.JSONObject;
 
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
@@ -45,7 +48,10 @@ public class ICPlayerEvents implements Listener {
 
     public static final String PROFILE_URL = "https://api.loohpjames.com/spigot/plugins/interactivechatdiscordsrvaddon/profile/%s";
 
-    private static final ConcurrentCacheHashMap<UUID, Map<String, Object>> CACHED_PROPERTIES = new ConcurrentCacheHashMap<>(300000);
+    private static final Cache<UUID, Map<String, Object>> CACHED_PROPERTIES = CacheBuilder
+            .newBuilder()
+            .maximumSize(300000)
+            .build();
 
     static {
         Bukkit.getScheduler().runTaskTimerAsynchronously(InteractiveChat.plugin, CACHED_PROPERTIES::cleanUp, 12000, 12000);
@@ -66,17 +72,17 @@ public class ICPlayerEvents implements Listener {
         populate(event.getPlayer(), false);
     }
 
-    private void populate(OfflineICPlayer player, boolean scheduleAsync) {
+    private void populate(OfflinePlayer player, boolean scheduleAsync) {
         if (scheduleAsync) {
             Bukkit.getScheduler().runTaskAsynchronously(InteractiveChatDiscordSrvAddon.plugin, () -> populate(player, false));
             return;
         }
-        Map<String, Object> cachedProperties = CACHED_PROPERTIES.get(player.getUniqueId());
+        Map<String, Object> cachedProperties = CACHED_PROPERTIES.getIfPresent(player.getUniqueId());
         if (cachedProperties == null) {
             cachedProperties = new HashMap<>();
-            JSONObject json = HTTPRequestUtils.getJSONResponse(PROFILE_URL.replace("%s", player.getName()));
-            if (json != null && json.containsKey("properties")) {
-                JSONObject properties = (JSONObject) json.get("properties");
+            HttpResponse<JsonNode> json = Unirest.get(PROFILE_URL.replace("%s", player.getName())).asJson();
+            if (json.isSuccess() && json.getBody().getObject().has("properties")) {
+                JSONObject properties = json.getBody().getObject().getJSONObject("properties");
                 for (Object obj : properties.keySet()) {
                     try {
                         String key = (String) obj;
@@ -86,7 +92,7 @@ public class ICPlayerEvents implements Listener {
                             player.addProperties(key, image);
                             cachedProperties.put(key, image);
                         } else if (value.endsWith(".bin")) {
-                            byte[] data = HTTPRequestUtils.download(value);
+                            byte[] data = Unirest.get(value).asBytes().getBody();
                             player.addProperties(key, data);
                             cachedProperties.put(key, data);
                         } else {

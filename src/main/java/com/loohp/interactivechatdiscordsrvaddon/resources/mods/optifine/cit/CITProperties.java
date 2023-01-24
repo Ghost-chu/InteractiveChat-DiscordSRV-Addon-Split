@@ -20,8 +20,6 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.resources.mods.optifine.cit;
 
-import com.loohp.interactivechat.InteractiveChat;
-import com.loohp.interactivechat.objectholders.ICMaterial;
 import com.loohp.interactivechat.utils.InteractiveChatComponentSerializer;
 import com.loohp.interactivechat.utils.ItemNBTUtils;
 import com.loohp.interactivechat.utils.NBTParsingUtils;
@@ -45,6 +43,26 @@ import java.util.function.UnaryOperator;
 
 public abstract class CITProperties {
 
+    protected final int weight;
+    protected final Set<Material> items;
+    protected final IntegerRange stackSize;
+    protected final PercentageOrIntegerRange damage;
+    protected final int damageMask;
+    protected final EquipmentSlot hand;
+    protected final Map<Enchantment, IntegerRange> enchantments;
+    protected final Map<String, CITValueMatcher> nbtMatch;
+
+    public CITProperties(int weight, Set<Material> items, IntegerRange stackSize, PercentageOrIntegerRange damage, int damageMask, EquipmentSlot hand, Map<Enchantment, IntegerRange> enchantments, Map<String, CITValueMatcher> nbtMatch) {
+        this.weight = weight;
+        this.items = items;
+        this.stackSize = stackSize;
+        this.damage = damage;
+        this.damageMask = damageMask;
+        this.hand = hand;
+        this.enchantments = enchantments;
+        this.nbtMatch = nbtMatch;
+    }
+
     @SuppressWarnings("deprecation")
     public static CITProperties fromProperties(ResourcePackFile file, Properties properties) {
         String name = file.getName();
@@ -52,7 +70,7 @@ public abstract class CITProperties {
             name = name.substring(0, name.lastIndexOf("."));
         }
         int weight = Integer.parseInt(properties.getProperty("weight", "0"));
-        Set<ICMaterial> items = new HashSet<>();
+        Set<Material> items = new HashSet<>();
         String itemsStr = properties.getProperty("items");
         if (itemsStr == null) {
             itemsStr = properties.getProperty("matchItems");
@@ -62,14 +80,9 @@ public abstract class CITProperties {
                 if (section.contains(":")) {
                     section = section.substring(section.indexOf(":") + 1);
                 }
-                ICMaterial icMaterial = ICMaterial.from(section.toUpperCase());
+                Material icMaterial = Material.matchMaterial(section.toUpperCase());
                 if (icMaterial != null) {
                     items.add(icMaterial);
-                } else {
-                    icMaterial = ICMaterial.from(name.toUpperCase());
-                    if (icMaterial != null) {
-                        items.add(icMaterial);
-                    }
                 }
             }
         }
@@ -230,31 +243,11 @@ public abstract class CITProperties {
         throw new IllegalArgumentException("Invalid CIT property type \"" + type + "\"");
     }
 
-    protected final int weight;
-    protected final Set<ICMaterial> items;
-    protected final IntegerRange stackSize;
-    protected final PercentageOrIntegerRange damage;
-    protected final int damageMask;
-    protected final EquipmentSlot hand;
-    protected final Map<Enchantment, IntegerRange> enchantments;
-    protected final Map<String, CITValueMatcher> nbtMatch;
-
-    public CITProperties(int weight, Set<ICMaterial> items, IntegerRange stackSize, PercentageOrIntegerRange damage, int damageMask, EquipmentSlot hand, Map<Enchantment, IntegerRange> enchantments, Map<String, CITValueMatcher> nbtMatch) {
-        this.weight = weight;
-        this.items = items;
-        this.stackSize = stackSize;
-        this.damage = damage;
-        this.damageMask = damageMask;
-        this.hand = hand;
-        this.enchantments = enchantments;
-        this.nbtMatch = nbtMatch;
-    }
-
     public int getWeight() {
         return weight;
     }
 
-    public Set<ICMaterial> getItems() {
+    public Set<Iaterial> getItems() {
         return items;
     }
 
@@ -287,7 +280,7 @@ public abstract class CITProperties {
         if (itemStack == null || itemStack.getType().equals(Material.AIR)) {
             return false;
         }
-        if (!items.contains(ICMaterial.from(itemStack))) {
+        if (!items.contains(itemStack.getType())) {
             return false;
         }
         if (!stackSize.test(itemStack.getAmount())) {
@@ -295,12 +288,8 @@ public abstract class CITProperties {
         }
         int maxDurability = itemStack.getType().getMaxDurability();
         int damage = 0;
-        if (InteractiveChat.version.isLegacy()) {
-            damage = itemStack.getDurability();
-        } else {
-            if (itemStack.hasItemMeta() && itemStack.getItemMeta() instanceof Damageable) {
-                damage = ((Damageable) itemStack.getItemMeta()).getDamage();
-            }
+        if (itemStack.hasItemMeta() && itemStack.getItemMeta() instanceof Damageable) {
+            damage = ((Damageable) itemStack.getItemMeta()).getDamage();
         }
         if (!this.damage.test(damage & damageMask, maxDurability)) {
             return false;

@@ -24,6 +24,8 @@ import com.loohp.interactivechatdiscordsrvaddon.registry.ResourceRegistry;
 import com.loohp.interactivechatdiscordsrvaddon.resources.*;
 import com.loohp.interactivechatdiscordsrvaddon.utils.TintUtils;
 import org.apache.commons.io.input.BOMInputStream;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

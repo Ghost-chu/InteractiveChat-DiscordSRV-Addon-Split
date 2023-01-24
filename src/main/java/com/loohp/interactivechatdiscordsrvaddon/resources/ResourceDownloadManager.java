@@ -24,6 +24,8 @@ import com.loohp.interactivechat.utils.FileUtils;
 import com.loohp.interactivechat.utils.HTTPRequestUtils;
 import com.loohp.interactivechatdiscordsrvaddon.utils.TriConsumer;
 import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

@@ -28,8 +28,13 @@ import com.loohp.interactivechatdiscordsrvaddon.resources.languages.LanguageMeta
 import com.loohp.interactivechatdiscordsrvaddon.resources.models.ModelManager;
 import com.loohp.interactivechatdiscordsrvaddon.resources.mods.ModManager;
 import com.loohp.interactivechatdiscordsrvaddon.resources.textures.TextureManager;
+import me.clip.placeholderapi.libs.kyori.adventure.text.format.NamedTextColor;
+import me.clip.placeholderapi.libs.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.text.Component;
 import org.apache.commons.io.input.BOMInputStream;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

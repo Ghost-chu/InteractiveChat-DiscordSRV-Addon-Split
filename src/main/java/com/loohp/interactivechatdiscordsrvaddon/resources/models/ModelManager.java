@@ -32,6 +32,8 @@ import com.loohp.interactivechatdiscordsrvaddon.resources.ResourcePackFile;
 import com.loohp.interactivechatdiscordsrvaddon.resources.models.ModelOverride.ModelOverrideType;
 import com.loohp.interactivechatdiscordsrvaddon.utils.TriFunction;
 import org.apache.commons.io.input.BOMInputStream;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -51,7 +53,7 @@ public class ModelManager extends AbstractManager implements IModelManager {
     public static final String ITEM_BASE = "builtin/generated";
     public static final String ITEM_BASE_LAYER = "layer";
 
-    public static JSONObject specialReadProvider(ResourcePackFile file) throws IOException {
+    public static JSONObject specialReadProvider(ResourcePackFile file) throws IOException, ParseException {
         try (InputStreamReader reader = new InputStreamReader(new BOMInputStream(file.getInputStream()), StandardCharsets.UTF_8)) {
             return (JSONObject) new JSONParser().parse(reader);
         } catch (ParseException e) {

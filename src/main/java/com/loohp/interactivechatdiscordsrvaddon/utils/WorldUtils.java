@@ -42,29 +42,27 @@ public class WorldUtils {
     private static Method getPrecipitationMethod;
 
     static {
-        if (InteractiveChat.version.isNewerOrEqualTo(MCVersion.V1_16)) {
-            try {
-                craftWorldClass = NMSUtils.getNMSClass("org.bukkit.craftbukkit.%s.CraftWorld");
-                getHandleMethod = craftWorldClass.getMethod("getHandle");
-                worldServerClass = getHandleMethod.getReturnType();
-                getWorldTypeKeyMethod = worldServerClass.getMethod("getTypeKey");
-                getMinecraftKeyMethod = getWorldTypeKeyMethod.getReturnType().getMethod("a");
-                getBiomeAtMethod = worldServerClass.getMethod("a", int.class, int.class, int.class);
-                Class<?> biomeBaseClass;
-                if (InteractiveChat.version.isNewerOrEqualTo(MCVersion.V1_18)) {
-                    holderGetMethod = getBiomeAtMethod.getReturnType().getMethod("a");
-                    biomeBaseClass = Class.forName("net.minecraft.world.level.biome.BiomeBase");
-                } else {
-                    biomeBaseClass = getBiomeAtMethod.getReturnType();
-                }
-                if (InteractiveChat.version.isOlderThan(MCVersion.V1_17)) {
-                    getPrecipitationMethod = biomeBaseClass.getMethod("d");
-                } else {
-                    getPrecipitationMethod = biomeBaseClass.getMethod("c");
-                }
-            } catch (ReflectiveOperationException e) {
-                e.printStackTrace();
+        try {
+            craftWorldClass = NMSUtils.getNMSClass("org.bukkit.craftbukkit.%s.CraftWorld");
+            getHandleMethod = craftWorldClass.getMethod("getHandle");
+            worldServerClass = getHandleMethod.getReturnType();
+            getWorldTypeKeyMethod = worldServerClass.getMethod("getTypeKey");
+            getMinecraftKeyMethod = getWorldTypeKeyMethod.getReturnType().getMethod("a");
+            getBiomeAtMethod = worldServerClass.getMethod("a", int.class, int.class, int.class);
+            Class<?> biomeBaseClass;
+            if (InteractiveChat.version.isNewerOrEqualTo(MCVersion.V1_18)) {
+                holderGetMethod = getBiomeAtMethod.getReturnType().getMethod("a");
+                biomeBaseClass = Class.forName("net.minecraft.world.level.biome.BiomeBase");
+            } else {
+                biomeBaseClass = getBiomeAtMethod.getReturnType();
             }
+            if (InteractiveChat.version.isOlderThan(MCVersion.V1_17)) {
+                getPrecipitationMethod = biomeBaseClass.getMethod("d");
+            } else {
+                getPrecipitationMethod = biomeBaseClass.getMethod("c");
+            }
+        } catch (ReflectiveOperationException e) {
+            e.printStackTrace();
         }
     }
 

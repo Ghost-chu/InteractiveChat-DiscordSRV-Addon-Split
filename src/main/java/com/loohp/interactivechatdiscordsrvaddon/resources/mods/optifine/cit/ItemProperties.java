@@ -20,9 +20,9 @@
 
 package com.loohp.interactivechatdiscordsrvaddon.resources.mods.optifine.cit;
 
-import com.loohp.interactivechat.objectholders.ICMaterial;
 import com.loohp.interactivechatdiscordsrvaddon.objectholders.IntegerRange;
 import com.loohp.interactivechatdiscordsrvaddon.objectholders.PercentageOrIntegerRange;
+import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.EquipmentSlot;
 
@@ -35,7 +35,7 @@ public class ItemProperties extends CITProperties {
     private final Map<String, String> models;
     private final Map<String, String> textures;
 
-    public ItemProperties(int weight, Set<ICMaterial> items, IntegerRange stackSize, PercentageOrIntegerRange damage, int damageMask, EquipmentSlot hand, Map<Enchantment, IntegerRange> enchantments, Map<String, CITValueMatcher> nbtMatch, Map<String, String> models, Map<String, String> textures) {
+    public ItemProperties(int weight, Set<Material> items, IntegerRange stackSize, PercentageOrIntegerRange damage, int damageMask, EquipmentSlot hand, Map<Enchantment, IntegerRange> enchantments, Map<String, CITValueMatcher> nbtMatch, Map<String, String> models, Map<String, String> textures) {
         super(weight, items, stackSize, damage, damageMask, hand, enchantments, nbtMatch);
         this.models = models;
         this.textures = textures;

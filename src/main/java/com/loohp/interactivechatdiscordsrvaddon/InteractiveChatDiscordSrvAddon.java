@@ -36,6 +36,7 @@ import com.loohp.interactivechatdiscordsrvaddon.resources.mods.chime.ChimeManage
 import com.loohp.interactivechatdiscordsrvaddon.resources.mods.optifine.OptifineManager;
 import com.loohp.interactivechatdiscordsrvaddon.utils.ResourcePackUtils;
 import com.loohp.interactivechatdiscordsrvaddon.utils.TranslationKeyUtils;
+import net.kyori.adventure.text.Component;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;

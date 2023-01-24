@@ -38,6 +38,8 @@ import org.apache.commons.io.input.BOMInputStream;
 import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
